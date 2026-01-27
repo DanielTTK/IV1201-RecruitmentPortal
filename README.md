@@ -22,7 +22,7 @@ cd recruitment
 docker compose up -d
 ```
 
-### Starta
+### Starta appen
 ```bash
 ./mvnw spring-boot:run
 ```
@@ -32,7 +32,7 @@ docker compose up -d
 http://localhost:8080
 ```
 
-### Stoppa:
+### Stoppa appen:
 
 ```bash
 docker compose down
