@@ -1,0 +1,8 @@
+.DS_Store
+**/.DS_Store
+**/target/
+**/.idea/
+**/.vscode/
+
+recruitment/src/main/resources/db/
+recruitment/db/init/
