@@ -1,3 +1,10 @@
+/**
+ * Security setup for the project.
+ *
+ * Provides password encoder for hashing (HGP 7). Right now (29/1) it's configured
+ * to not block register/login pages, later it may be configured to enforce tighter access rules.
+ */
+
 package se.kth.iv1201.recruitment.config;
 
 import org.springframework.context.annotation.Bean;
