@@ -1,7 +1,7 @@
 <!-- Registration form. Use reusable fragments (HGP 27) and client-side validation (HGP 26) where appropriate. -->
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     
     <head>
         <title>Register account</title>
@@ -11,30 +11,27 @@
         <h1>
             Register your account
         </h1>
-        <p>
-            <input type="text" placeholder="First name"/>
-        </p>
-        <p> 
-            <input type="text" placeholder="Last name"/>
-        </p>
-        <p> 
-            <input type="text" placeholder="Person number"/>
-        </p>
-        <p>
-            <input type="email" placeholder="Email address"/>
-        </p>
-        <p>
-            <input type="email" placeholder="Confirm email"/>
-        </p>
-        <p>
-            <input type="password" placeholder="Password"/>
-        </p>
-        <p>
-            <input type="password" placeholder="Confirm password"/>
-        </p>
-        <p>
-            <button>Submit</button>
-        </p>
+        <form method="post" action="/register">
+            <div>
+                <input type="text" name="firstName" placeholder="First name" required/>
+            </div>
+            <div> 
+                <input type="text" name="lastName" placeholder="Last name" required/>
+            </div>
+            <div> 
+                <input type="text" name="personNumber" placeholder="Person number" minlength="12" maxlength="12" required/>
+            </div>
+            <div>
+                <input type="email" name="email" placeholder="Email address" required/>
+            </div>
+          
+            <div>
+                <input type="password" id="password" name="password" placeholder="Password" minlength="6" required/>
+            </div>
+            <div>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
 
     </body>
 </html>
