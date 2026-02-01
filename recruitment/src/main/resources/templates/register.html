@@ -1,38 +1,109 @@
 <!-- Registration form. Use reusable fragments (HGP 27) and client-side validation (HGP 26) where appropriate. -->
 
-<!DOCTYPE html>
-<html lang="en">
-    
-    <head>
-        <meta charset="UTF-8">
-        <title>Register account</title>
-        <link rel="stylesheet" href="/css/style.css">
-    </head>
-    <body >
-        <h1>
-            Register your account
-        </h1>
-        <form method="post" action="/register">
-            <div>
-                <input type="text" name="firstName" placeholder="First name" required/>
-            </div>
-            <div> 
-                <input type="text" name="lastName" placeholder="Last name" required/>
-            </div>
-            <div> 
-                <input type="text" name="personNumber" placeholder="Person number" minlength="12" maxlength="12" required/>
-            </div>
-            <div>
-                <input type="email" name="email" placeholder="Email address" required/>
-            </div>
-          
-            <div>
-                <input type="password" id="password" name="password" placeholder="Password" minlength="6" required/>
-            </div>
-            <div>
-                <button type="submit">Submit</button>
-            </div>
-        </form>
-
-    </body>
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Register account</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <h1>Register your account</h1>
+    <form method="post" action="/register" th:object="${registerForm}">
+      <div>
+        <input
+          type="text"
+          th:field="*{firstName}"
+          placeholder="First name"
+          required />
+      </div>
+      <div>
+        <span
+          th:if="${#fields.hasErrors('firstName')}"
+          th:errors="*{firstName}"
+          style="color: red"></span>
+      </div>
+      <div>
+        <input
+          type="text"
+          th:field="*{lastName}"
+          placeholder="Last name"
+          required />
+      </div>
+      <div>
+        <span
+          th:if="${#fields.hasErrors('lastName')}"
+          th:errors="*{lastName}"
+          style="color: red"></span>
+      </div>
+      <div>
+        <input
+          type="number"
+          th:field="*{personNumber}"
+          placeholder="Person number"
+          required />
+      </div>
+      <div>
+        <span
+          th:if="${#fields.hasErrors('personNumber')}"
+          th:errors="*{personNumber}"
+          style="color: red"></span>
+      </div>
+      <div>
+        <input
+          type="text"
+          th:field="*{email}"
+          placeholder="Email address"
+          required />
+      </div>
+      <div>
+        <span
+          th:if="${#fields.hasErrors('email')}"
+          th:errors="*{email}"
+          style="color: red"></span>
+      </div>
+      <div>
+        <input
+          type="text"
+          th:field="*{confirmedEmail}"
+          placeholder="Confirm email"
+          required />
+      </div>
+      <div>
+        <span
+          th:if="${#fields.hasErrors('confirmedEmail')}"
+          th:errors="*{confirmedEmail}"
+          style="color: red"></span>
+      </div>
+      <div>
+        <input
+          type="password"
+          th:field="*{password}"
+          placeholder="Password"
+          required />
+      </div>
+      <div>
+        <span
+          th:if="${#fields.hasErrors('password')}"
+          th:errors="*{password}"
+          style="color: red"></span>
+      </div>
+      <div>
+        <input
+          type="password"
+          th:field="*{confirmedPassword}"
+          placeholder="Confirm password"
+          required />
+      </div>
+      <div>
+        <span
+          th:if="${#fields.hasErrors('confirmedPassword')}"
+          th:errors="*{confirmedPassword}"
+          style="color: red"></span>
+      </div>
+      <div>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </body>
 </html>

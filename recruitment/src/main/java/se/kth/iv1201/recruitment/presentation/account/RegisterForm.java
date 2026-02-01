@@ -27,8 +27,16 @@ public class RegisterForm {
     private String email;
 
     @NotBlank
+    @Email
+    private String confirmedEmail;
+
+    @NotBlank
     @Size(min = 6)
     private String password;
+
+    @NotBlank
+    @Size(min = 6)
+    private String confirmedPassword;
 
     public String getFirstName() {
         return firstName;
@@ -62,12 +70,28 @@ public class RegisterForm {
         this.email = email;
     }
 
+    public String getConfirmedEmail() {
+        return confirmedEmail;
+    }
+
+    public void setConfirmedEmail(String confirmedEmail) {
+        this.confirmedEmail = confirmedEmail;
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getConfirmedPassword() {
+        return confirmedPassword;
+    }
+
+    public void setConfirmedPassword(String confirmedPassword) {
+        this.confirmedPassword = confirmedPassword;
     }
 
 }
