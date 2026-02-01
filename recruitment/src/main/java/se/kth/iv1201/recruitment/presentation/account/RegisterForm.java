@@ -19,11 +19,11 @@ public class RegisterForm {
     private String lastName;
 
     @NotBlank
-    @Size(min = 12, max = 12)
+    @Size(min = 12, max = 12, message = "Person number must cosist of 12 digits")
     private String personNumber;
 
     @NotBlank
-    @Email
+    @Email(message = "Email must consist of @")
     private String email;
 
     @NotBlank
@@ -31,11 +31,11 @@ public class RegisterForm {
     private String confirmedEmail;
 
     @NotBlank
-    @Size(min = 6)
+    @Size(min = 6, max = 100, message = "Password must be at least 6 characters")
     private String password;
 
     @NotBlank
-    @Size(min = 6)
+    @Size(min = 6, max = 100, message = "Password must be at least 6 characters")
     private String confirmedPassword;
 
     public String getFirstName() {

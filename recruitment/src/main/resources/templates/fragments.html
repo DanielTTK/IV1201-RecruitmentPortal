@@ -1,0 +1,36 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <div th:fragment="field(labelText, fieldName, type)">
+      <div>
+        <input
+          th:field="*{__${fieldName}__}"
+          th:attr="type=${type}"
+          th:placeholder="${labelText}"
+          required />
+      </div>
+      <div>
+        <span
+          th:if="${#fields.hasErrors(fieldName)}"
+          th:errors="*{__${fieldName}__}"
+          style="color: red"></span>
+      </div>
+    </div>
+
+    <div th:fragment="fieldWithMax(labelText, fieldName, type, max)">
+      <div>
+        <input
+          th:field="*{__${fieldName}__}"
+          th:attr="type=${type}, maxlength=${max}"
+          th:placeholder="${labelText}"
+          required />
+      </div>
+      <div>
+        <span
+          th:if="${#fields.hasErrors(fieldName)}"
+          th:errors="*{__${fieldName}__}"
+          style="color: red"></span>
+      </div>
+    </div>
+  </body>
+</html>

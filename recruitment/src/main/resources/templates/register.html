@@ -10,98 +10,21 @@
   <body>
     <h1>Register your account</h1>
     <form method="post" action="/register" th:object="${registerForm}">
-      <div>
-        <input
-          type="text"
-          th:field="*{firstName}"
-          placeholder="First name"
-          required />
-      </div>
-      <div>
-        <span
-          th:if="${#fields.hasErrors('firstName')}"
-          th:errors="*{firstName}"
-          style="color: red"></span>
-      </div>
-      <div>
-        <input
-          type="text"
-          th:field="*{lastName}"
-          placeholder="Last name"
-          required />
-      </div>
-      <div>
-        <span
-          th:if="${#fields.hasErrors('lastName')}"
-          th:errors="*{lastName}"
-          style="color: red"></span>
-      </div>
-      <div>
-        <input
-          type="number"
-          th:field="*{personNumber}"
-          placeholder="Person number"
-          required />
-      </div>
-      <div>
-        <span
-          th:if="${#fields.hasErrors('personNumber')}"
-          th:errors="*{personNumber}"
-          style="color: red"></span>
-      </div>
-      <div>
-        <input
-          type="text"
-          th:field="*{email}"
-          placeholder="Email address"
-          required />
-      </div>
-      <div>
-        <span
-          th:if="${#fields.hasErrors('email')}"
-          th:errors="*{email}"
-          style="color: red"></span>
-      </div>
-      <div>
-        <input
-          type="text"
-          th:field="*{confirmedEmail}"
-          placeholder="Confirm email"
-          required />
-      </div>
-      <div>
-        <span
-          th:if="${#fields.hasErrors('confirmedEmail')}"
-          th:errors="*{confirmedEmail}"
-          style="color: red"></span>
-      </div>
-      <div>
-        <input
-          type="password"
-          th:field="*{password}"
-          placeholder="Password"
-          required />
-      </div>
-      <div>
-        <span
-          th:if="${#fields.hasErrors('password')}"
-          th:errors="*{password}"
-          style="color: red"></span>
-      </div>
-      <div>
-        <input
-          type="password"
-          th:field="*{confirmedPassword}"
-          placeholder="Confirm password"
-          required />
-      </div>
-      <div>
-        <span
-          th:if="${#fields.hasErrors('confirmedPassword')}"
-          th:errors="*{confirmedPassword}"
-          style="color: red"></span>
-      </div>
-      <div>
+      <div
+        th:replace="fragments :: field('First name', 'firstName', 'text')"></div>
+      <div
+        th:replace="fragments :: field('Last name', 'lastName', 'text')"></div>
+      <div
+        th:replace="fragments :: fieldWithMax('Person number', 'personNumber', 'text', 12)"></div>
+      <div
+        th:replace="fragments :: field('Email address', 'email', 'text')"></div>
+      <div
+        th:replace="fragments :: field('Confirm email', 'confirmedEmail', 'text')"></div>
+      <div
+        th:replace="fragments :: field('Password', 'password', 'password')"></div>
+      <div
+        th:replace="fragments :: field('Confirm password', 'confirmedPassword', 'password')"></div>
+      <div class="marg-15">
         <button type="submit">Submit</button>
       </div>
     </form>
