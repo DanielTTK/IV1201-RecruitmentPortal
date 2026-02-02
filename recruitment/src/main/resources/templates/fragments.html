@@ -10,7 +10,7 @@
           th:id="${fieldName}"
           th:field="*{__${fieldName}__}"
           th:attr="type=${type}"
-          aria-label="${labelText}"
+          th:aria-label="${labelText}"
           required />
       </div>
       <div>
@@ -29,7 +29,7 @@
           th:id="${fieldName}"
           th:field="*{__${fieldName}__}"
           th:attr="type=${type}, maxlength=${max}"
-          aria-label="${labelText}"
+          th:aria-label="${labelText}"
           required />
       </div>
       <div>

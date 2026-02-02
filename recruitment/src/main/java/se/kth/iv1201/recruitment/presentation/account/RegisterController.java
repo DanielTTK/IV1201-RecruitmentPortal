@@ -24,13 +24,13 @@ public class RegisterController {
         return "register";
     }
 
-    @PostMapping("/register")
+    @PostMapping({ "/register", "/registerForm" })
     public String register(@Valid @ModelAttribute("registerForm") RegisterForm form,
             BindingResult bindingResult) {
         if (form.getPassword() != null && form.getConfirmedPassword() != null &&
                 !form.getPassword().equals(form.getConfirmedPassword())) {
             bindingResult.rejectValue("confirmedPassword", "error.mismatch", "Passwords do not match");
-        }
+        } // Messages in english atm, change for future
 
         if (form.getEmail() != null && form.getConfirmedEmail() != null &&
                 !form.getEmail().equals(form.getConfirmedEmail())) {
