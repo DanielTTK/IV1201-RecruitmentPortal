@@ -32,11 +32,6 @@ public class RegisterController {
             bindingResult.rejectValue("confirmedPassword", "error.mismatch", "Passwords do not match");
         } // Messages in english atm, change for future
 
-        if (form.getEmail() != null && form.getConfirmedEmail() != null &&
-                !form.getEmail().equals(form.getConfirmedEmail())) {
-            bindingResult.rejectValue("confirmedEmail", "error.mismatch", "Emails do not match");
-        }
-
         if (bindingResult.hasErrors()) {
             return "register";
         }

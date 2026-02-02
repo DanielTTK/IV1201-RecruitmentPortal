@@ -1,5 +1,5 @@
 <!-- Registration form. Use reusable fragments (HGP 27) and client-side validation (HGP 26) where appropriate. -->
- <!--Hardcoded in english atm-->
+<!--Hardcoded in english atm-->
 
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
@@ -15,12 +15,11 @@
         th:replace="fragments :: field('First name', 'firstName', 'text')"></div>
       <div
         th:replace="fragments :: field('Last name', 'lastName', 'text')"></div>
+      <div th:replace="fragments :: field('Username', 'username', text)"></div>
       <div
         th:replace="fragments :: fieldWithMax('Person number', 'personNumber', 'text', 12)"></div>
       <div
         th:replace="fragments :: field('Email address', 'email', 'email')"></div>
-      <div
-        th:replace="fragments :: field('Confirm email', 'confirmedEmail', 'email')"></div>
       <div
         th:replace="fragments :: field('Password', 'password', 'password')"></div>
       <div

@@ -19,16 +19,15 @@ public class RegisterForm {
     private String lastName;
 
     @NotBlank
+    private String username;
+
+    @NotBlank
     @Size(min = 12, max = 12, message = "Person number must consist of 12 digits")
     private String personNumber;
 
     @NotBlank
     @Email(message = "Please enter a valid email address")
     private String email;
-
-    @NotBlank
-    @Email
-    private String confirmedEmail;
 
     @NotBlank
     @Size(min = 6, max = 100, message = "Password must be at least 6 characters")
@@ -54,6 +53,14 @@ public class RegisterForm {
         this.lastName = lastName;
     }
 
+    public String username(){
+        return username;
+    }
+
+    public void getUsername(String username){
+        this.username = username;
+    }
+
     public String getPersonNumber() {
         return personNumber;
     }
@@ -68,14 +75,6 @@ public class RegisterForm {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getConfirmedEmail() {
-        return confirmedEmail;
-    }
-
-    public void setConfirmedEmail(String confirmedEmail) {
-        this.confirmedEmail = confirmedEmail;
     }
 
     public String getPassword() {
