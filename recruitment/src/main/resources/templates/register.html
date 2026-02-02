@@ -17,14 +17,14 @@
       <div
         th:replace="fragments :: fieldWithMax('Person number', 'personNumber', 'text', 12)"></div>
       <div
-        th:replace="fragments :: field('Email address', 'email', 'text')"></div>
+        th:replace="fragments :: field('Email address', 'email', 'email')"></div>
       <div
-        th:replace="fragments :: field('Confirm email', 'confirmedEmail', 'text')"></div>
+        th:replace="fragments :: field('Confirm email', 'confirmedEmail', 'email')"></div>
       <div
         th:replace="fragments :: field('Password', 'password', 'password')"></div>
       <div
         th:replace="fragments :: field('Confirm password', 'confirmedPassword', 'password')"></div>
-      <div class="marg-15">
+      <div>
         <button type="submit">Submit</button>
       </div>
     </form>
