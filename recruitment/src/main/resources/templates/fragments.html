@@ -1,0 +1,44 @@
+<!-- This is for using fragments to make it possible to re-use code. Makes it easier to maintain code -->
+
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <div th:fragment="field(labelText, fieldName, type)">
+      <div>
+        <label th:for="${fieldName}" th:text="${labelText}"></label>
+        <input
+          th:id="${fieldName}"
+          th:field="*{__${fieldName}__}"
+          th:attr="type=${type}"
+          th:aria-label="${labelText}"
+          required />
+      </div>
+      <div>
+        <span
+          th:if="${#fields.hasErrors(fieldName)}"
+          th:errors="*{__${fieldName}__}"
+          style="color: red"
+          th:attr="role=alert"></span>
+      </div>
+    </div>
+
+    <div th:fragment="fieldWithMax(labelText, fieldName, type, max)">
+      <div>
+        <label th:for="${fieldName}" th:text="${labelText}"></label>
+        <input
+          th:id="${fieldName}"
+          th:field="*{__${fieldName}__}"
+          th:attr="type=${type}, maxlength=${max}"
+          th:aria-label="${labelText}"
+          required />
+      </div>
+      <div>
+        <span
+          th:if="${#fields.hasErrors(fieldName)}"
+          th:errors="*{__${fieldName}__}"
+          style="color: red"
+          th:attr="role=alert"></span>
+      </div>
+    </div>
+  </body>
+</html>
