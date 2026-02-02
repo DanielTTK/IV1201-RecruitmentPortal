@@ -127,8 +127,9 @@
 				<version>3.11.0</version>
 				<configuration>
 					<release>${java.version}</release>
-					<!-- use javac as fallback. -->
-					<compilerExecutable>${env.JAVA_HOME}/bin/javac</compilerExecutable>
+					<!-- force using the javac from JAVA_HOME when forking -->
+					<fork>true</fork>
+					<executable>${env.JAVA_HOME}/bin/javac</executable>
 				</configuration>
 			</plugin>
 			<plugin>
