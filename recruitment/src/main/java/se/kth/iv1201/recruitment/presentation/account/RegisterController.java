@@ -6,7 +6,7 @@
  */
 
 package se.kth.iv1201.recruitment.presentation.account;
-
+// test
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
