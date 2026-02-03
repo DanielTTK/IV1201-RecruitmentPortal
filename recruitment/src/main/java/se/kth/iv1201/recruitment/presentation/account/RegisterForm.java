@@ -18,7 +18,7 @@ public class RegisterForm {
     @NotBlank
     private String lastName;
 
-    @NotBlank
+    @NotBlank(message = "Username cannot be blank")
     private String username;
 
     @NotBlank
@@ -53,11 +53,11 @@ public class RegisterForm {
         this.lastName = lastName;
     }
 
-    public String username(){
+    public String getUsername() {
         return username;
     }
 
-    public void getUsername(String username){
+    public void setUsername(String username) {
         this.username = username;
     }
 
