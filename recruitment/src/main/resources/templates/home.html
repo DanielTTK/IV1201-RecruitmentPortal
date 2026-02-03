@@ -1,0 +1,19 @@
+<!-- Simple home page to be redirected to the different pages. -->
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Home</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <h1>Welcome to the Recruitment Portal!</h1>
+
+    <p>This is the Home Page.</p>
+
+    <nav>
+      <a th:href="@{/login}">Login</a> |
+      <a th:href="@{/registerForm}">Register</a>
+    </nav>
+  </body>
+</html>
