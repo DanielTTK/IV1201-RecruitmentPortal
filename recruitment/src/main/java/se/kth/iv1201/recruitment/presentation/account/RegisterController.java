@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import se.kth.iv1201.recruitment.application.UsernameTakenException;
 
 import jakarta.validation.Valid;
 import se.kth.iv1201.recruitment.application.AccountService;
@@ -32,7 +33,7 @@ public class RegisterController {
         return "register";
     }
 
-    @PostMapping({ "/register", "/registerForm" })
+    @PostMapping({ "/register" })
     public String register(@Valid @ModelAttribute("registerForm") RegisterForm form,
             BindingResult bindingResult) {
         if (form.getPassword() != null && form.getConfirmedPassword() != null &&
@@ -44,7 +45,19 @@ public class RegisterController {
         return "register";
     }
 
-    accountService.registerUser(form);
-    return "register_success";
+    try {
+            accountService.registerUser(
+                form.getFirstName(),
+                form.getLastName(),
+                form.getUsername(),
+                form.getPersonNumber(),
+                form.getEmail(),
+                form.getPassword()
+            );
+            return "register_success";
+        } catch (UsernameTakenException e) {
+            bindingResult.rejectValue("username", "error.usernameTaken", "Username is already taken!");
+            return "register";
+        }
     }
 }
