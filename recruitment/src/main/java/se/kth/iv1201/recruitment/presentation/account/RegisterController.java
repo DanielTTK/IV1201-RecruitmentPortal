@@ -15,10 +15,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.validation.Valid;
+import se.kth.iv1201.recruitment.application.AccountService;
 
 @Controller
 public class RegisterController {
-    @GetMapping("/registerForm")
+
+    private final AccountService accountService; 
+
+    public RegisterController(AccountService accountService) {
+        this.accountService = accountService;
+    }
+    
+    @GetMapping("/register")
     public String registerForm(Model model) {
         model.addAttribute("registerForm", new RegisterForm());
         return "register";
@@ -30,13 +38,13 @@ public class RegisterController {
         if (form.getPassword() != null && form.getConfirmedPassword() != null &&
                 !form.getPassword().equals(form.getConfirmedPassword())) {
             bindingResult.rejectValue("confirmedPassword", "error.mismatch", "Passwords do not match");
-        } // Messages in english atm, change for future
+        } 
 
-        if (bindingResult.hasErrors()) {
-            return "register";
-        }
+    if (bindingResult.hasErrors()) {
+        return "register";
+    }
 
-        // TODO: Call AccountService to save user
-        return "register_success";
+    accountService.registerUser(form);
+    return "register_success";
     }
 }
