@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
  * - verify register.html contains expected fields or fragments
  */
 @Disabled("TODO: implement template assertions for register.html")
-class RegisterTemplateTest {
+class RegisterFormTest {
 
     @Test
     void placeholder() {}
