@@ -122,11 +122,6 @@ public class Person {
     }
 
     @Override
-    public int hashCode() {
-        return (personId == null) ? System.identityHashCode(this) : personId.hashCode();
-    }
-
-    @Override
     public String toString() { return "Person{personId=" + personId + ", username=" + username + ", roleId=" + roleId + ", name=" + name + ", surname=" + surname + ", email=" + email + ", pnr=" + pnr + "}"; 
     }
     }
