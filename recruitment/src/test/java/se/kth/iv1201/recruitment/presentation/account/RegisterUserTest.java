@@ -1,0 +1,67 @@
+package se.kth.iv1201.recruitment.presentation.account;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+
+import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+
+import se.kth.iv1201.recruitment.domain.Person;
+import se.kth.iv1201.recruitment.repository.PersonRepository;
+
+@SpringBootTest
+public class RegisterUserTest {
+
+    private MockMvc mockMvc;
+
+    @Autowired
+    private WebApplicationContext wac;
+
+    @Autowired
+    private PersonRepository personRepository;
+
+    @BeforeEach
+    void setUp() {
+        personRepository.deleteAll();
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac)
+                .apply(springSecurity())
+                .build();
+    }
+
+    @Test
+    void personSavedInDBAfterPosting() throws Exception {
+        String username = "alice777";
+
+        mockMvc.perform(post("/register")
+                .param("firstName", "Alice")
+                .param("lastName", "Swedishson")
+                .param("username", username)
+                .param("personNumber", "197101015678")
+                .param("email", "alice@google.com")
+                .param("password", "password123")
+                .param("confirmedPassword", "password123")
+                .with(csrf()))
+                .andExpect(status().isOk());
+
+        Optional<Person> opt = personRepository.findByUsername(username);
+        assertThat(opt).isPresent();
+        Person p = opt.get();
+        assertEquals("Alice", p.getName());
+        assertEquals("Swedishson", p.getSurname());
+        assertEquals("alice@google.com", p.getEmail());
+        assertNotNull(p.getPassword());
+        assertNotEquals("password123", p.getPassword(), "Password needs to be hashed");
+        assertEquals(Integer.valueOf(2), p.getRoleId());
+    }
+}
