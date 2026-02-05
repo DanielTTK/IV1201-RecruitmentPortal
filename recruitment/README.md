@@ -1,6 +1,6 @@
 # running tests
 
-This readme explains how to run tests for both Java 21 or Java 17.
+This section explains how to run tests for both Java 21 or Java 17.
 
 Make sure everyone uses the same Maven version:
 
