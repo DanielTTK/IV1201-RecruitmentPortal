@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Competence profile</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div>
+      <h1>Fill out your competences!</h1>
+      <form
+        method="post"
+        th:action="@{/competence}"
+        th:object="${competenceProfile}">
+        <div>Have you been working with us before?</div>
+        <div class="radio-group">
+          <div class="radio-option">
+            <label for="yes">Yes</label>
+            <input
+              type="radio"
+              th:field="*{workingBefore}"
+              value="yes"
+              id="yes" />
+          </div>
+          <div class="radio-option">
+            <label for="no">No</label>
+            <input
+              type="radio"
+              th:field="*{workingBefore}"
+              value="no"
+              id="no" />
+          </div>
+        </div>
+        <h3>Previous Experience</h3>
+        <div th:each="exp, iterStat : *{experiences}">
+          <div class="row">
+            <select th:field="*{experiences[__${iterStat.index}__].expertise}">
+              <option value="null">None of the alternatives</option>
+              <option value="Restaurant">Restaurant</option>
+              <option value="Cashier">Cashier</option>
+              <option value="Mechanics">Mechanics</option>
+              <option value="Entertainer">Entertainer</option>
+              <option value="Customer Service">Customer Service</option>
+              <option value="Cleaner">Cleaner</option>
+            </select>
+            <select th:field="*{experiences[__${iterStat.index}__].years}">
+              <option value="null">-</option>
+              <option value="<1">< 1 Year</option>
+              <option value="1">1 Year</option>
+              <option value="2">2 Years</option>
+              <option value="3">3 Years</option>
+              <option value="4">4 Years</option>
+              <option value="5+">5+ Years</option>
+            </select>
+            <button
+              class="small"
+              type="submit"
+              name="addExperienceRow"
+              value="true">
+              +
+            </button>
+          </div>
+        </div>
+
+        <div
+          th:replace="~{fragments :: textareaField('What is your motivation for applying for this job', 'motivation')}"></div>
+        <div
+          th:replace="~{fragments :: textareaField('Tell us something about yourself', 'aboutYou')}"></div>
+        <div>
+          <h3>When will you be able to work?</h3>
+          <div class="row" th:each="range, iterStat : *{dateRanges}">
+            <label for="startDate__${iterStat.index}">Start date</label>
+            <input
+              type="date"
+              th:field="*{dateRanges[__${iterStat.index}__].startDate}"
+              id="startDate__${iterStat.index}"
+              required />
+            <label for="endDate__${iterStat.index}">End date</label>
+            <input
+              type="date"
+              th:field="*{dateRanges[__${iterStat.index}__].endDate}"
+              id="endDate__${iterStat.index}"
+              required />
+            <button type="submit" name="addDateRow" value="true">+</button>
+          </div>
+        </div>
+        <div class="marg-15">
+          <button type="submit" name="submitted" value="true">Submit</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
