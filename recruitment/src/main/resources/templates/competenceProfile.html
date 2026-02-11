@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
+    <div th:insert="header :: header"></div>
     <div>
       <h1>Fill out your competences!</h1>
       <form
@@ -86,6 +87,7 @@
         <div class="marg-15">
           <button type="submit" name="submitted" value="true">Submit</button>
         </div>
+        <div th:insert="footer :: footer"></div>
       </form>
     </div>
   </body>
