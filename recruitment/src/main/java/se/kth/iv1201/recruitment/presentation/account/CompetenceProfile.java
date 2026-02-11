@@ -2,22 +2,25 @@ package se.kth.iv1201.recruitment.presentation.account;
 
 import java.util.ArrayList;
 import java.util.List;
+import jakarta.validation.Valid;
+
+/**
+ * Class for the competence profile page. Has the inputs from the form.
+ */
 
 public class CompetenceProfile {
 
     private String workingBefore;
     private String motivation;
     private String aboutYou;
-
-    private String startDate;
-    private String endDate;
-
     private String prevExperience;
 
     private String prevExperienceYears;
 
+    @Valid
     private List<DateRange> dateRanges = new ArrayList<>();
 
+    @Valid
     private List<Experiences> experiences = new ArrayList<>();
 
     public String getWorkingBefore() {
@@ -58,22 +61,6 @@ public class CompetenceProfile {
 
     public void setAboutYou(String aboutYou) {
         this.aboutYou = aboutYou;
-    }
-
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
     }
 
     public List<DateRange> getDateRanges() {

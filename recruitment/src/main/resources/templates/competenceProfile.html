@@ -83,6 +83,9 @@
               required />
             <button type="submit" name="addDateRow" value="true">+</button>
           </div>
+          <div th:if="${#fields.hasErrors('*')}">
+            <p style="color: rgb(255, 0, 0)" th:errors="*{all}"></p>
+          </div>
         </div>
         <div class="marg-15">
           <button type="submit" name="submitted" value="true">Submit</button>

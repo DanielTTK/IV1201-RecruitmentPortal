@@ -1,56 +1,62 @@
 package se.kth.iv1201.recruitment.presentation.account;
 
+import java.time.LocalDate;
+import jakarta.validation.constraints.FutureOrPresent;
+import org.springframework.format.annotation.DateTimeFormat;
+
 /**
- * This class includes a start date and an end date for applicants. 
- * The class is used in CompetenceProfile to make it possible to add multiple periods
- * that the applicant is available to work.
+ * This class includes a start date and an end date for applicants.
+ * The class is used in CompetenceProfile to make it possible to add multiple
+ * periods that the applicant is available to work.
  */
 
 public class DateRange {
-    private String startDate;
-    private String endDate;
+    @FutureOrPresent(message = "Start date cannot be in the past")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDate;
+
+    @FutureOrPresent(message = "End date cannot be in the past")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endDate;
 
     /**
      * Getter for the start date
      * 
-     * @return the start date in the format YYYY-MM-DD
+     * @return the start date
      */
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
     /**
      * Setter for start date
      * 
-     * @param startDate which is the start date in format YYYY-MM-DD
+     * @param startDate the start date
      */
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
     /**
      * Getter for end date.
      * 
-     * @return end date in formate YYYY-MM-DD
+     * @return end date
      */
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
     /**
      * Setter for end date
      * 
-     * @param endDate which is the end date in formate YYYY-MM-DD
+     * @param endDate the end date
      */
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
     @Override
     public String toString() {
-        return "DateRange{" +
-                "startDate='" + startDate + '\'' +
-                ", endDate='" + endDate + '\'' +
-                '}';
+        return "DateRange{" + "startDate='" + startDate + '\'' + ", endDate='" + endDate + '\'' + '}';
     }
 }
