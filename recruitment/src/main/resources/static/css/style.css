@@ -3,6 +3,8 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
+    padding-top: 65px;
+    padding-bottom: 100px;
     background-color: #f5f5f5;
     text-align: center;
 }
@@ -20,7 +22,7 @@ label {
     margin-bottom: 5px;
     font-weight: bold;
     color: #333;
-    text-align: left;
+    text-align: middle;
     max-width: 320px;
     margin-left: auto;
     margin-right: auto;
@@ -34,7 +36,56 @@ input {
     font-size: 14px;
 }
 
+input[type="radio"] {
+    width: auto;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+
+.radio-group {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-bottom: 15px;
+}
+
+.radio-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.radio-option label {
+    max-width: none;
+    margin: 0;
+}
+
+.radio-option input[type="radio"] {
+    margin: 0;
+}
+
+textarea {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    resize: vertical;
+    min-height: 100px;
+}
+
 input:focus {
+    outline: none;
+    border-color: #4a5ba8;
+    box-shadow: 0 0 5px#4a5ba8;
+}
+
+textarea:focus {
     outline: none;
     border-color: #4a5ba8;
     box-shadow: 0 0 5px#4a5ba8;
@@ -52,4 +103,69 @@ button {
 
 button:hover {
     background-color: #4a5ba8;
+}
+
+.row {
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; 
+}
+.row label {
+  margin: 0 5px;
+}
+
+.small {
+    padding-block: 1px;
+    padding-inline: 10px;
+}
+
+.header {
+    background-color: #acb4d9;
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+    padding-left: 15px;
+    margin: 0;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.header div {
+    margin-bottom: 0;
+  
+}
+.header a {
+   margin: 10px;
+   background-color: #acb4d9;
+   color: black;
+   text-decoration: none;
+}
+
+.header a:hover {
+    font-weight: bold;
+}
+
+.header h3 {
+    margin-right: 15px;
+    text-align: center;
+
+}
+
+.header .login{
+    margin-left: auto;
+    margin-right: 45px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    text-align: center;
 }

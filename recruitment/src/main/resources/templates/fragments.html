@@ -40,5 +40,23 @@
           th:attr="role=alert"></span>
       </div>
     </div>
+
+    <div th:fragment="textareaField(labelText, fieldName)">
+      <div>
+        <label th:for="${fieldName}" th:text="${labelText}"></label>
+        <textarea
+          th:id="${fieldName}"
+          th:field="*{__${fieldName}__}"
+          th:aria-label="${labelText}"
+          ></textarea>
+      </div>
+      <div>
+        <span
+          th:if="${#fields.hasErrors(fieldName)}"
+          th:errors="*{__${fieldName}__}"
+          style="color: red"
+          th:attr="role=alert"></span>
+      </div>
+    </div>
   </body>
 </html>
