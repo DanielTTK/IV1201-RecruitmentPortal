@@ -20,7 +20,10 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import se.kth.iv1201.recruitment.domain.Person;
 import se.kth.iv1201.recruitment.repository.PersonRepository;
 /**
- * This test verifies if a user is properly registered in the database from the register form.
+ * This test verifies if a user is properly registered in the database from the register form. It is a general test, 
+ * meaning it doesn't test per layer, but rather the whole flow of the registration process. 
+ * It uses MockMvc to simulate a POST request, 
+ * and then checks if the user is saved in the database with the expected attributes.
  */
 @SpringBootTest
 public class RegisterUserTest {

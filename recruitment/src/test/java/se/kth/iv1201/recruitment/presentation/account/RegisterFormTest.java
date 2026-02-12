@@ -2,14 +2,13 @@ package se.kth.iv1201.recruitment.presentation.account;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 /**
- * TODO: template tests
- * - verify register.html contains expected fields or fragments
  */
-@Disabled("TODO: implement template assertions for register.html")
+//@SpringBootTest
+@Disabled("TODO: Test constraints and validation of RegisterForm")
 class RegisterFormTest {
-
     @Test
     void placeholder() {}
 }

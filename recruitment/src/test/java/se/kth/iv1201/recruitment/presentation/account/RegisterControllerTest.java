@@ -2,15 +2,13 @@ package se.kth.iv1201.recruitment.presentation.account;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 /**
- * TODO: unit tests for RegisterController
- * - test form validation (password mismatch, missing fields)
- * - test redirect / model attributes on success and failure
  */
-@Disabled("TODO: implement RegisterController unit tests")
-class RegisterControllerTest {
-
+//@SpringBootTest
+@Disabled("TODO: Test expected behavior of RegisterController, including form validation and redirects")
+public class RegisterControllerTest {
     @Test
     void placeholder() {}
 }
