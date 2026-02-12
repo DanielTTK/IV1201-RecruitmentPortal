@@ -11,8 +11,13 @@ import se.kth.iv1201.recruitment.domain.Person;
 
 public interface PersonRepository extends JpaRepository<Person, Integer> {
 
-    Optional<Person> findByUsername(String username); //returns given person if exists
+    Optional<Person> findByUsernameIgnoreCase(String username); //returns given person if exists
+    Optional<Person> findByEmailIgnoreCase(String email);
 
 
-    boolean existsByUsername(String username); //true if username is taken
+    boolean existsByUsernameIgnoreCase(String username); //only for use in field error logic!!
+    boolean existsByEmailIgnoreCase(String email); //only for use in field error logic!!
+
+
+    
 }
