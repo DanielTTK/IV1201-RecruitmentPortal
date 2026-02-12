@@ -56,7 +56,7 @@ public class RegisterUserTest {
                 .with(csrf()))
                 .andExpect(status().isOk());
 
-        Optional<Person> opt = personRepository.findByUsername(username);
+        Optional<Person> opt = personRepository.findByUsernameIgnoreCase(username);
         assertThat(opt).isPresent();
         Person p = opt.get();
         assertEquals("Alice", p.getName());
