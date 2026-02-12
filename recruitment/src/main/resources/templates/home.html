@@ -5,9 +5,57 @@
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-    <div>
-      <div th:insert="header :: header"></div>
-      <h1>Home</h1>
+    <div th:insert="header :: header"></div>
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      ">
+      <div>
+        <h1 style="font-size: 48px; margin-top: 150px">
+          Have your best summer ever and join us for an amazing experience!
+        </h1>
+        <p style="font-size: x-large; margin-top: 190px">Interested?</p>
+        <p style="margin-top: 20px;">Scroll down</p>
+        <p style="font-size: 100px; margin: 20px">&#8595;</p>
+        <p></p>
+      </div>
+    </div>
+
+    <div
+      style="
+        background-color: #e8f0f8;
+        padding: 50px;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      ">
+      <div style="max-width: 800px">
+        <h2 style="font-size: 36px; color: #333; margin-bottom: 20px">
+          Why Join Our Team?
+        </h2>
+        <p style="font-size: 18px; line-height: 1.6; color: #555">
+          Are you ready for an exciting summer adventure? Our amusement park is
+          looking for passionate, energetic team members to create unforgettable
+          experiences for thousands of guests. Whether you're greeting visitors,
+          managing attractions, or keeping the park running smoothly, your
+          contribution matters.
+        </p>
+        <p
+          style="
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+            margin-top: 15px;
+          ">
+          This is more than just a job—it's a chance to be part of a dynamic
+          team, develop valuable skills, and make memories that last a lifetime.
+          Apply today and be part of the magic!
+        </p>
+      </div>
     </div>
   </body>
   <div th:insert="footer :: footer"></div>

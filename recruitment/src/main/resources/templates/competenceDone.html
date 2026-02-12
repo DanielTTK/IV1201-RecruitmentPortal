@@ -8,8 +8,13 @@
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
+    <div th:insert="header :: header"></div>
     <h1>Application Sent!</h1>
     <div>Thank you for you application!</div>
-    <div>We are now going to go over your application and get back to you as soon as possible!</div>
+    <div>
+      We are now going to go over your application and get back to you as soon
+      as possible!
+    </div>
+    <div th:insert="footer :: footer"></div>
   </body>
 </html>
