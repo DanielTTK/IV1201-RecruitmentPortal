@@ -4,23 +4,16 @@
 
 - Java 17
 - VS Code (med extensions Java + Spring Boot Extension Pack)
-- Docker Desktop (startat)
 
 ## Instruktioner:
 
-Vi kör Postgres lokalt i Docker för att underlätta utveckling just nu. Senare kommer den ligga i en molntjänst.
+Vi kör Postgres i Neon (moln). Flyway-migreringar ligger i repo, DB är redan importerad/migrerad i Neon.
 
-### 1) Lägg till databasen
-1. Ladda ner `existing-database.sql` från [Canvas](https://canvas.kth.se/courses/59268/pages/project)
-2. Flytta till:
-  `recruitment/db/init/existing-database.sql`
+### 1) Skapa lokal konfigfil (gitignored)
+1. `cd recruitment`
+2. `cp .env.example .env.properties`
+3. Öppna `.env.properties` och fyll i lösenordet från Discord
 
-### 2) Starta databasen
-
-```bash
-cd recruitment
-docker compose up -d
-```
 
 ### Starta appen
 ```bash
@@ -30,11 +23,4 @@ docker compose up -d
 Öppna i webbläsaren:
 ```bash
 http://localhost:8080
-```
-
-### Stoppa appen:
-
-```bash
-docker compose down
-Ctrl + C i terminalen
 ```
