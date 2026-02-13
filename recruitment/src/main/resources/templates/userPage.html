@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>User Page</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div th:insert="header::header"></div>
+    <h1>Welcome {placeholder for name}</h1>
+    <div style="text-align: left">
+      <h3>Submit a new application</h3>
+      <div style="margin-top: 20px; padding-top: 20px; padding-bottom: 50px">
+        <a
+          href="/competenceProfile"
+          style="
+            padding: 20px 40px;
+            border: 2px solid black;
+            text-decoration: none;
+            color: black;
+            border-radius: 4px;"
+          >+</a
+        >
+      </div>
+      <h3>My applications</h3>
+    </div>
+    <div th:insert="footer::footer"></div>
+  </body>
+</html>

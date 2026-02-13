@@ -112,6 +112,8 @@ button:hover {
     background-color: #4a5ba8;
 }
 
+
+
 .row {
     
     display: flex;
@@ -153,7 +155,7 @@ button:hover {
    text-decoration: none;
 }
 
-.header a:hover {
+ a:hover {
     font-weight: bold;
 }
 

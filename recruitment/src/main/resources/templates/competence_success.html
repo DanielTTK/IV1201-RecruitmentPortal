@@ -10,11 +10,16 @@
   <body>
     <div th:insert="header :: header"></div>
     <h1>Application Sent!</h1>
-    <div>Thank you for you application!</div>
-    <div>
+    <p>Thank you for you application!</p>
+    <p>
       We are now going to go over your application and get back to you as soon
       as possible!
+    </p>
+    <div class="row" style="margin-top: 20px;">
+      <a a href="/userPage" style="text-decoration: none; color: black;">&#8592;</a>
+      <a href="/userPage" style="text-decoration: none; color: black;">Go back to my applications</a>
     </div>
+
     <div th:insert="footer :: footer"></div>
   </body>
 </html>
