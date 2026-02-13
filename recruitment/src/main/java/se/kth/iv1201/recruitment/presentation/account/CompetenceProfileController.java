@@ -57,7 +57,7 @@ public class CompetenceProfileController {
             return "competenceProfile";
         }
 
-        if (addDateRow != null) {
+        else if (addDateRow != null) {
             form.getDateRanges().add(new DateRange());
             model.addAttribute("competenceProfile", form);
             return "competenceProfile";
