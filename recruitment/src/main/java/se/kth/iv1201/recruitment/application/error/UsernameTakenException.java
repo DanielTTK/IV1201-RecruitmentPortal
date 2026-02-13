@@ -3,7 +3,7 @@
  * Shown on form
  */
 
-package se.kth.iv1201.recruitment.application;
+package se.kth.iv1201.recruitment.application.error;
 
 public class UsernameTakenException extends RuntimeException {
 

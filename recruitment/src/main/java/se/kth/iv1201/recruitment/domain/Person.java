@@ -46,6 +46,9 @@ public class Person {
     @Column(name = "username")
     private String username;
 
+    @Column(name = "isLegacy", nullable = false)
+    private boolean isLegacy = false;
+
 
     public Person() {
     }
@@ -112,6 +115,14 @@ public class Person {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public boolean isLegacy() {
+    return isLegacy;
+    }
+
+    public void setLegacy(boolean legacy) {
+        isLegacy = legacy;
     }
 
     @Override
