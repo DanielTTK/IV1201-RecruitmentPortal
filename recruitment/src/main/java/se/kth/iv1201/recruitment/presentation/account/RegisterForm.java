@@ -11,6 +11,12 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+/**
+ * Class for registering an account. Including all parameters in the form to
+ * register an account and their requirements to make it possible to submit.
+ * 
+ * Also includes all the getters and setters.
+ */
 public class RegisterForm {
     @NotBlank
     private String firstName;
@@ -53,11 +59,11 @@ public class RegisterForm {
         this.lastName = lastName;
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username){
+    public void setUsername(String username) {
         this.username = username;
     }
 

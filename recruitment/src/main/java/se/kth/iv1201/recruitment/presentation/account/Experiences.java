@@ -1,5 +1,12 @@
 package se.kth.iv1201.recruitment.presentation.account;
 
+/**
+ * This class is used to make it possible for the user to add multiple
+ * expertises.
+ * Inlcudes the type of expertise and years of the expertise.
+ * 
+ * Also includes getters and setters. 
+ */
 public class Experiences {
     private String expertise;
     private String years;
@@ -22,9 +29,6 @@ public class Experiences {
 
     @Override
     public String toString() {
-        return "Experiences{" +
-                "expertise='" + expertise + '\'' +
-                ", years='" + years + '\'' +
-                '}';
+        return "Experiences{" + "expertise='" + expertise + '\'' + ", years='" + years + '\'' + '}';
     }
 }

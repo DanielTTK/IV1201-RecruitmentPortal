@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * Controller for competence profile controller. Send correct info from
+ * application to database.
+ */
+
 @Controller
 public class CompetenceProfileController {
 
@@ -21,34 +26,47 @@ public class CompetenceProfileController {
         return "competenceProfile";
     }
 
+    /**
+     * Handles competence profile form submission
+     * 
+     * Returns different views depending on the input.
+     * 
+     * @return If button for "+" next to competences are pressed, a new row of
+     *         competences
+     *         should appear.
+     * @return If button for "+" next to dates are pressed, a new row of dates
+     *         should
+     *         appear.
+     * @return Returning a page for submission success, if all required parts are
+     *         filled
+     *         out, and submit button is pressed.
+     * @return same page agian if errors appear, including the errors.
+     */
     @PostMapping("/competence")
     public String competence(@Valid @ModelAttribute("competenceProfile") CompetenceProfile form,
             BindingResult bindingResult,
             @RequestParam(value = "addDateRow", required = false) String addDateRow,
             @RequestParam(value = "addExperienceRow", required = false) String addExperienceRow,
-            String submitted,
+            @RequestParam(value = "submitted", required = false) String submitted,
             Model model) {
 
-                System.out.println("Date ranges" + form.getDateRanges());
-                System.out.println("Experiences" + form.getExperiences());
+        System.out.println("Date ranges" + form.getDateRanges());
+        System.out.println("Experiences" + form.getExperiences());
+
+        if (bindingResult.hasErrors()) {
+            return "competenceProfile";
+        }
+
         if (addDateRow != null) {
             form.getDateRanges().add(new DateRange());
             model.addAttribute("competenceProfile", form);
             return "competenceProfile";
-        }
-
-        if (addExperienceRow != null) {
+        } else if (addExperienceRow != null) {
             form.getExperiences().add(new Experiences());
             model.addAttribute("competenceProfile", form);
             return "competenceProfile";
-        }
-
-        if (submitted != null) {
+        } else if (submitted != null) {
             return "competenceDone";
-        }
-
-        if (bindingResult.hasErrors()) {
-            return "competenceProfile";
         }
 
         return "competenceProfile";
