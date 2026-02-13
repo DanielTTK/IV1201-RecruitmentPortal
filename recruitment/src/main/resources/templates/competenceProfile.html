@@ -56,7 +56,8 @@
               class="small"
               type="submit"
               name="addExperienceRow"
-              value="true">
+              value="true"
+              formnovalidate>
               +
             </button>
           </div>
@@ -81,7 +82,9 @@
               th:field="*{dateRanges[__${iterStat.index}__].endDate}"
               id="endDate__${iterStat.index}"
               required />
-            <button type="submit" name="addDateRow" value="true">+</button>
+            <button type="submit" name="addDateRow" value="true" formnovalidate>
+              +
+            </button>
           </div>
           <div th:if="${#fields.hasErrors('*')}">
             <p style="color: rgb(255, 0, 0)" th:errors="*{all}"></p>

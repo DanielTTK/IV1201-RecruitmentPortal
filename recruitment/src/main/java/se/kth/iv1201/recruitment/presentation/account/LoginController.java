@@ -44,13 +44,15 @@ public class LoginController {
     public String loggedIn(@Valid @ModelAttribute LoginForm form,
             BindingResult bindningResult) {
 
-        System.out.println("Username: " + form.getUsername());
-        System.out.println("Password: " + form.getPassword());
+        //! REMOVE LOGS LATER, only for debugging 
+        // System.out.println("Username: " + form.getUsername());
+        // System.out.println("Password: " + form.getPassword());
 
         if (bindningResult.hasErrors()) {
             return "loginPage";
         }
 
+        //TODO - add a check that controls that username and password are correct and then forward user to /competenceProfile
         return "redirect:/competenceProfile";
     }
 
