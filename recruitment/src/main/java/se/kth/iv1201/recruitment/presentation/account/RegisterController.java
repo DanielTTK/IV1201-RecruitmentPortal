@@ -13,10 +13,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import se.kth.iv1201.recruitment.application.UsernameTakenException;
 
 import jakarta.validation.Valid;
 import se.kth.iv1201.recruitment.application.AccountService;
+import se.kth.iv1201.recruitment.application.error.UsernameTakenException;
 
 /**
  * Controller for registering an account. Connected to application to make it

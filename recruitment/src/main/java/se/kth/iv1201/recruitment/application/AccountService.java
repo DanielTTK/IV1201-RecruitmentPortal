@@ -13,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import se.kth.iv1201.recruitment.application.error.UsernameTakenException;
 import se.kth.iv1201.recruitment.domain.Person;
 import se.kth.iv1201.recruitment.repository.PersonRepository;
 
@@ -35,7 +37,7 @@ public class AccountService {
         System.out.println("DEBUG: AccountService.registerUser called, username=" + username);
         log.info("Register attempt: username={}", username);
         
-        if (personRepository.existsByUsername(username)) {
+        if (personRepository.existsByUsernameIgnoreCase(username)) {
             log.info("Register failed: username_taken username={}", username);
             throw new UsernameTakenException(username);
         }
