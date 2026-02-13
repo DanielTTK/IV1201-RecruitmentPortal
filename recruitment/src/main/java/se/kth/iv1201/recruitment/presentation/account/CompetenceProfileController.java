@@ -66,7 +66,7 @@ public class CompetenceProfileController {
             model.addAttribute("competenceProfile", form);
             return "competenceProfile";
         } else if (submitted != null) {
-            return "competenceDone";
+            return "competence_success";
         }
 
         return "competenceProfile";

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import jakarta.validation.Valid;
 
 import org.springframework.validation.BindingResult;
+import org.springframework.ui.Model;
 
 /**
  * Controller for log in and handle authentication for the user
@@ -27,7 +28,8 @@ import org.springframework.validation.BindingResult;
 public class LoginController {
 
     @GetMapping("/loginPage")
-    public String login() {
+    public String login(Model model) {
+        model.addAttribute("loginPage", new LoginForm());
         return "login";
     }
 
@@ -44,7 +46,7 @@ public class LoginController {
     public String loggedIn(@Valid @ModelAttribute LoginForm form,
             BindingResult bindningResult) {
 
-        //! REMOVE LOGS LATER, only for debugging 
+        // ! REMOVE LOGS LATER, only for debugging
         // System.out.println("Username: " + form.getUsername());
         // System.out.println("Password: " + form.getPassword());
 
@@ -52,7 +54,8 @@ public class LoginController {
             return "loginPage";
         }
 
-        //TODO - add a check that controls that username and password are correct and then forward user to /competenceProfile
+        // TODO - add a check that controls that username and password are correct and
+        // then forward user to /competenceProfile
         return "redirect:/competenceProfile";
     }
 

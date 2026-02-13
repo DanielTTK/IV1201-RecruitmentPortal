@@ -10,14 +10,10 @@
     <div>
       <h1>Login</h1>
       <form method="post" th:object="${loginPage}" action="/loginPage">
-        <div>
-          <label for="username">Username:</label>
-          <input type="text" id="username" name="username" required />
-        </div>
-        <div>
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password" required />
-        </div>
+        <div
+          th:replace="fragments :: field('Username', 'username', 'text')"></div>
+        <div
+          th:replace="fragments :: field('Password', 'password', 'password')"></div>
         <div th:if="${param.error}">
           <p style="color: rgb(255, 0, 0)">Invalid username or password</p>
         </div>
