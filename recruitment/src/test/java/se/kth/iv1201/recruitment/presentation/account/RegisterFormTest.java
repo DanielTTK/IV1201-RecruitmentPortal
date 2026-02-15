@@ -2,7 +2,7 @@ package se.kth.iv1201.recruitment.presentation.account;
 
 import java.util.Set;
 
-import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -70,6 +70,7 @@ class RegisterFormTest {
 
         Set<ConstraintViolation<RegisterForm>> violations = validator.validate(form);
         assertThat(violations).withFailMessage("Expected no validation violations for valid RegisterForm").isEmpty();
+        assertThat(violations).anyMatch(v -> v.getPropertyPath().toString().equals("email"));
     }
 
     @Disabled("This is for now tested in RegisterControllerTest, as the constraint is written in 'RegisterController' and not in 'RegisterForm'. If we move the constraint to 'RegisterForm', this test should be enabled.")
@@ -85,6 +86,5 @@ class RegisterFormTest {
 
         Set<ConstraintViolation<RegisterForm>> violations = validator.validate(form);
         assertThat(violations).hasSizeGreaterThanOrEqualTo(1);
-    
     }
 }
