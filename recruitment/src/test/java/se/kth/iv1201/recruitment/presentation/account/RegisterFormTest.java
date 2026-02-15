@@ -73,7 +73,8 @@ class RegisterFormTest {
         assertThat(violations).anyMatch(v -> v.getPropertyPath().toString().equals("email"));
     }
 
-    @Disabled("This is for now tested in RegisterControllerTest, as the constraint is written in 'RegisterController' and not in 'RegisterForm'. If we move the constraint to 'RegisterForm', this test should be enabled.")
+
+    @Disabled("This is tested in RegisterControllerTest, as the constraint is written in 'RegisterController' and not in 'RegisterForm'. If we move the constraint to 'RegisterForm', this test should be enabled.")
     @Test
     void checkForPasswordMismatch() {
         RegisterForm form = new RegisterForm();
