@@ -24,7 +24,6 @@ class RegisterFormTest {
     @BeforeEach
     void setUp() {
         form = new RegisterForm();
-        setDefaults(form);
     }
 
     @AfterEach
@@ -40,6 +39,7 @@ class RegisterFormTest {
 
     @Test
     void checkForNotBlank() {
+        setDefaults(form);
         form.setPersonNumber("");
         form.setEmail("");
         form.setPassword("");
@@ -58,6 +58,7 @@ class RegisterFormTest {
      */
     @Test
     void checkForFlatConstraints() {
+        setDefaults(form);
         form.setPersonNumber("123456789101");
         form.setEmail("john.doe@example.com");
         form.setPassword("password");
@@ -70,6 +71,7 @@ class RegisterFormTest {
 
     @Test
     void checkForInvalidEmail() {
+        setDefaults(form);
         form.setPersonNumber("123456789101");
         form.setEmail("invalid-email");
         form.setPassword("password");
@@ -80,6 +82,49 @@ class RegisterFormTest {
         assertThat(violations).withFailMessage("Expected invalid email to cause validation error, but it did not.").anyMatch(v -> v.getPropertyPath().toString().equals("email"));
     }
 
+    @Test
+    void checkForInvalidPersonNumber() {
+        setDefaults(form);
+        form.setPersonNumber("invalid-person-number");
+        form.setEmail("john.doe@example.com");
+        form.setPassword("password");
+        form.setConfirmedPassword("password");
+
+        Set<ConstraintViolation<RegisterForm>> violations = validator.validate(form);
+        assertThat(violations).hasSizeGreaterThanOrEqualTo(1);
+        assertThat(violations).withFailMessage("Expected invalid person number (personnr that consist of numbers) to cause validation error, but it did not.")
+        .anyMatch(v -> v.getPropertyPath().toString().equals("personNumber"));
+    }
+
+    @Test
+    void checkForShortPassword() {
+        setDefaults(form);
+        form.setPersonNumber("123456789101");
+        form.setEmail("john.doe@example.com");
+        form.setPassword("short");
+        form.setConfirmedPassword("short");
+
+        Set<ConstraintViolation<RegisterForm>> violations = validator.validate(form);
+        assertThat(violations).hasSizeGreaterThanOrEqualTo(1);
+        assertThat(violations).withFailMessage("Expected too short (less than 6 characters) password to cause validation error, but it did not.")
+        .anyMatch(v -> v.getPropertyPath().toString().equals("password"));
+    }
+
+    @Test
+    void checkForBlankUsername() {
+        form.setFirstName("Johnny");
+        form.setLastName("Doughy");
+        form.setUsername("");
+        form.setPersonNumber("123456789101");
+        form.setEmail("john.doe@example.com");
+        form.setPassword("password");
+        form.setConfirmedPassword("password");
+
+        Set<ConstraintViolation<RegisterForm>> violations = validator.validate(form);
+        assertThat(violations).hasSizeGreaterThanOrEqualTo(1);
+        assertThat(violations).withFailMessage("Expected blank username to cause validation error, but it did not.")
+        .anyMatch(v -> v.getPropertyPath().toString().equals("username"));
+    }
 
     @Disabled("This is tested in RegisterControllerTest, as the constraint is written in 'RegisterController' and not in 'RegisterForm'. If we move the constraint to 'RegisterForm', this test should be enabled.")
     @Test
