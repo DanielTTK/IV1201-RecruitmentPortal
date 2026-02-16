@@ -54,9 +54,8 @@ public class LoginController {
             return "loginPage";
         }
 
-        // TODO - add a check that controls that username and password are correct and
-        // then forward user to /competenceProfile
-        return "redirect:/competenceProfile";
+        // TODO - add a check that controls that username and password are correct
+        return "redirect:/userPage";
     }
 
 }
