@@ -50,6 +50,7 @@ public class CompetenceProfileController {
             @RequestParam(value = "submitted", required = false) String submitted,
             Model model) {
 
+        //! Remove when done with troubleshooting
         System.out.println("Date ranges" + form.getDateRanges());
         System.out.println("Experiences" + form.getExperiences());
 
@@ -66,7 +67,7 @@ public class CompetenceProfileController {
             model.addAttribute("competenceProfile", form);
             return "competenceProfile";
         } else if (submitted != null) {
-            return "competenceDone";
+            return "competence_success";
         }
 
         return "competenceProfile";
