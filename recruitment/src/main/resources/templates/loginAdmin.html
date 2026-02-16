@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Login Admin</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body style="background-color: #1d254d">
+    <div th:insert="header :: header"></div>
+    <div class="loginAdmin" >
+      <h1>Login for Recruiters</h1>
+      <form method="post" th:object="${loginAdmin}" action="/loginAdmin">
+        <div
+          th:replace="fragments :: field('Username', 'username', 'text')"></div>
+        <div
+          th:replace="fragments :: field('Password', 'password', 'password')"></div>
+        <div th:if="${param.error}">
+          <p style="color: rgb(255, 0, 0)">Invalid username or password</p>
+        </div>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+    <div th:insert="footer :: footer"></div>
+  </body>
+</html>
