@@ -13,15 +13,33 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+/**
+ * Global exception handling for the presentation layer.
+ *
+ * Shows a more nice error page instead of the Whitelabel page/stacktrace. 
+ * Also logs the error together with request method + URI.
+ *
+ * Handles 503 (DB/data access issues), 404 (missing routes/resources) and a fallback for unexpected errors (500).
+ *
+ * All handlers return the same Thymeleaf view: {@code error/error}.
+ */
+
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
+
     /**
-     * DB-issues
+     * Handles DB-related failures, like when the DB is down or a query fails.
+     *
+     * @param exception The thrown database-related exception.
+     * @param request   The current HTTP request (used for logging and showing the path).
+     * @param model     Model attributes used by the error view.
+     * @return The Thymeleaf view name for the error page.
      */
     @ExceptionHandler({ CannotGetJdbcConnectionException.class, DataAccessException.class })
-    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE) //503
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
     public String handleDB(Exception exception, HttpServletRequest request, Model model) {
         log.error("DB-problem at {} {}", request.getMethod(), request.getRequestURI(), exception);
 
@@ -32,12 +50,18 @@ public class GlobalExceptionHandler {
         return "error/error";
     }
 
+
     /**
-     * 404, missing route/resource
+     * Handles cases where the requested route or static resource does not exist.
+     *
+     * @param exception The thrown not-found exception.
+     * @param request   The current HTTP request (used for logging and showing the path).
+     * @param model     Model attributes used by the error view.
+     * @return The Thymeleaf view name for the error page.
      */
     @ExceptionHandler({ NoHandlerFoundException.class, NoResourceFoundException.class })
-    @ResponseStatus(HttpStatus.NOT_FOUND) // 404
-    public String handleNotFound(Exception ex, HttpServletRequest request, Model model) {
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handleNotFound(Exception exception, HttpServletRequest request, Model model) {
         log.debug("404 at {} {}", request.getMethod(), request.getRequestURI());
 
         model.addAttribute("status", 404);
@@ -48,12 +72,17 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 500, fallback for everything else
+     * Fallback handler for unexpected errors that ain't handled elsewhere.
+     *
+     * @param exception      The thrown exception.
+     * @param request Current HTTP request (used for logging and showing the path).
+     * @param model   Model attributes used by the error view.
+     * @return The Thymeleaf view name for the error page.
      */
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // 500
-    public String handleOther(Exception ex, HttpServletRequest request, Model model) {
-        log.error("Unexpected error at {} {}", request.getMethod(), request.getRequestURI(), ex);
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String handleOther(Exception exception, HttpServletRequest request, Model model) {
+        log.error("Unexpected error at {} {}", request.getMethod(), request.getRequestURI(), exception);
 
         model.addAttribute("status", 500);
         model.addAttribute("title", "Nåt gick fel");
