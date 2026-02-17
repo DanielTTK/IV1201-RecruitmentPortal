@@ -26,6 +26,6 @@ public class LoginAdminController {
         }
 
         // TODO: connect to application to be able to check with db 
-        return "redirect:/adminDashboard";
+        return "redirect:/adminPage";
     }
 }
