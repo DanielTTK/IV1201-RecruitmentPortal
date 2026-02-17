@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <title th:text="${title} ?: 'Fel'">Fel</title>
+</head>
+<body>
+  <h1 th:text="${title} ?: 'Fel'">Fel</h1>
+
+  <p th:text="${message} ?: 'Något gick fel.'">Något gick fel.</p>
+
+  <p><a href="/home">Till startsidan</a></p>
+</body>
+</html>
