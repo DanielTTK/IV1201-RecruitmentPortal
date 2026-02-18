@@ -14,6 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
+import se.kth.iv1201.recruitment.application.error.EmailTakenException;
+import se.kth.iv1201.recruitment.application.error.PersonNumberTakenException;
 import se.kth.iv1201.recruitment.application.error.UsernameTakenException;
 import se.kth.iv1201.recruitment.domain.Person;
 import se.kth.iv1201.recruitment.repository.PersonRepository;
@@ -31,6 +34,7 @@ public class AccountService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Transactional
     public void registerUser( String firstName, String lastName, String username, String personNumber,
                                 String email, String rawPassword
     ) {
@@ -41,7 +45,16 @@ public class AccountService {
             log.info("Register failed: username_taken username={}", username);
             throw new UsernameTakenException(username);
         }
-
+        //This error message currently doesn't work as expected.
+        /*if (personRepository.existsByPnr(personNumber)) {
+            log.info("Register failed: personnumber_taken personNumber={}", personNumber);
+            throw new PersonNumberTakenException();
+        }*/
+        if (personRepository.existsByEmailIgnoreCase(email)) {
+            log.info("Register failed: email_taken email={}", email);
+            throw new EmailTakenException(email);
+        }
+        
         Person person = new Person();
         person.setName(firstName);
         person.setSurname(lastName);

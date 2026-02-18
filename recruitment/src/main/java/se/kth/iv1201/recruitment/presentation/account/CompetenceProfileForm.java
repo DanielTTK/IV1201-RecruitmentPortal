@@ -8,7 +8,9 @@ import jakarta.validation.Valid;
  * Class for the competence profile page. Has the inputs from the form.
  */
 
-public class CompetenceProfile {
+// Changed the class name from CompetenceProfile -> CompetenceProfileForm, 
+// to help the service layer differentiate the repo and presentation class
+public class CompetenceProfileForm {
 
     private String workingBefore;
     private String motivation;

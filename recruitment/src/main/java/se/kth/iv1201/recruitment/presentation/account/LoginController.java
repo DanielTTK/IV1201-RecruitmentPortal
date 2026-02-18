@@ -6,15 +6,8 @@
  */
 
 package se.kth.iv1201.recruitment.presentation.account;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import jakarta.validation.Valid;
-
-import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
 
 /**
@@ -33,6 +26,8 @@ public class LoginController {
         return "login";
     }
 
+// Temporarily commented out since authentication is handled by Spring Security: 
+
     /**
      * Processes the login form and validates if it is correct or not
      * 
@@ -42,7 +37,7 @@ public class LoginController {
      *         is returned
      */
 
-    @PostMapping("/loginPage")
+    /*@PostMapping("/loginPage")
     public String loggedIn(@Valid @ModelAttribute LoginForm form,
             BindingResult bindningResult) {
 
@@ -58,4 +53,7 @@ public class LoginController {
         return "redirect:/userPage";
     }
 
+        //TODO - add a check that controls that username and password are correct and then forward user to /competenceProfile
+        return "redirect:/competenceProfile";
+    }*/
 }

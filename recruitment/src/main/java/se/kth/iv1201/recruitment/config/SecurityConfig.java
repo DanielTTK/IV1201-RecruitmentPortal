@@ -9,7 +9,6 @@ package se.kth.iv1201.recruitment.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,20 +21,55 @@ public class SecurityConfig {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    @Bean
+
+   @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
-            
-            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll()) //Just let everything through for now so no login required
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/register","/home","/css/**",
+                                "/loginPage","/loginAdmin").permitAll() // permit everyone to access and view these pages
+                .requestMatchers("/admin/**", "/adminPage").hasRole("RECRUITER") //restrict this pages for the recruiter
+                .requestMatchers("/competenceProfile", "/competence") 
+                    .hasRole("APPLICANT") // only allow the applicant to access thesse pages
+                .anyRequest().authenticated()
+            )
+            .formLogin(form -> form
+                .loginPage("/loginPage")
+                .loginProcessingUrl("/login") // Post endpoint for spring security config
+                .successHandler((request, response, authentication) -> {
 
-            .formLogin(Customizer.withDefaults());
-        
+                    boolean isRecruiter = authentication.getAuthorities().stream()
+                            .anyMatch(a -> a.getAuthority().equals("ROLE_RECRUITER"));
 
-        http.httpBasic(httpBasic -> httpBasic.disable());
+                    boolean isApplicant = authentication.getAuthorities().stream()
+                            .anyMatch(a -> a.getAuthority().equals("ROLE_APPLICANT"));
 
+                    String portal = request.getParameter("portal");
 
+                    // If trying to login from admin portal as a user, and vice versa for user portal, as an admin.
+                    if ("admin".equals(portal) && !isRecruiter) {
+                        request.getSession().invalidate();
+                        response.sendRedirect("/loginAdmin?error=unauthorized");
+                        return;
+                    }
+                    if ("user".equals(portal) && !isApplicant) {
+                        request.getSession().invalidate();
+                        response.sendRedirect("/loginPage?error=unauthorized");
+                        return;
+                    }
 
-        http.csrf(csrf -> csrf.disable()); //re-enable ts later when we implement real auth.
+                    // Normal redirection for login
+                    if (isRecruiter) {
+                        response.sendRedirect("/adminPage");
+                    } else if (isApplicant) {
+                        response.sendRedirect("/competenceProfile");
+                    } else {
+                        response.sendRedirect("/home");
+                    }
+                })
+                .failureUrl("/loginPage?error") // display any {param.error} that is included in the given thymeleaf template.
+            );
 
         return http.build();
     }

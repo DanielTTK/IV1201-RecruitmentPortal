@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.validation.Valid;
 import se.kth.iv1201.recruitment.application.AccountService;
+import se.kth.iv1201.recruitment.application.error.EmailTakenException;
+import se.kth.iv1201.recruitment.application.error.PersonNumberTakenException;
 import se.kth.iv1201.recruitment.application.error.UsernameTakenException;
 
 /**
@@ -69,6 +71,12 @@ public class RegisterController {
         } catch (UsernameTakenException e) {
             bindingResult.rejectValue("username", "error.usernameTaken", "Username is already taken!");
             return "register";
-        }
+        } catch (EmailTakenException e) {
+            bindingResult.rejectValue("email", "error.email", e.getMessage());
+            return "register";
+        } /*catch (PersonNumberTakenException e) {
+            bindingResult.rejectValue("pnr", "error.pnr", e.getMessage());
+            return "register";
+        } */
     }
 }

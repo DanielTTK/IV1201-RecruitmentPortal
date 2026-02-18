@@ -17,7 +17,7 @@ public class LoginAdminController {
         return "loginAdmin";
     }
 
-    @PostMapping("/loginAdmin")
+    /*@PostMapping("/loginAdmin")
     public String loginAdminSubmit(@Valid @ModelAttribute LoginForm form,
             BindingResult bindingResult) {
 
@@ -27,5 +27,5 @@ public class LoginAdminController {
 
         // TODO: connect to application to be able to check with db 
         return "redirect:/adminPage";
-    }
+    }*/
 }

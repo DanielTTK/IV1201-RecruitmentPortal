@@ -8,7 +8,14 @@
     <div th:insert="header :: header"></div>
     <div class="loginAdmin" >
       <h1>Login for Recruiters</h1>
+      <form th:action="@{/login}" method="post"
+        th:object="${loginAdmin}">
+        <!-- Added this to make it function as a helper for the authentication process (the user is not able to see this), to validate
+         if the user is an admin or not -->
+         <input type="hidden" name="portal" value="admin" />
+        <!-- 
       <form method="post" th:object="${loginAdmin}" action="/loginAdmin">
+      -->
         <div
           th:replace="fragments :: field('Username', 'username', 'text')"></div>
         <div
