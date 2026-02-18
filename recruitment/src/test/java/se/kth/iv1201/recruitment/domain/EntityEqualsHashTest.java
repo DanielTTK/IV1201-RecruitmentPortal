@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 
 /**
- * Simple unit tests for equals/hashCode in domain.
+ * Simple unit tests for equals/hashCode in domain
  */
 class EntityEqualsHashTest {
 
