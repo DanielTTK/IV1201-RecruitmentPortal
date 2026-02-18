@@ -85,4 +85,9 @@ public class Availability extends ObjectUtils<Integer> {
 
     @Override
     public Integer getId() { return getAvailabilityId(); }
+    @Override
+    public String toString() {
+        Integer personId = (person == null) ? null : person.getPersonId();
+        return "Availability{availabilityId=" + availabilityId + ", personId=" + personId + ", fromDate=" + fromDate + ", toDate=" + toDate + "}";
+    }
 }

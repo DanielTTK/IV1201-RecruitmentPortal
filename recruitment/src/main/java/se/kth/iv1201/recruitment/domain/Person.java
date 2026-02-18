@@ -183,4 +183,6 @@ public class Person extends ObjectUtils<Integer> {
     }
     @Override
     public Integer getId() { return getPersonId(); }
+    @Override
+    public String toString() { return "Person{personId=" + personId + ", username=" + username + ", roleId=" + roleId + ", name=" + name + ", surname=" + surname + ", email=" + email + ", pnr=" + pnr + ", isLegacy=" + isLegacy + "}"; }
 }

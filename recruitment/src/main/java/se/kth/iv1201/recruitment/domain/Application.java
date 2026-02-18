@@ -115,4 +115,9 @@ public class Application extends ObjectUtils<Integer> {
     }
     @Override
     public Integer getId() { return getApplicationId(); }
+    @Override
+    public String toString() {
+        Integer personId = (person != null) ? person.getPersonId() : null;
+        return "Application{applicationId=" + applicationId + ", personId=" + personId + ", status=" + status + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "}";
+    }
 }

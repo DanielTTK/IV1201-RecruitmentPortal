@@ -23,9 +23,4 @@ public abstract class ObjectUtils<ID> {
         ID id = getId();
         return (id != null) ? Objects.hashCode(id) : System.identityHashCode(this);
     }
-
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName() + "{id=" + getId() + "}";
-    }
 }

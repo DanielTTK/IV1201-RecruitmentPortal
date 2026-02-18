@@ -130,7 +130,7 @@
 					<!-- force using the javac from JAVA_HOME when forking -->
 					<fork>true</fork>
 					<!-- Use the javac on PATH (do not hardcode an executable path) -->
-					<executable>${env.JAVA_HOME}/bin/javac</executable>
+					<!-- <executable>${env.JAVA_HOME}/bin/javac</executable> -->
 				</configuration>
 			</plugin>
 			<plugin>

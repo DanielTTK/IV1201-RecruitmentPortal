@@ -107,4 +107,10 @@ public class CompetenceProfile extends ObjectUtils<Integer> {
 
     @Override
     public Integer getId() { return getCompetenceProfileId(); }
+    @Override
+    public String toString() {
+        Integer personId = (person != null) ? person.getPersonId() : null;
+        Integer competenceId = (competence != null) ? competence.getCompetenceId() : null;
+        return "CompetenceProfile{competenceProfileId=" + competenceProfileId + ", personId=" + personId + ", competenceId=" + competenceId + ", yearsOfExperience=" + yearsOfExperience + "}";
+    }
 }
