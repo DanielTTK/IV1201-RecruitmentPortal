@@ -10,7 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
-import java.util.Objects;
 
 /**
  * Corresponds to the {@code availability} table.
@@ -22,7 +21,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "availability")
-public class Availability {
+public class Availability extends ObjectUtils<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -84,22 +83,6 @@ public class Availability {
     }
 
 
-    /**
-     * Equality is based on the primary key (availabilityId).
-     *
-     * @param o The object to compare with.
-     * @return {@code true} if both objects represent the same persisted row.
-     */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Availability other)) return false;
-        return availabilityId != null && Objects.equals(availabilityId, other.availabilityId);
-    }
-
-    @Override
-    public String toString() {
-        Integer personId = (person == null) ? null : person.getPersonId();
-        return "Availability{availabilityId=" + availabilityId + ", personId=" + personId + ", fromDate=" + fromDate + ", toDate=" + toDate + "}";
-    }
+    public Integer getId() { return getAvailabilityId(); }
 }

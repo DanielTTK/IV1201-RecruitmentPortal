@@ -10,7 +10,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Represents one row in the {@code competence} table.
@@ -24,7 +23,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "competence")
-public class Competence {
+public class Competence extends ObjectUtils<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -83,12 +82,14 @@ public class Competence {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Competence other)) return false;
-        return competenceId != null && Objects.equals(competenceId, other.competenceId);
+    if (!(o instanceof Competence other)) return false;
+    return competenceId != null && competenceId.equals(other.competenceId);
     }
 
     @Override
     public String toString() {
         return "Competence{competenceId=" + competenceId + ", name=" + name + "}";
     }
+    @Override
+    public Integer getId() { return getCompetenceId(); }
 }

@@ -12,7 +12,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
-import java.util.Objects;
 
 /**
  * Corresponds to the {@code application} table.
@@ -31,7 +30,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "application")
-public class Application {
+public class Application extends ObjectUtils<Integer> {
 
     /**
      * Primary key of the application.
@@ -114,23 +113,6 @@ public class Application {
     public void setUpdatedAt(OffsetDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-
-    /**
-     * Equality is based on the primary key (applicationId).
-     *
-     * @param o The object to compare with.
-     * @return {@code true} if both objects represent the same persisted row.
-     */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Application other)) return false;
-        return applicationId != null && Objects.equals(applicationId, other.applicationId);
-    }
-
-    @Override
-    public String toString() {
-        Integer personId = (person != null) ? person.getPersonId() : null;
-        return "Application{applicationId=" + applicationId + ", personId=" + personId + ", status=" + status + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "}";
-    }
+    public Integer getId() { return getApplicationId(); }
 }

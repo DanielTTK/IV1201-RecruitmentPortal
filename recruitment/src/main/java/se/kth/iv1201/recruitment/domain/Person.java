@@ -3,7 +3,6 @@ package se.kth.iv1201.recruitment.domain;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Represents a row in the {@code person} table.
@@ -22,7 +21,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "person")
-public class Person {
+public class Person extends ObjectUtils<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -182,22 +181,6 @@ public class Person {
     public List<CompetenceProfile> getCompetenceProfiles() { 
         return competenceProfiles; 
     }
-
-
-    /**
-     * Equality is based on the primary key (personId).
-     *
-     * @param o The object to compare with.
-     * @return {@code true} if both objects represent the same persisted row.
-     */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Person other)) return false;
-        return personId != null && Objects.equals(personId, other.personId);
-    }
-
-    @Override
-    public String toString() { return "Person{personId=" + personId + ", username=" + username + ", roleId=" + roleId + ", name=" + name + ", surname=" + surname + ", email=" + email + ", pnr=" + pnr + ", isLegacy=" + isLegacy + "}"; 
-    }
+    public Integer getId() { return getPersonId(); }
 }

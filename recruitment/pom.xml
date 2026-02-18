@@ -27,7 +27,7 @@
 		<url/>
 	</scm>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 
@@ -130,7 +130,6 @@
 					<!-- force using the javac from JAVA_HOME when forking -->
 					<fork>true</fork>
 					<!-- Use the javac on PATH (do not hardcode an executable path) -->
-					<executable>${env.JAVA_HOME}/bin/javac</executable>
 				</configuration>
 			</plugin>
 			<plugin>

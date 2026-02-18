@@ -9,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.util.Objects;
 
 /**
  * Represents a row in the {@code competence_profile} table.
@@ -28,7 +27,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "competence_profile")
-public class CompetenceProfile {
+public class CompetenceProfile extends ObjectUtils<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -106,23 +105,6 @@ public class CompetenceProfile {
     }
 
 
-    /**
-     * Equality is based on the primary key (competenceProfileId).
-     *
-     * @param o The object to compare with.
-     * @return {@code true} if both objects represent the same persisted row.
-     */
     @Override
-    public boolean equals(Object o) {  
-        if (this == o) return true;
-        if (!(o instanceof CompetenceProfile other)) return false;
-        return competenceProfileId != null && Objects.equals(competenceProfileId, other.competenceProfileId);
-    }
-
-    @Override
-    public String toString() {
-        Integer personId = (person != null) ? person.getPersonId() : null;
-        Integer competenceId = (competence != null) ? competence.getCompetenceId() : null;
-        return "CompetenceProfile{competenceProfileId=" + competenceProfileId + ", personId=" + personId + ", competenceId=" + competenceId + ", yearsOfExperience=" + yearsOfExperience + "}";
-    }
+    public Integer getId() { return getCompetenceProfileId(); }
 }
