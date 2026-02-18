@@ -8,6 +8,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 
 import java.util.Optional;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,13 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import se.kth.iv1201.recruitment.domain.Person;
 import se.kth.iv1201.recruitment.repository.PersonRepository;
 /**
- * This test verifies if a user is properly registered in the database from the register form.
+ * This test verifies if a user is properly registered in the database from the register form. It is a general test, 
+ * meaning it doesn't test per layer, but rather the whole flow of the registration process. 
+ * It uses MockMvc to simulate a POST request, 
+ * and then checks if the user is saved in the database with the expected attributes.
+ * 
+ * TODO: Need to complement this test with per layer tests (controller, service, repository) to 
+ * ensure all layers are properly tested and to make debugging easier when a test fails.
  */
 @SpringBootTest
 public class RegisterUserTest {
@@ -39,6 +46,11 @@ public class RegisterUserTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac)
                 .apply(springSecurity())
                 .build();
+    }
+
+    @AfterEach
+    void tearDown() {
+        personRepository.deleteAll();
     }
 
     @Test
