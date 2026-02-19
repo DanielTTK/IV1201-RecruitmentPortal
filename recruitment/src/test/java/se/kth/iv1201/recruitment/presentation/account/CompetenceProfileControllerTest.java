@@ -45,15 +45,21 @@ public class CompetenceProfileControllerTest {
 
     @Test
     void populateModelWithRow() throws Exception {
+        // Fake a browser, send GET request, to /competenceProfile
         MvcResult res = mockMvc.perform(get("/competenceProfile"))
                 .andExpect(status().isOk())
                 .andReturn();
 
+        // Give me the object that the controller sent to the view (What will be rendered)
         Object obj = res.getModelAndView().getModel().get("competenceProfile");
         assertThat(obj).isInstanceOf(CompetenceProfile.class);
         CompetenceProfile form = (CompetenceProfile) obj;
         assertThat(form.getDateRanges()).hasSize(1);
         assertThat(form.getExperiences()).hasSize(1);
+
+        // Checks that the model contains a "competenceProfile" object, 
+        // and that its an instance of CompetenceProfile class. 
+        // Then checks that the initial size of date ranges and experiences is 1, as expected.
     }
 
     @Test
