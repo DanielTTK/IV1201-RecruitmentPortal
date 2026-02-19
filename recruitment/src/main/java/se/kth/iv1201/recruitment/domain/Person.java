@@ -59,7 +59,7 @@ public class Person {
     @Column(name = "is_legacy", nullable = false)
     private boolean isLegacy = false;
 
-
+    
 
     /**
      * Applications created by this person.
@@ -85,6 +85,7 @@ public class Person {
 
 
 
+
     /**
      * Competences and years of experience registered for this person.
      *
@@ -101,76 +102,74 @@ public class Person {
      */    
     public Person() {}
 
-    public Integer getPersonId() {
-        return personId;
+    public Integer getPersonId() { 
+        return personId; 
     }
-    public void setPersonId(Integer personId) {
-        this.personId = personId;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
+    public void setPersonId(Integer personId) { 
+        this.personId = personId; 
     }
 
 
-    public String getSurname() {
-        return surname;
+    public String getName() { 
+        return name; 
     }
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setName(String name) { 
+        this.name = name; 
+    }
+
+
+    public String getSurname() { 
+        return surname; 
+    }
+    public void setSurname(String surname) { 
+        this.surname = surname; 
     }
 
 
-    public String getPnr() {
-        return pnr;
+    public String getPnr() { 
+        return pnr; 
     }
-    public void setPnr(String pnr) {
-        this.pnr = pnr;
+    public void setPnr(String pnr) { 
+        this.pnr = pnr; 
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmail() { 
+        return email; 
     }
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail(String email) { 
+        this.email = email; 
     }
 
 
     public String getPassword() { 
-        return password;
+        return password; 
     }
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String password) { 
+        this.password = password; 
     }
 
 
-    public Integer getRoleId() {
-        return roleId;
+    public Integer getRoleId() { 
+        return roleId; 
     }
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public void setRoleId(Integer roleId) { 
+        this.roleId = roleId; 
     }
 
 
     public String getUsername() { 
-        return username;
+        return username; 
     }
-
-    public void setUsername(String username) {
+    public void setUsername(String username) { 
         this.username = username;
     }
 
 
-    public boolean isLegacy() {
-    return isLegacy;
+    public boolean isLegacy() { 
+        return isLegacy; 
     }
-
-    public void setLegacy(boolean legacy) {
-        isLegacy = legacy;
+    public void setLegacy(boolean legacy) { 
+        isLegacy = legacy; 
     }
 
 
@@ -192,7 +191,7 @@ public class Person {
      * @return {@code true} if both objects represent the same persisted row.
      */
     @Override
-    public boolean equals(Object o) { //set to compare by personId, otherwise obj identity
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Person other)) return false;
         return personId != null && Objects.equals(personId, other.personId);
@@ -200,5 +199,5 @@ public class Person {
 
     @Override
     public String toString() { return "Person{personId=" + personId + ", username=" + username + ", roleId=" + roleId + ", name=" + name + ", surname=" + surname + ", email=" + email + ", pnr=" + pnr + ", isLegacy=" + isLegacy + "}"; 
-        }
     }
+}
