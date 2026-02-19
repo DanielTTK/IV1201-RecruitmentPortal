@@ -80,6 +80,7 @@ public class CompetenceProfileControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
+        // same as "model.addAttribute("competenceProfile", form);"
         Object obj = res.getModelAndView().getModel().get("competenceProfile");
         assertThat(obj).isInstanceOf(CompetenceProfile.class);
         CompetenceProfile form = (CompetenceProfile) obj;
