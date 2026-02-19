@@ -1,16 +1,35 @@
 <!doctype html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"> <!-- Using their inbuilt auth-related functions-->
   <head> </head>
   <body  style="margin-bottom: 0;">
     <div th:fragment="header" class="header" style="margin-bottom: 0;">
       <h3>Amusement parks</h3>
       <a href="/home">Home</a>
-      <a href="/userPage">My applications</a>
-      <div class="row" style="margin-left: auto">
-        <a href="/loginPage" class="login">Login</a>
-        <p>/</p>
-        <a href="/register">Sign up</a>
+       <!-- Restricting the visability, to make it visible for applicant only -->
+       <div sec:authorize="hasRole('APPLICANT')" style="display:inline;">
+        <a href="/userPage">My applications</a> 
       </div>
+      <div sec:authorize="hasRole('RECRUITER')" style="display:inline;">
+        <a href="/adminPage">Admin Dashboard</a> 
+      </div>
+      <div class="row" style="margin-left: auto">
+     <!-- Login button visible for unauthorized users (everyone) in the login page-->
+    <div sec:authorize="isAnonymous()">
+      <a th:href="@{/loginPage}" class="login">Login</a>
+      <span> / </span>
+      <a th:href="@{/register}">Sign up</a>
     </div>
-  </body>
+    <div sec:authorize="isAuthenticated()">
+      <span>
+        <!-- Logout button visible ONLY for authenticated users, so that they don't get redirected to the login page again after logging in-->
+        Logged in as: <span sec:authentication="name"></span>
+      </span>
+      <form th:action="@{/logout}" method="post" style="display:inline;">
+        <button type="submit">Logout</button>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
 </html>

@@ -1,3 +1,6 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <!doctype html>
 <html>
   <head> </head>
@@ -5,8 +8,10 @@
     <div class="footer" th:fragment="footer">
       <div class="row" style="margin-bottom: 0;">
         <p style="margin-left: 0;">&copy; Amusement parks 2026</p>
+         <div sec:authorize="isAnonymous()">
         <p style="font-size: small; margin-right: 0;">Admin? Log in here:</p>
         <a href="loginAdmin" style="text-decoration: none; color: black; font-size: small;">Login</a>
+        </div>
       </div>
     </div>
   </body>

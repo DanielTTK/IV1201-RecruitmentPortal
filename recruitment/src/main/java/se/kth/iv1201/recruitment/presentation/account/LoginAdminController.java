@@ -17,7 +17,8 @@ public class LoginAdminController {
         return "loginAdmin";
     }
 
-    @PostMapping("/loginAdmin")
+    // Had to comment this out so it wouldn't interfere with spring security's Post endpoint
+    /*@PostMapping("/loginAdmin")
     public String loginAdminSubmit(@Valid @ModelAttribute LoginForm form,
             BindingResult bindingResult) {
 
@@ -27,5 +28,5 @@ public class LoginAdminController {
 
         // TODO: connect to application to be able to check with db 
         return "redirect:/adminPage";
-    }
+    }*/
 }

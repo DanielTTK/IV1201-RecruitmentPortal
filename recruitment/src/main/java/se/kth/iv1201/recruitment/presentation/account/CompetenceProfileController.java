@@ -1,6 +1,9 @@
 package se.kth.iv1201.recruitment.presentation.account;
 
 import jakarta.validation.Valid;
+import se.kth.iv1201.recruitment.application.error.UsernameTakenException;
+
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import se.kth.iv1201.recruitment.application.ApplicationService;
 
 /**
  * Controller for competence profile controller. Send correct info from
@@ -17,9 +21,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class CompetenceProfileController {
 
+    // Injecting the service layer:
+    private final ApplicationService applicationService;
+    public CompetenceProfileController(ApplicationService applicationService) {
+    this.applicationService = applicationService;
+    }
+
     @GetMapping("/competenceProfile")
     public String competenceProfile(Model model) {
-        CompetenceProfile form = new CompetenceProfile();
+        CompetenceProfileForm form = new CompetenceProfileForm();
         form.getDateRanges().add(new DateRange());
         form.getExperiences().add(new Experiences());
         model.addAttribute("competenceProfile", form);
@@ -43,12 +53,13 @@ public class CompetenceProfileController {
      * @return same page agian if errors appear, including the errors.
      */
     @PostMapping("/competence")
-    public String competence(@Valid @ModelAttribute("competenceProfile") CompetenceProfile form,
+    public String competence(@Valid @ModelAttribute("competenceProfile") CompetenceProfileForm form,
             BindingResult bindingResult,
             @RequestParam(value = "addDateRow", required = false) String addDateRow,
             @RequestParam(value = "addExperienceRow", required = false) String addExperienceRow,
             @RequestParam(value = "submitted", required = false) String submitted,
-            Model model) {
+            Model model,
+            Authentication authentication) {
 
         //! Remove when done with troubleshooting
         System.out.println("Date ranges" + form.getDateRanges());
@@ -58,7 +69,7 @@ public class CompetenceProfileController {
             return "competenceProfile";
         }
 
-        else if (addDateRow != null) {
+        if (addDateRow != null) {
             form.getDateRanges().add(new DateRange());
             model.addAttribute("competenceProfile", form);
             return "competenceProfile";
@@ -67,9 +78,15 @@ public class CompetenceProfileController {
             model.addAttribute("competenceProfile", form);
             return "competenceProfile";
         } else if (submitted != null) {
-            return "competence_success";
+            try {
+                String username = authentication.getName(); 
+                applicationService.submitApplication(username, form); // submits application -> Service layer 
+                return "competence_success";
+            } catch (Exception e) {
+                bindingResult.reject("error.submit", "Could not submit application");
+                return "competenceProfile";
+            }
         }
-
         return "competenceProfile";
     }
 }

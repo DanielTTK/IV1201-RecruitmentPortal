@@ -35,7 +35,6 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
     Optional<Person> findByEmailIgnoreCase(String email);
 
 
-
     /**
      * Checks if a username already exists. Only for use in field error logic!
      *

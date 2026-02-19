@@ -9,7 +9,7 @@ package se.kth.iv1201.recruitment.presentation.account;
  */
 public class Experiences {
     private String expertise;
-    private String years;
+    private Integer years; // changed the data type from String -> Integer
 
     public String getExpertise() {
         return expertise;
@@ -19,11 +19,11 @@ public class Experiences {
         this.expertise = expertise;
     }
 
-    public String getYears() {
+    public Integer getYears() {
         return years;
     }
 
-    public void setYears(String years) {
+    public void setYears(Integer years) {
         this.years = years;
     }
 

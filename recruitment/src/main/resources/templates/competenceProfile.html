@@ -42,15 +42,18 @@
               <option value="Entertainer">Entertainer</option>
               <option value="Customer Service">Customer Service</option>
               <option value="Cleaner">Cleaner</option>
+              <option value = "ticket sales"> Ticket Sales</option>
+              <option value = "lotteries"> Lotteries </option>
+              <option value = "roller coaster operation"> Roller Coaster Operation</option>
             </select>
             <select th:field="*{experiences[__${iterStat.index}__].years}">
-              <option value="null">-</option>
-              <option value="<1">< 1 Year</option>
+              <option value="">-</option>
+              <option value="0">&lt 1 Year</option>
               <option value="1">1 Year</option>
               <option value="2">2 Years</option>
               <option value="3">3 Years</option>
               <option value="4">4 Years</option>
-              <option value="5+">5+ Years</option>
+              <option value="5">5+ Years</option>
             </select>
             <button
               class="small"
