@@ -69,18 +69,23 @@ public class AccountService {
     public void registerUser( String firstName, String lastName, String username, String personNumber,
                                 String email, String rawPassword
     ) {
-        System.out.println("DEBUG: AccountService.registerUser called, username=" + username);
+        //System.out.println("DEBUG: AccountService.registerUser called, username=" + username);
         log.info("Register attempt: username={}", username);
         
         if (personRepository.existsByUsernameIgnoreCase(username)) {
             log.info("Register failed: username_taken username={}", username);
             throw new UsernameTakenException(username);
         }
-        //This error message currently doesn't work as expected (check person number doesn't exist in PersonRepo yet)
-        /*if (personRepository.existsByPnr(personNumber)) {
-            log.info("Register failed: personnumber_taken personNumber={}", personNumber);
+
+        //Pnr normalized to match DB format
+        String digits = personNumber.replaceAll("\\D", "");
+        String normalizedPnr = digits.substring(0, 8) + "-" + digits.substring(8);
+
+        if (personRepository.existsByPnr(normalizedPnr)) {
+            log.info("Register failed: personnumber_taken personNumber={}", normalizedPnr);
             throw new PersonNumberTakenException();
-        }*/
+
+        }
         if (personRepository.existsByEmailIgnoreCase(email)) {
             log.info("Register failed: email_taken email={}", email);
             throw new EmailTakenException(email);
@@ -90,7 +95,7 @@ public class AccountService {
         person.setName(firstName);
         person.setSurname(lastName);
         person.setUsername(username);
-        person.setPnr(personNumber);
+        person.setPnr(normalizedPnr);
         person.setEmail(email);
         person.setPassword(passwordEncoder.encode(rawPassword));
         person.setRoleId(2); // applicant

@@ -10,6 +10,7 @@ package se.kth.iv1201.recruitment.presentation.account;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Pattern;
 
 /**
  * Class for registering an account. Including all parameters in the form to
@@ -27,8 +28,8 @@ public class RegisterForm {
     @NotBlank(message = "Username cannot be blank")
     private String username;
 
-    @NotBlank
-    @Size(min = 12, max = 12, message = "Person number must consist of 12 digits")
+    @NotBlank(message = "Person number is required")
+    @Pattern(regexp = "\\d{8}-?\\d{4}", message = "Person number must be YYYYMMDD-XXXX")
     private String personNumber;
 
     @NotBlank
