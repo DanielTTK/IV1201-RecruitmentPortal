@@ -85,7 +85,6 @@ public class Person {
 
 
 
-
     /**
      * Competences and years of experience registered for this person.
      *

@@ -17,6 +17,7 @@ public class LoginAdminController {
         return "loginAdmin";
     }
 
+    // Had to comment this out so it wouldn't interfere with spring security's Post endpoint
     /*@PostMapping("/loginAdmin")
     public String loginAdminSubmit(@Valid @ModelAttribute LoginForm form,
             BindingResult bindingResult) {

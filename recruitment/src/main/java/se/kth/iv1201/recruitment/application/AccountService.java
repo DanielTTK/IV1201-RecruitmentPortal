@@ -21,6 +21,16 @@ import se.kth.iv1201.recruitment.application.error.UsernameTakenException;
 import se.kth.iv1201.recruitment.domain.Person;
 import se.kth.iv1201.recruitment.repository.PersonRepository;
 
+
+/**
+ * Service layer responsible for handling account-related business logic.
+ *
+ * <p>This service manages user registration, including validation of unique
+ * fields (username and email), password encryption, and persistence of
+ * {@link Person} entities.</p>
+ *
+ * All write operations are executed within a transactional context
+ */
 @Service
 public class AccountService {
 
@@ -29,11 +39,32 @@ public class AccountService {
     private final PersonRepository personRepository;
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * Constructs an AccountService with required dependencies.
+     *
+     * @param personRepository repository used to access and persist {@link Person} entities
+     * @param passwordEncoder encoder used to securely hash user passwords before storing them
+     */
     public AccountService(PersonRepository personRepository, PasswordEncoder passwordEncoder) {
         this.personRepository = personRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Registers a new user in the system.
+     * This method performs the following steps:
+     * - Validates that the email and username is not already taken,
+     * - Encrypts the provided raw password,
+     * - Creates and persists a new {@link Person} entity
+     * If validation fails, a domain-specific runtime exception is thrown. 
+     *
+     * @param firstName     the user's first name
+     * @param lastName      the user's last name
+     * @param username      the desired username (must be unique, case-insensitive)
+     * @param personNumber  the user's personal identification number
+     * @param email         the user's email address (must be unique, case-insensitive)
+     * @param rawPassword   un-encrypted, raw password provided during registration
+     */
     @Transactional
     public void registerUser( String firstName, String lastName, String username, String personNumber,
                                 String email, String rawPassword
@@ -45,7 +76,7 @@ public class AccountService {
             log.info("Register failed: username_taken username={}", username);
             throw new UsernameTakenException(username);
         }
-        //This error message currently doesn't work as expected.
+        //This error message currently doesn't work as expected (check person number doesn't exist in PersonRepo yet)
         /*if (personRepository.existsByPnr(personNumber)) {
             log.info("Register failed: personnumber_taken personNumber={}", personNumber);
             throw new PersonNumberTakenException();
