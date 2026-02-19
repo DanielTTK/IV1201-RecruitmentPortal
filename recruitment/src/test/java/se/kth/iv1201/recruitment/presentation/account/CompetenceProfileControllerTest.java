@@ -22,6 +22,8 @@ import org.springframework.web.context.WebApplicationContext;
  *
  * Tests if controller correctly populates the model with the expected number of rows
  * when adding date ranges and experiences.
+ * 
+ * TODO: Add error messages so it's easier to pinpoint what went wrong when a test fails.
  */
 @SpringBootTest
 public class CompetenceProfileControllerTest {
