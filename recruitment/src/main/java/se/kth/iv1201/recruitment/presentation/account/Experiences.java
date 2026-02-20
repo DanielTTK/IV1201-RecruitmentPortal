@@ -1,5 +1,8 @@
 package se.kth.iv1201.recruitment.presentation.account;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 /**
  * This class is used to make it possible for the user to add multiple
  * expertises.
@@ -8,8 +11,12 @@ package se.kth.iv1201.recruitment.presentation.account;
  * Also includes getters and setters. 
  */
 public class Experiences {
+    
+    @NotBlank(message = "Previous Experience must be selected.")
     private String expertise;
-    private Integer years; // changed the data type from String -> Integer
+
+    @NotNull(message = "Experience Years must be selected.")
+    private Integer years;
 
     public String getExpertise() {
         return expertise;

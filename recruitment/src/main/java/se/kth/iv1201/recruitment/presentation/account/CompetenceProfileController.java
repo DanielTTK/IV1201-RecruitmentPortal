@@ -11,28 +11,48 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
+import se.kth.iv1201.recruitment.application.error.ApplicationAlreadySubmitted;
 import se.kth.iv1201.recruitment.application.ApplicationService;
 
 /**
  * Controller for competence profile controller. Send correct info from
  * application to database.
+ * 
+ * The form state is stored temporarily in the HTTP session using
+ * @SessionAttributes, until the application is either submitted
+ * or cancelled.
+ * 
  */
 
 @Controller
+@SessionAttributes("competenceProfile") 
 public class CompetenceProfileController {
 
+    /*
+    * <p>Business logic and persistence are delegated to the {@link ApplicationService}.
+    */
     // Injecting the service layer:
     private final ApplicationService applicationService;
     public CompetenceProfileController(ApplicationService applicationService) {
     this.applicationService = applicationService;
     }
 
-    @GetMapping("/competenceProfile")
-    public String competenceProfile(Model model) {
+    /**
+     * Initializes the {competence profile form} object which exists in the session before 
+     * any request handling method is executed. This is created so that we can pass further the content (data) to be reviewed
+     * at competenceProfile/review. 
+    */
+    @ModelAttribute("competenceProfile")
+    public CompetenceProfileForm initializeForm()  {
         CompetenceProfileForm form = new CompetenceProfileForm();
         form.getDateRanges().add(new DateRange());
         form.getExperiences().add(new Experiences());
-        model.addAttribute("competenceProfile", form);
+        return form;
+    }
+    @GetMapping("/competenceProfile")
+    public String competenceProfile() {
         return "competenceProfile";
     }
 
@@ -47,9 +67,9 @@ public class CompetenceProfileController {
      * @return If button for "+" next to dates are pressed, a new row of dates
      *         should
      *         appear.
-     * @return Returning a page for submission success, if all required parts are
+     * @return Returning to the review page, if all required parts are
      *         filled
-     *         out, and submit button is pressed.
+     *         out, and review button is pressed.
      * @return same page agian if errors appear, including the errors.
      */
     @PostMapping("/competence")
@@ -57,9 +77,8 @@ public class CompetenceProfileController {
             BindingResult bindingResult,
             @RequestParam(value = "addDateRow", required = false) String addDateRow,
             @RequestParam(value = "addExperienceRow", required = false) String addExperienceRow,
-            @RequestParam(value = "submitted", required = false) String submitted,
-            Model model,
-            Authentication authentication) {
+            @RequestParam(value = "review", required = false) String review
+            ) {
 
         //! Remove when done with troubleshooting
         System.out.println("Date ranges" + form.getDateRanges());
@@ -71,22 +90,47 @@ public class CompetenceProfileController {
 
         if (addDateRow != null) {
             form.getDateRanges().add(new DateRange());
-            model.addAttribute("competenceProfile", form);
             return "competenceProfile";
         } else if (addExperienceRow != null) {
             form.getExperiences().add(new Experiences());
-            model.addAttribute("competenceProfile", form);
             return "competenceProfile";
-        } else if (submitted != null) {
-            try {
-                String username = authentication.getName(); 
-                applicationService.submitApplication(username, form); // submits application -> Service layer 
-                return "competence_success";
-            } catch (Exception e) {
-                bindingResult.reject("error.submit", "Could not submit application");
-                return "competenceProfile";
-            }
+        } 
+        return "redirect:/competenceProfile/review";
+    }
+
+    @GetMapping("/competenceProfile/review")
+    public String review() {
+        return "competenceReview";
+    }
+
+    /**
+     * 
+     * @param authentication: Authenticated user submitting the application
+     * @param form: The competence profile stored in the session
+     * @param sessionStatus: used to clear the session after successful submission
+     * @param model: used to pass error messages to the view
+     * @return: Returns to competence_success view if the submission is successful, otherwise review view.
+     */
+    @PostMapping("/competenceProfile/submit")
+        public String submit(Authentication authentication, 
+                        @ModelAttribute("competenceProfile") CompetenceProfileForm form,
+                        SessionStatus sessionStatus, Model model) {
+
+    try {
+        applicationService.submitApplication(authentication.getName(), form);
+        sessionStatus.setComplete(); // clear session after submission => clear old data
+        return "competence_success";
+
+        } catch (ApplicationAlreadySubmitted e) {
+
+            model.addAttribute("submitError", e.getMessage());
+            return "competenceReview";
+
+        } catch (Exception e) {
+
+            model.addAttribute("submitError",
+                    "Could not submit the application. Please try again later.");
+            return "competenceReview";
         }
-        return "competenceProfile";
     }
 }

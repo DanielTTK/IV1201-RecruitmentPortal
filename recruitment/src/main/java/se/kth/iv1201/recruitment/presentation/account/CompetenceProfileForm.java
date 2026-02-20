@@ -28,7 +28,6 @@ public class CompetenceProfileForm {
     public String getWorkingBefore() {
         return workingBefore;
     }
-
     public void setWorkingBefore(String workingBefore) {
         this.workingBefore = workingBefore;
     }
@@ -40,7 +39,6 @@ public class CompetenceProfileForm {
     public void setPrevExperience(String prevExperience) {
         this.prevExperience = prevExperience;
     }
-
     public String getPrevExperienceYears() {
         return prevExperienceYears;
     }
@@ -72,7 +70,6 @@ public class CompetenceProfileForm {
     public void setDateRanges(List<DateRange> dateRanges) {
         this.dateRanges = dateRanges;
     }
-
     public List<Experiences> getExperiences() {
         return experiences;
     }
