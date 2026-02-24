@@ -29,9 +29,8 @@ import se.kth.iv1201.recruitment.application.ApplicationService;
 public class CompetenceProfileController {
 
     /*
-    * <p>Business logic and persistence are delegated to the {@link ApplicationService}.
+    * Business logic and persistence are delegated to the {@link ApplicationService}.
     */
-    // Injecting the service layer:
     private final ApplicationService applicationService;
     public CompetenceProfileController(ApplicationService applicationService) {
     this.applicationService = applicationService;
@@ -56,19 +55,12 @@ public class CompetenceProfileController {
 
     /**
      * Handles competence profile form submission
-     * 
      * Returns different views depending on the input.
      * 
-     * @return If button for "+" next to competences are pressed, a new row of
-     *         competences
-     *         should appear.
-     * @return If button for "+" next to dates are pressed, a new row of dates
-     *         should
-     *         appear.
-     * @return Returning to the review page, if all required parts are
-     *         filled
-     *         out, and review button is pressed.
-     * @return same page agian if errors appear, including the errors.
+     * @return If button for "+" next to competences are pressed, a new row of competences should appear.
+     * @return If button for "+" next to dates are pressed, a new row of dates should appear.
+     * @return Returning to the review page, if all required parts are filled out, and review button is pressed.
+     * @return same page again if errors appear, including the errors.
      */
     @PostMapping("/competence")
     public String competence(@Valid @ModelAttribute("competenceProfile") CompetenceProfileForm form,
@@ -108,6 +100,8 @@ public class CompetenceProfileController {
     }
 
     /**
+     *  Handles the final submission of the competence profile form. It calls the application service to submit the application, 
+     *  and handles any exceptions that may occur during submission.
      * 
      * @param authentication: Authenticated user submitting the application
      * @param form: The competence profile stored in the session

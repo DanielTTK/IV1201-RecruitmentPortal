@@ -1,5 +1,3 @@
-
-/**
 package se.kth.iv1201.recruitment.presentation.account;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -91,7 +89,4 @@ public class CompetenceProfileControllerTest {
                 .andExpect(result -> assertThat(result.getModelAndView().getViewName()).isEqualTo("competence_success"));
                 // Pass a function that takes 'result' as input and runs this assertion.
             }
-
-}
-
-*/
+} 
