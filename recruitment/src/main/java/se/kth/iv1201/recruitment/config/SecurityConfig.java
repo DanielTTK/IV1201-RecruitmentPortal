@@ -75,19 +75,9 @@ public class SecurityConfig {
             })
 
 
-            .failureHandler((httpRequest, httpResponse, authException) -> {
-                String identifier = httpRequest.getParameter("username");
-
-                boolean legacy = identifier != null && !identifier.isBlank() &&
-                        personRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(identifier, identifier)
-                                .map(p -> p.isLegacy())
-                                .orElse(false);
-
-                String target = legacy
-                        ? "/legacy/start?identifier=" + java.net.URLEncoder.encode(identifier, java.nio.charset.StandardCharsets.UTF_8)
-                        : "/loginAdmin?error";
-
-                httpResponse.sendRedirect(target);
+            .failureHandler((request, response, exception) -> {
+                String identifier = request.getParameter("username");
+                response.sendRedirect(legacyRedirectTarget(identifier, "/loginAdmin?error"));
             })
             )
             .logout(logout -> logout
@@ -98,8 +88,15 @@ public class SecurityConfig {
         return http.build();
     }
 
+
+    /**
+     * Security filter chain for the user login portal. Only allows users with the APPLICANT role to access the user pages.
+     * @param http the HttpSecurity to configure
+     * @return the security filter chain for the user login portal
+     * @throws Exception 
+     */
     @Bean
-    @Order(2) //handled after (fallback) by default
+    @Order(2) // handles the user login portal, and is evaluated after the adminSecurity filter chain
     SecurityFilterChain userSecurity(HttpSecurity http) throws Exception {
 
         http
@@ -126,19 +123,10 @@ public class SecurityConfig {
                 }
                 response.sendRedirect("/competenceProfile");
                 })
-                .failureHandler((req, res, ex) -> {
-                    String identifier = req.getParameter("username"); // may be username or email
-                    var p = (identifier == null || identifier.isBlank())
-                            ? null
-                            : personRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(identifier, identifier).orElse(null);
-
-                    if (p != null && p.isLegacy()) {
-                        String enc = java.net.URLEncoder.encode(identifier, java.nio.charset.StandardCharsets.UTF_8);
-                        res.sendRedirect("/legacy/start?identifier=" + enc);
-                    } else {
-                        res.sendRedirect("/loginPage?error");
-                    }
-                })
+            .failureHandler((request, response, exception) -> {
+                String identifier = request.getParameter("username");
+                response.sendRedirect(legacyRedirectTarget(identifier, "/loginPage?error"));
+            })
             )
             .logout(logout -> logout
             .logoutUrl("/logout")
@@ -147,4 +135,27 @@ public class SecurityConfig {
         return http.build();
     } 
 
+
+    /**
+     * Two helper methods for handling legacy users during login:  
+     * isLegacyIdentifier checks if the provided identifier (username or email) belongs to a legacy user.
+     * legacyRedirectTarget returns the appropriate redirect URL based on whether the identifier is legacy or not.
+     * 
+     * @param identifier the username or email entered by the user during login
+     * @param nonLegacyTarget the URL to redirect to if the identifier does not belong to a legacy user
+     * @return true if the identifier belongs to a legacy user, false otherwise
+     */
+    private boolean isLegacyIdentifier(String identifier) {
+    return identifier != null && !identifier.isBlank() && personRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(identifier, identifier)
+                    .map(p -> p.isLegacy())
+                    .orElse(false);
+    }
+
+    private String legacyRedirectTarget(String identifier, String nonLegacyTarget) {
+        if (!isLegacyIdentifier(identifier)) {
+            return nonLegacyTarget;
+        }
+        String enc = java.net.URLEncoder.encode(identifier, java.nio.charset.StandardCharsets.UTF_8);
+        return "/legacy/start?identifier=" + enc;
+    }
 }
