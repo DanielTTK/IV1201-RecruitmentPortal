@@ -77,6 +77,6 @@ public class RegisterController {
         } catch (PersonNumberTakenException e) {
             bindingResult.rejectValue("personNumber", "error.pnrTaken", e.getMessage());
             return "register";
-        }
+        } 
     }
 }
