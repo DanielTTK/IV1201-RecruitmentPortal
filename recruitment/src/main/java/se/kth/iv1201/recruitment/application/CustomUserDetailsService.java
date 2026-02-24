@@ -9,6 +9,7 @@ import se.kth.iv1201.recruitment.repository.PersonRepository;
  * Custom implementation of Spring Security's UserDetailsService.
  * This service is responsible for loading user information from the database
  * during the authentication process.
+ * 
  * It retrieves a Person entity and converts it into a Spring Security
  * UserDetails object used for authentication and authorization.
  */
@@ -25,20 +26,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     /**
-     *
      * This method is called automatically by Spring Security when a user
      * attempts to log in.
      *
-     * The method:
-     * - Retrieves the Person from the database (case-insensitive search)
-     * - Verifies that the user has a stored password
-     * - Maps the internal roleId to a Spring Security role
-     * - Builds and returns a UserDetails object
+     * It looks up the user by username (or email), checks if the user is a legacy user, 
+     * and if not, it builds a UserDetails object with the user's information and roles. 
      *
      * @param username the username provided during login: it loads a user by username during authentication.
      * @return a UserDetails object used by Spring Security
-     * @throws UsernameNotFoundException if the user does not exist
-     *                                   or does not have a password
+     * @throws UsernameNotFoundException if the user does not exist or does not have a password
      */
     @Override 
     public UserDetails loadUserByUsername(String username)

@@ -25,9 +25,9 @@ import se.kth.iv1201.recruitment.repository.PersonRepository;
 /**
  * Service layer responsible for handling account-related business logic.
  *
- * <p>This service manages user registration, including validation of unique
+ * This service manages user registration, including validation of unique
  * fields (username and email), password encryption, and persistence of
- * {@link Person} entities.</p>
+ * {@link Person} entities.
  *
  * All write operations are executed within a transactional context
  */
@@ -105,6 +105,21 @@ public class AccountService {
         log.info("Register success: username={} personId={}", username, saved.getPersonId());
     } 
 
+
+
+    /**
+     * Completes the registration of a legacy user. This method is called after a legacy user has successfully verified their OTP code.
+     * It updates the existing {@link Person} entity with the provided information, sets the legacy flag to false, and saves the changes to the database.
+     * If the personId does not correspond to a legacy user, the method returns without making any changes.
+     * 
+     * @param personId the ID of the legacy user to complete registration for
+     * @param firstName the user's first name
+     * @param lastName the user's last name
+     * @param username the desired username (must be unique, case-insensitive)
+     * @param personNumber the user's personal identification number
+     * @param email the user's email address (must be unique, case-insensitive)
+     * @param rawPassword un-encrypted, raw password provided during registration
+     */
     @Transactional
     public void completeLegacyUser(Integer personId, String firstName, String lastName, String username, String personNumber, String email, String rawPassword) 
     {

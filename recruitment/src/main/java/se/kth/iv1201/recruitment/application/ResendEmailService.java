@@ -20,6 +20,14 @@ public class ResendEmailService {
     private final Resend resend;
     private final String from;
 
+
+    /**
+     * Creates a new ResendEmailService with the given API key and sender email address.
+     * 
+     * @param apiKey the API key for the Resend email service, injected from application properties
+     * @param from the sender email address for OTP emails, injected from application properties
+     * @throws RuntimeException if the Resend client fails to initialize
+     */
     public ResendEmailService(
             @Value("${resend.api-key}") String apiKey,
             @Value("${resend.from}") String from
@@ -28,6 +36,12 @@ public class ResendEmailService {
         this.from = from;
     }
 
+    /** 
+     * Sends an OTP email to the specified recipient.
+     * 
+     * @param toEmail the email address of the recipient
+     * @param otp the OTP code to be sent in the email
+     */
     public void sendOtp(String toEmail, String otp) {
         CreateEmailOptions params = CreateEmailOptions.builder().from(from).to(toEmail)
                 .subject("Your verification code")

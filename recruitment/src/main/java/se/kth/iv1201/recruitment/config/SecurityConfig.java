@@ -44,6 +44,7 @@ public class SecurityConfig {
 
     /**
      * Security filter chain for the admin login portal. Only allows users with the RECRUITER role to access the admin pages.
+     * 
      * @param http the HttpSecurity to configure
      * @return the security filter chain for the admin login portal
      * @throws Exception
@@ -91,6 +92,7 @@ public class SecurityConfig {
 
     /**
      * Security filter chain for the user login portal. Only allows users with the APPLICANT role to access the user pages.
+     * 
      * @param http the HttpSecurity to configure
      * @return the security filter chain for the user login portal
      * @throws Exception 
