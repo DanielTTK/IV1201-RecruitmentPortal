@@ -42,7 +42,7 @@ public class CustomUserDetailsService implements UserDetailsService {
      */
     @Override 
     public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
+            throws UsernameNotFoundException {     
         Person person = personRepository.findByUsernameIgnoreCase(username) // we search up the person from the database.
                 .orElseThrow(() -> 
                 new UsernameNotFoundException("User not found")); // internal error

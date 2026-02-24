@@ -25,35 +25,4 @@ public class LoginController {
         model.addAttribute("loginPage", new LoginForm());
         return "login";
     }
-
-// Temporarily commented out since authentication is handled by Spring Security: 
-
-    /**
-     * Processes the login form and validates if it is correct or not
-     * 
-     * @param form           is the login form containing both username and password
-     * @param bindningResult contains the validation results for the form inputs
-     * @return if success it returns user to competence profile, if error, same page
-     *         is returned
-     */
-
-    /*@PostMapping("/loginPage")
-    public String loggedIn(@Valid @ModelAttribute LoginForm form,
-            BindingResult bindningResult) {
-
-        // ! REMOVE LOGS LATER, only for debugging
-        // System.out.println("Username: " + form.getUsername());
-        // System.out.println("Password: " + form.getPassword());
-
-        if (bindningResult.hasErrors()) {
-            return "loginPage";
-        }
-
-        // TODO - add a check that controls that username and password are correct
-        return "redirect:/userPage";
-    }
-
-        //TODO - add a check that controls that username and password are correct and then forward user to /competenceProfile
-        return "redirect:/competenceProfile";
-    }*/
 }

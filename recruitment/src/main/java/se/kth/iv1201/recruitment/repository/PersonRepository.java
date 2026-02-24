@@ -54,6 +54,15 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
      */
     boolean existsByEmailIgnoreCase(String email);
 
+    
+    /**
+     * Checks if a person number already exists. Only for use in field error logic!
+     *
+     * @param pnr The person number to check.
+     * @return True if the person number exists, otherwise false.
+     */
+    boolean existsByPnr(String pnr);
+
 
     
 }

@@ -1,8 +1,6 @@
 package se.kth.iv1201.recruitment.presentation.account;
 
 import jakarta.validation.Valid;
-import se.kth.iv1201.recruitment.application.error.UsernameTakenException;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -95,7 +93,13 @@ public class CompetenceProfileController {
             form.getExperiences().add(new Experiences());
             return "competenceProfile";
         } 
-        return "redirect:/competenceProfile/review";
+        return "competenceReview";
+    }
+
+    @GetMapping("/competenceProfile/cancel")
+    public String cancel(SessionStatus sessionStatus) {
+        sessionStatus.setComplete(); 
+        return "/competenceProfile";
     }
 
     @GetMapping("/competenceProfile/review")

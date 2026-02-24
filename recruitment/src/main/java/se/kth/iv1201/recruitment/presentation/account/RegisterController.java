@@ -69,14 +69,14 @@ public class RegisterController {
                     form.getPassword());
             return "register_success";
         } catch (UsernameTakenException e) {
-            bindingResult.rejectValue("username", "error.usernameTaken", "Username is already taken!");
+            bindingResult.rejectValue("username", "error.usernameTaken", e.getMessage());
             return "register";
         } catch (EmailTakenException e) {
             bindingResult.rejectValue("email", "error.email", e.getMessage());
             return "register";
-        } /*catch (PersonNumberTakenException e) {
-            bindingResult.rejectValue("pnr", "error.pnr", e.getMessage());
+        } catch (PersonNumberTakenException e) {
+            bindingResult.rejectValue("personNumber", "error.pnrTaken", e.getMessage());
             return "register";
-        } */
+        } 
     }
 }

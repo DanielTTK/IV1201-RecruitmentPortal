@@ -18,6 +18,9 @@ public class SecurityConfig {
 
     // Since we have two different login portals with restricted access, 
     // we need to create multiple filter chains which will mean to order them. 
+
+    // Since we have two different login portals with restricted access, 
+    // we need to create multiple filter chains which will mean to order them. 
     @Bean
     @Order(1) // handles the admin login portal, and is evaluated first
     SecurityFilterChain adminSecurity(HttpSecurity http) throws Exception {
