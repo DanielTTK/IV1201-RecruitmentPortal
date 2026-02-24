@@ -104,4 +104,31 @@ public class AccountService {
 
         log.info("Register success: username={} personId={}", username, saved.getPersonId());
     } 
+
+    @Transactional
+    public void completeLegacyUser(Integer personId, String firstName, String lastName, String username, String personNumber, String email, String rawPassword) 
+    {
+
+        Person person = personRepository.findById(personId).orElseThrow(() -> new IllegalArgumentException("Legacy user not found"));
+
+        if (!person.isLegacy()) {
+            return;
+        }
+
+        String digits = personNumber.replaceAll("\\D", "");
+        String normalizedPnr = digits.substring(0, 8) + "-" + digits.substring(8);
+
+        Integer roleId = person.getRoleId(); //preserve recruiter/applicant role
+
+        person.setName(firstName);
+        person.setSurname(lastName);
+        person.setUsername(username);
+        person.setEmail(email);
+        person.setPnr(normalizedPnr);
+        person.setPassword(passwordEncoder.encode(rawPassword));
+        person.setRoleId(roleId);
+        person.setLegacy(false);
+
+        personRepository.save(person);
+    }
 }

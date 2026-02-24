@@ -43,12 +43,13 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override 
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {     
-        Person person = personRepository.findByUsernameIgnoreCase(username) // we search up the person from the database.
-                .orElseThrow(() -> 
-                new UsernameNotFoundException("User not found")); // internal error
 
-        if (person.getPassword() == null) { // Temporarily blocking the users that does not have a password
-            throw new UsernameNotFoundException("User has no password"); // internal error
+    Person person = personRepository
+            .findByUsernameIgnoreCaseOrEmailIgnoreCase(username, username)
+            .orElseThrow(() -> new UsernameNotFoundException("User not found")); // internal error
+
+        if (person.isLegacy()) {
+        throw new UsernameNotFoundException("Legacy user");
         }
 
         String role = mapRole(person.getRoleId());
