@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -29,7 +30,7 @@ import se.kth.iv1201.recruitment.repository.PersonRepository;
  * TODO: Need to complement this test with per layer tests (controller, service, repository) to 
  * ensure all layers are properly tested and to make debugging easier when a test fails.
  */
-@SpringBootTest
+@WebMvcTest(RegisterController.class)
 public class RegisterUserTest {
 
     private MockMvc mockMvc;

@@ -1,10 +1,22 @@
 package se.kth.iv1201.recruitment.presentation.account;
 
+import se.kth.iv1201.recruitment.application.AccountService;
+import se.kth.iv1201.recruitment.application.ApplicationService;
+import se.kth.iv1201.recruitment.application.ResendEmailService;
+import se.kth.iv1201.recruitment.repository.PersonRepository;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -48,8 +60,34 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
  *   of the `registerForm` object — that's how controller-level `BindingResult` errors
  *   are exposed to templates/views.
  */
-@SpringBootTest
+
+
+
+@WebMvcTest(RegisterController.class)
+@Import(RegisterControllerTest.TestConfig.class)
 public class RegisterControllerTest {
+    @TestConfiguration
+    static class TestConfig {
+        @Bean
+        public AccountService accountService() {
+            return Mockito.mock(AccountService.class);
+        }
+
+        @Bean
+        public PersonRepository personRepository() {
+            return Mockito.mock(PersonRepository.class);
+        }
+
+        @Bean
+        public ApplicationService applicationService() {
+            return Mockito.mock(ApplicationService.class);
+        }
+
+        @Bean
+        public ResendEmailService resendEmailService() {
+            return Mockito.mock(ResendEmailService.class);
+        }
+    }
 
     @Autowired
     private WebApplicationContext context;
