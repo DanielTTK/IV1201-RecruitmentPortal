@@ -8,7 +8,9 @@ import jakarta.validation.Valid;
  * Class for the competence profile page. Has the inputs from the form.
  */
 
-public class CompetenceProfile {
+// Changed the class name from CompetenceProfile -> CompetenceProfileForm, 
+// to help the service layer differentiate the repo and presentation class
+public class CompetenceProfileForm {
 
     private String workingBefore;
     private String motivation;
@@ -26,7 +28,6 @@ public class CompetenceProfile {
     public String getWorkingBefore() {
         return workingBefore;
     }
-
     public void setWorkingBefore(String workingBefore) {
         this.workingBefore = workingBefore;
     }
@@ -38,7 +39,6 @@ public class CompetenceProfile {
     public void setPrevExperience(String prevExperience) {
         this.prevExperience = prevExperience;
     }
-
     public String getPrevExperienceYears() {
         return prevExperienceYears;
     }
@@ -70,7 +70,6 @@ public class CompetenceProfile {
     public void setDateRanges(List<DateRange> dateRanges) {
         this.dateRanges = dateRanges;
     }
-
     public List<Experiences> getExperiences() {
         return experiences;
     }

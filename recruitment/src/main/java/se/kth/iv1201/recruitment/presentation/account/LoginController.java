@@ -6,15 +6,8 @@
  */
 
 package se.kth.iv1201.recruitment.presentation.account;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import jakarta.validation.Valid;
-
-import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
 
 /**
@@ -32,30 +25,4 @@ public class LoginController {
         model.addAttribute("loginPage", new LoginForm());
         return "login";
     }
-
-    /**
-     * Processes the login form and validates if it is correct or not
-     * 
-     * @param form           is the login form containing both username and password
-     * @param bindningResult contains the validation results for the form inputs
-     * @return if success it returns user to competence profile, if error, same page
-     *         is returned
-     */
-
-    @PostMapping("/loginPage")
-    public String loggedIn(@Valid @ModelAttribute LoginForm form,
-            BindingResult bindningResult) {
-
-        // ! REMOVE LOGS LATER, only for debugging
-        // System.out.println("Username: " + form.getUsername());
-        // System.out.println("Password: " + form.getPassword());
-
-        if (bindningResult.hasErrors()) {
-            return "loginPage";
-        }
-
-        // TODO - add a check that controls that username and password are correct
-        return "redirect:/userPage";
-    }
-
 }

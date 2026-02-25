@@ -35,22 +35,25 @@
         <div th:each="exp, iterStat : *{experiences}">
           <div class="row">
             <select th:field="*{experiences[__${iterStat.index}__].expertise}">
-              <option value="null">None of the alternatives</option>
+              <option value="">None of the alternatives</option>
               <option value="Restaurant">Restaurant</option>
               <option value="Cashier">Cashier</option>
               <option value="Mechanics">Mechanics</option>
               <option value="Entertainer">Entertainer</option>
               <option value="Customer Service">Customer Service</option>
               <option value="Cleaner">Cleaner</option>
+              <option value = "ticket sales"> Ticket Sales</option>
+              <option value = "lotteries"> Lotteries </option>
+              <option value = "roller coaster operation"> Roller Coaster Operation</option>
             </select>
             <select th:field="*{experiences[__${iterStat.index}__].years}">
-              <option value="null">-</option>
-              <option value="<1">< 1 Year</option>
+              <option value="">-</option>
+              <option value="0">&lt 1 Year</option>
               <option value="1">1 Year</option>
               <option value="2">2 Years</option>
               <option value="3">3 Years</option>
               <option value="4">4 Years</option>
-              <option value="5+">5+ Years</option>
+              <option value="5">5+ Years</option>
             </select>
             <button
               class="small"
@@ -90,8 +93,9 @@
             <p style="color: rgb(255, 0, 0)" th:errors="*{all}"></p>
           </div>
         </div>
+        
         <div class="marg-15">
-          <button type="submit" name="submitted" value="true">Submit</button>
+          <button type="submit" name="review" value="true">Review</button>
         </div>
         <div th:insert="footer :: footer"></div>
       </form>

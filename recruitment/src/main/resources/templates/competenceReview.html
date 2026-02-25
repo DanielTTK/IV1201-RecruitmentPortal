@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:if="${submitError}" style="color:red;">
+    <p th:text="${submitError}"></p>
+</div>
+<head>
+    <title>Review Application</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+
+<div th:insert="header :: header"></div>
+
+<div>
+    <h1>Review Your Application</h1>
+
+    <h3>Have you worked with us before?</h3>
+    <p th:text="${competenceProfile.workingBefore}"></p>
+
+    <h3>Previous Experience</h3>
+    <div th:each="exp : ${competenceProfile.experiences}">
+        <div th:if="${exp.expertise != null}">
+            <p>
+                <strong>Expertise:</strong>
+                <span th:text="${exp.expertise}"></span>
+            </p>
+            <p>
+                <strong>Years:</strong>
+                <span th:text="${exp.years}"></span>
+            </p>
+            <hr/>
+        </div>
+    </div>
+
+    <h3>Motivation</h3>
+    <p th:text="${competenceProfile.motivation}"></p>
+
+    <h3>About You</h3>
+    <p th:text="${competenceProfile.aboutYou}"></p>
+
+    <h3>Availability</h3>
+    <div th:each="range : ${competenceProfile.dateRanges}">
+        <div th:if="${range.startDate != null}">
+            <p>
+                <strong>From:</strong>
+                <span th:text="${range.startDate}"></span>
+                <br/>
+                <strong>To:</strong>
+                <span th:text="${range.endDate}"></span>
+            </p>
+            <hr/>
+        </div>
+    </div>
+    <div class="marg-15">
+        <form method="post"
+              th:action="@{/competenceProfile/submit}">
+            <button type="submit">
+                Confirm and Submit
+            </button>
+        </form>
+        <br/>
+        <a th:href="@{/competenceProfile}">
+            <button type="button">Cancel</button>
+        </a>
+        <br/><br/>
+    </div>
+</div>
+
+<div th:insert="footer :: footer"></div>
+
+</body>
+</html>
