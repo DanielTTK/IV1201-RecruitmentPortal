@@ -22,8 +22,6 @@ import org.springframework.web.context.WebApplicationContext;
  *
  * Tests if controller correctly populates the model with the expected number of rows
  * when adding date ranges and experiences.
- * 
- * TODO: Add error messages so it's easier to pinpoint what went wrong when a test fails.
  */
 @SpringBootTest
 public class CompetenceProfileControllerTest {
@@ -56,9 +54,10 @@ public class CompetenceProfileControllerTest {
         Object obj = res.getModelAndView().getModel().get("competenceProfile");
         assertThat(obj).isInstanceOf(CompetenceProfile.class);
         CompetenceProfile form = (CompetenceProfile) obj;
-        assertThat(form.getDateRanges()).hasSize(1);
-        assertThat(form.getExperiences()).hasSize(1);
+        assertThat(form.getDateRanges()).withFailMessage("Expected 1 date range, but found " + form.getDateRanges().size()).hasSize(1);
+        assertThat(form.getExperiences()).withFailMessage("Expected 1 experience, but found " + form.getExperiences().size()).hasSize(1);
 
+        // when getting "/competenceProfile", the controller adds the rows for date ranges and experiences, so we expect 1 of each.
         // Checks that the model contains a "competenceProfile" object, 
         // and that its an instance of CompetenceProfile class. 
         // Then checks that the initial size of date ranges and experiences is 1, as expected.
@@ -73,7 +72,7 @@ public class CompetenceProfileControllerTest {
         Object obj = res.getModelAndView().getModel().get("competenceProfile");
         assertThat(obj).isInstanceOf(CompetenceProfile.class);
         CompetenceProfile form = (CompetenceProfile) obj;
-        assertThat(form.getDateRanges()).hasSize(1);
+        assertThat(form.getDateRanges()).withFailMessage("Expected 1 date range, but found " + form.getDateRanges().size()).hasSize(1);
     }
 
     @Test
@@ -86,7 +85,7 @@ public class CompetenceProfileControllerTest {
         Object obj = res.getModelAndView().getModel().get("competenceProfile");
         assertThat(obj).isInstanceOf(CompetenceProfile.class);
         CompetenceProfile form = (CompetenceProfile) obj;
-        assertThat(form.getExperiences()).hasSize(1);
+        assertThat(form.getExperiences()).withFailMessage("Expected 1 experience, but found " + form.getExperiences().size()).hasSize(1);
     }
 
     @Test
@@ -96,5 +95,4 @@ public class CompetenceProfileControllerTest {
                 .andExpect(result -> assertThat(result.getModelAndView().getViewName()).isEqualTo("competence_success"));
                 // Pass a function that takes 'result' as input and runs this assertion.
             }
-
 }
