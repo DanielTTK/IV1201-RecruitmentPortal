@@ -34,6 +34,15 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
      */
     Optional<Person> findByEmailIgnoreCase(String email);
 
+    /**
+     * Finds a person by username or email (case-insensitive).
+     * 
+     * @param username The username to search for. 
+     * @param email The email address to search for.
+     * @return The matching person, or empty if none exists.
+     */
+    Optional<Person> findByUsernameIgnoreCaseOrEmailIgnoreCase(String username, String email);
+
 
     /**
      * Checks if a username already exists. Only for use in field error logic!
@@ -62,6 +71,16 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
      * @return True if the person number exists, otherwise false.
      */
     boolean existsByPnr(String pnr);
+
+    
+    /**
+     * Checks if a username or email already exists. Only for use in field error logic!
+     * 
+     * @param username The username to check.
+     * @param email The email address to check.
+     * @return True if the username or email exists, otherwise false.
+     */
+    boolean existsByUsernameIgnoreCaseOrEmailIgnoreCase(String username, String email);
 
 
     

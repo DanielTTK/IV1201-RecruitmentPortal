@@ -17,14 +17,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-/**
- * Tests for {@link CompetenceProfileController}.
- *
- * Tests if controller correctly populates the model with the expected number of rows
- * when adding date ranges and experiences.
- * 
- * TODO: Add error messages so it's easier to pinpoint what went wrong when a test fails.
- */
+
 @SpringBootTest
 public class CompetenceProfileControllerTest {
 
@@ -96,5 +89,4 @@ public class CompetenceProfileControllerTest {
                 .andExpect(result -> assertThat(result.getModelAndView().getViewName()).isEqualTo("competence_success"));
                 // Pass a function that takes 'result' as input and runs this assertion.
             }
-
-}
+} 
