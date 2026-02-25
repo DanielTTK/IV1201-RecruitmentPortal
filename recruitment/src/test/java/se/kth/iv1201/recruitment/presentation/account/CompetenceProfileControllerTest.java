@@ -24,6 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
  * when adding date ranges and experiences.
  */
 
+
 @SpringBootTest
 public class CompetenceProfileControllerTest {
 
