@@ -71,10 +71,10 @@ public class RegisterUserTest {
         Optional<Person> opt = personRepository.findByUsernameIgnoreCase(username);
         assertThat(opt).isPresent();
         Person p = opt.get();
-        assertEquals("Alice", p.getName());
-        assertEquals("Swedishson", p.getSurname());
-        assertEquals("alice@google.com", p.getEmail());
-        assertNotNull(p.getPassword());
+        assertEquals("Alice", p.getName(), "First name should be saved correctly");
+        assertEquals("Swedishson", p.getSurname(), "Last name should be saved correctly");
+        assertEquals("alice@google.com", p.getEmail(), "Email should be saved correctly");
+        assertNotNull(p.getPassword(), "Password should not be null");
         assertNotEquals("password123", p.getPassword(), "Password needs to be hashed");
         assertEquals(Integer.valueOf(2), p.getRoleId());
     }
