@@ -23,8 +23,6 @@ import org.springframework.web.context.WebApplicationContext;
  * Tests if controller correctly populates the model with the expected number of rows
  * when adding date ranges and experiences.
  */
-
-
 @SpringBootTest
 public class CompetenceProfileControllerTest {
 
@@ -53,14 +51,14 @@ public class CompetenceProfileControllerTest {
                 .andReturn();
 
         // Give me the object that the controller sent to the view (What will be rendered)
-        Object obj = res.getModelAndView().getModel().get("competenceProfile");
-        assertThat(obj).isInstanceOf(CompetenceProfile.class);
-        CompetenceProfile form = (CompetenceProfile) obj;
+        Object obj = res.getModelAndView().getModel().get("CompetenceProfileForm");
+        assertThat(obj).isInstanceOf(CompetenceProfileForm.class);
+        CompetenceProfileForm form = (CompetenceProfileForm) obj;
         assertThat(form.getDateRanges()).hasSize(1);
         assertThat(form.getExperiences()).hasSize(1);
 
-        // Checks that the model contains a "competenceProfile" object, 
-        // and that its an instance of CompetenceProfile class. 
+        // Checks that the model contains a "CompetenceProfileForm" object, 
+        // and that its an instance of CompetenceProfileForm class. 
         // Then checks that the initial size of date ranges and experiences is 1, as expected.
     }
 
@@ -70,9 +68,9 @@ public class CompetenceProfileControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Object obj = res.getModelAndView().getModel().get("competenceProfile");
-        assertThat(obj).isInstanceOf(CompetenceProfile.class);
-        CompetenceProfile form = (CompetenceProfile) obj;
+        Object obj = res.getModelAndView().getModel().get("CompetenceProfileForm");
+        assertThat(obj).isInstanceOf(CompetenceProfileForm.class);
+        CompetenceProfileForm form = (CompetenceProfileForm) obj;
         assertThat(form.getDateRanges()).hasSize(1);
     }
 
@@ -82,10 +80,10 @@ public class CompetenceProfileControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        // same as "model.addAttribute("competenceProfile", form);"
-        Object obj = res.getModelAndView().getModel().get("competenceProfile");
-        assertThat(obj).isInstanceOf(CompetenceProfile.class);
-        CompetenceProfile form = (CompetenceProfile) obj;
+        // same as "model.addAttribute("CompetenceProfileForm", form);"
+        Object obj = res.getModelAndView().getModel().get("CompetenceProfileForm");
+        assertThat(obj).isInstanceOf(CompetenceProfileForm.class);
+        CompetenceProfileForm form = (CompetenceProfileForm) obj;
         assertThat(form.getExperiences()).hasSize(1);
     }
 
