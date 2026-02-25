@@ -23,6 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
  * Tests if controller correctly populates the model with the expected number of rows
  * when adding date ranges and experiences.
  */
+
 @SpringBootTest
 public class CompetenceProfileControllerTest {
 

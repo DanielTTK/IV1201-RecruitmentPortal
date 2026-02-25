@@ -8,7 +8,12 @@
     <div th:insert="header :: header"></div>
     <div class="loginAdmin" >
       <h1>Login for Recruiters</h1>
+        <!--changed the post endpoint -->
+      <form th:action="@{/admin/login}" method="post"
+        th:object="${loginAdmin}">
+        <!-- 
       <form method="post" th:object="${loginAdmin}" action="/loginAdmin">
+      -->
         <div
           th:replace="fragments :: field('Username', 'username', 'text')"></div>
         <div

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Legacy verification</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div th:insert="header :: header"></div>
+
+    <h1>Legacy verification</h1>
+
+    <p>We sent a verification code to your email address. Enter it below.</p>
+
+    <form th:action="@{/legacy/verify}" method="post">
+      <input id="code" name="code" required />
+      <div th:if="${error}">
+        <p style="color:red;">Wrong code</p>
+      </div>
+      <button type="submit">Continue</button>
+    </form>
+
+    <div style="margin-top: 2rem;">
+      <a href="/legacy/cancel">Cancel</a>
+    </div>
+
+    <div th:insert="footer :: footer"></div>
+  </body>
+</html>
