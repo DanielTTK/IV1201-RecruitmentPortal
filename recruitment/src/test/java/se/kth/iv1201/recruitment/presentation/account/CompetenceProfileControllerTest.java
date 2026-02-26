@@ -17,6 +17,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import se.kth.iv1201.recruitment.application.ApplicationService;
+
 /**
  * Tests for {@link CompetenceProfileController}.
  *
@@ -27,9 +29,16 @@ import org.springframework.web.context.WebApplicationContext;
 public class CompetenceProfileControllerTest {
 
     @Autowired
+    private final ApplicationService applicationService;
+
+    @Autowired
     private WebApplicationContext context;
 
     private MockMvc mockMvc;
+
+    public CompetenceProfileControllerTest(ApplicationService applicationService) {
+        this.applicationService = applicationService;
+    }
 
     @BeforeEach
     void setUp() {
@@ -46,18 +55,18 @@ public class CompetenceProfileControllerTest {
     @Test
     void populateModelWithRow() throws Exception {
         // Fake a browser, send GET request, to /CompetenceProfileForm
-        MvcResult res = mockMvc.perform(get("/CompetenceProfileForm"))
+        MvcResult res = mockMvc.perform(get("/CompetenceProfile"))
                 .andExpect(status().isOk())
                 .andReturn();
 
         // Give me the object that the controller sent to the view (What will be rendered)
-        Object obj = res.getModelAndView().getModel().get("CompetenceProfileForm");
+        Object obj = res.getModelAndView().getModel().get("CompetenceProfile");
         assertThat(obj).isInstanceOf(CompetenceProfileForm.class);
         CompetenceProfileForm form = (CompetenceProfileForm) obj;
         assertThat(form.getDateRanges()).hasSize(1);
         assertThat(form.getExperiences()).hasSize(1);
 
-        // Checks that the model contains a "CompetenceProfileForm" object, 
+        // Checks that the model contains a "CompetenceProfile" object, 
         // and that its an instance of CompetenceProfileForm class. 
         // Then checks that the initial size of date ranges and experiences is 1, as expected.
     }
@@ -68,7 +77,7 @@ public class CompetenceProfileControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Object obj = res.getModelAndView().getModel().get("CompetenceProfileForm");
+        Object obj = res.getModelAndView().getModel().get("CompetenceProfile");
         assertThat(obj).isInstanceOf(CompetenceProfileForm.class);
         CompetenceProfileForm form = (CompetenceProfileForm) obj;
         assertThat(form.getDateRanges()).hasSize(1);
@@ -80,8 +89,8 @@ public class CompetenceProfileControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        // same as "model.addAttribute("CompetenceProfileForm", form);"
-        Object obj = res.getModelAndView().getModel().get("CompetenceProfileForm");
+        // same as "model.addAttribute("CompetenceProfile", form);"
+        Object obj = res.getModelAndView().getModel().get("CompetenceProfile");
         assertThat(obj).isInstanceOf(CompetenceProfileForm.class);
         CompetenceProfileForm form = (CompetenceProfileForm) obj;
         assertThat(form.getExperiences()).hasSize(1);

@@ -8,15 +8,14 @@ import se.kth.iv1201.recruitment.repository.PersonRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -64,6 +63,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 
 
 @WebMvcTest(RegisterController.class)
+@AutoConfigureMockMvc(addFilters = false)
 @Import(RegisterControllerTest.TestConfig.class)
 public class RegisterControllerTest {
     @TestConfiguration
@@ -106,6 +106,7 @@ public class RegisterControllerTest {
         this.mockMvc = null;
     }
 
+    @WithMockUser
     @Test
     void checkPasswordMismatch() throws Exception {
 
