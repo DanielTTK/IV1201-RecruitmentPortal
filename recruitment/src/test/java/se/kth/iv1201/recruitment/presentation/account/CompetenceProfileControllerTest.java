@@ -68,13 +68,13 @@ public class CompetenceProfileControllerTest {
     @Test
     @WithMockUser(username = "testuser")
     void populateModelWithRow() throws Exception {
-        // Fake a browser, send GET request, to /CompetenceProfile
-        MvcResult res = mockMvc.perform(get("/CompetenceProfile"))
+        // Fake a browser, send GET request, to /competenceProfile
+        MvcResult res = mockMvc.perform(get("/competenceProfile"))
                 .andExpect(status().isOk())
                 .andReturn();
 
         // Give me the object that the controller sent to the view (What will be rendered)
-        Object obj = res.getModelAndView().getModel().get("CompetenceProfile");
+        Object obj = res.getModelAndView().getModel().get("competenceProfile");
         assertThat(obj).isInstanceOf(CompetenceProfileForm.class);
         CompetenceProfileForm form = (CompetenceProfileForm) obj;
         assertThat(form.getDateRanges()).hasSize(1);
@@ -91,7 +91,7 @@ public class CompetenceProfileControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        Object obj = res.getModelAndView().getModel().get("CompetenceProfile");
+        Object obj = res.getModelAndView().getModel().get("competenceProfile");
         assertThat(obj).isInstanceOf(CompetenceProfileForm.class);
         CompetenceProfileForm form = (CompetenceProfileForm) obj;
         assertThat(form.getDateRanges()).hasSize(1);
@@ -103,8 +103,8 @@ public class CompetenceProfileControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        // same as "model.addAttribute("CompetenceProfile", form);"
-        Object obj = res.getModelAndView().getModel().get("CompetenceProfile");
+        // same as "model.addAttribute("competenceProfile", form);"
+        Object obj = res.getModelAndView().getModel().get("competenceProfile");
         assertThat(obj).isInstanceOf(CompetenceProfileForm.class);
         CompetenceProfileForm form = (CompetenceProfileForm) obj;
         assertThat(form.getExperiences()).hasSize(1);
@@ -112,7 +112,7 @@ public class CompetenceProfileControllerTest {
 
     @Test
     void returnSuccessView() throws Exception {
-        mockMvc.perform(post("/competence").param("submitted", "true").with(csrf()))
+        mockMvc.perform(post("/competenceProfile/submit").param("submitted", "true").with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(result -> assertThat(result.getModelAndView().getViewName()).isEqualTo("competence_success"));
                 // Pass a function that takes 'result' as input and runs this assertion.
