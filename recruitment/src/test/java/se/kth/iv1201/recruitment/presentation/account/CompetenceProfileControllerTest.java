@@ -10,14 +10,25 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import se.kth.iv1201.recruitment.application.AccountService;
 import se.kth.iv1201.recruitment.application.ApplicationService;
+import se.kth.iv1201.recruitment.application.ResendEmailService;
+import se.kth.iv1201.recruitment.domain.Person;
+import se.kth.iv1201.recruitment.repository.PersonRepository;
 
 /**
  * Tests for {@link CompetenceProfileController}.
@@ -25,25 +36,27 @@ import se.kth.iv1201.recruitment.application.ApplicationService;
  * Tests if controller correctly populates the model with the expected number of rows
  * when adding date ranges and experiences.
  */
-@SpringBootTest
+@WebMvcTest(CompetenceProfileController.class)
+@AutoConfigureMockMvc(addFilters = false)
+@Import(CompetenceProfileControllerTest.TestConfig.class)
 public class CompetenceProfileControllerTest {
-
-    @Autowired
-    private final ApplicationService applicationService;
+    @TestConfiguration
+    static class TestConfig {
+        @Bean
+        public ApplicationService applicationService() {
+            return Mockito.mock(ApplicationService.class);
+        }
+    }
 
     @Autowired
     private WebApplicationContext context;
 
     private MockMvc mockMvc;
 
-    public CompetenceProfileControllerTest(ApplicationService applicationService) {
-        this.applicationService = applicationService;
-    }
-
     @BeforeEach
     void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
-                .apply(springSecurity())
+                //.apply(springSecurity())
                 .build();
     }
 
@@ -53,8 +66,9 @@ public class CompetenceProfileControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "testuser")
     void populateModelWithRow() throws Exception {
-        // Fake a browser, send GET request, to /CompetenceProfileForm
+        // Fake a browser, send GET request, to /CompetenceProfile
         MvcResult res = mockMvc.perform(get("/CompetenceProfile"))
                 .andExpect(status().isOk())
                 .andReturn();
