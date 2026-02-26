@@ -1,11 +1,16 @@
 package se.kth.iv1201.recruitment.presentation.account;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,6 +56,9 @@ public class CompetenceProfileControllerTest {
     @Autowired
     private WebApplicationContext context;
 
+    @Autowired
+    private ApplicationService applicationService;
+
     private MockMvc mockMvc;
 
     @BeforeEach
@@ -66,7 +74,6 @@ public class CompetenceProfileControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "testuser")
     void populateModelWithRow() throws Exception {
         // Fake a browser, send GET request, to /competenceProfile
         MvcResult res = mockMvc.perform(get("/competenceProfile"))
@@ -112,9 +119,19 @@ public class CompetenceProfileControllerTest {
 
     @Test
     void returnSuccessView() throws Exception {
-        mockMvc.perform(post("/competenceProfile/submit").param("submitted", "true").with(csrf()))
+        mockMvc.perform(post("/competenceProfile/submit").param("submitted", "true")
+                .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(result -> assertThat(result.getModelAndView().getViewName()).isEqualTo("competence_success"));
                 // Pass a function that takes 'result' as input and runs this assertion.
-            }
+    }
+
+    @Test
+void submitSuccess() throws Exception {
+    mockMvc.perform(post("/competenceProfile/submit")
+            .with(user("test")))
+            .andExpect(status().isOk())
+            .andExpect(view().name("competence_success"));
+}
+            
 } 
