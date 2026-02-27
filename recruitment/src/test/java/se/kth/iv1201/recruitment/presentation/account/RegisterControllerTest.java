@@ -118,10 +118,29 @@ public class RegisterControllerTest {
                 .param("username", "johndoe")
                 .param("personNumber", "199001011234")
                 .param("email", "johndoe@example.com")
-                .param("password", "pw1")
-                .param("confirmedPassword", "pw2")
+                .param("password", "samesame")
+                .param("confirmedPassword", "different")
                 .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeHasFieldErrors("registerForm", "confirmedPassword"));
+    }
+
+    @WithMockUser
+    @Test
+    void checkPasswordMatch() throws Exception {
+
+        // Perform an HTTP POST to the /register endpoint with matching passwords.
+        // We include a CSRF token using .with(csrf()).
+        mockMvc.perform(post("/register")
+                .param("firstName", "John")
+                .param("lastName", "Doe")
+                .param("username", "johndoe")
+                .param("personNumber", "199001011234")
+                .param("email", "johndoe@example.com")
+                .param("password", "samesame")
+                .param("confirmedPassword", "samesame")
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeHasNoErrors("registerForm"));
     }
 }

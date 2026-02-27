@@ -6,18 +6,34 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.Mockito;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
+import se.kth.iv1201.recruitment.application.AccountService;
 
 /**
  */
-@SpringBootTest
+@WebMvcTest(RegisterForm.class)
+@AutoConfigureMockMvc(addFilters = false)
+@Import(RegisterFormTest.TestConfig.class)
 class RegisterFormTest {
+    @TestConfiguration
+    static class TestConfig {
+        @Bean
+        public AccountService accountService() {
+            return Mockito.mock(AccountService.class);
+        }
+    }
+
     private final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
     private RegisterForm form;
 

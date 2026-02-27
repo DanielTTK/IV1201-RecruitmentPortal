@@ -11,14 +11,22 @@ import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
+import se.kth.iv1201.recruitment.application.AccountService;
+import se.kth.iv1201.recruitment.application.ApplicationService;
+import se.kth.iv1201.recruitment.application.ResendEmailService;
 import se.kth.iv1201.recruitment.domain.Person;
 import se.kth.iv1201.recruitment.repository.PersonRepository;
 /**
@@ -30,8 +38,34 @@ import se.kth.iv1201.recruitment.repository.PersonRepository;
  * TODO: Need to complement this test with per layer tests (controller, service, repository) to 
  * ensure all layers are properly tested and to make debugging easier when a test fails.
  */
+
 @WebMvcTest(RegisterController.class)
+@AutoConfigureMockMvc(addFilters = false)
+@Import(RegisterUserTest.TestConfig.class)
 public class RegisterUserTest {
+        @TestConfiguration
+    static class TestConfig {
+        @Bean
+        public AccountService accountService() {
+            return Mockito.mock(AccountService.class);
+        }
+
+        @Bean
+        public PersonRepository personRepository() {
+            return Mockito.mock(PersonRepository.class);
+        }
+
+        @Bean
+        public ApplicationService applicationService() {
+            return Mockito.mock(ApplicationService.class);
+        }
+
+        @Bean
+        public ResendEmailService resendEmailService() {
+            return Mockito.mock(ResendEmailService.class);
+        }
+    }
+
 
     private MockMvc mockMvc;
 
@@ -54,6 +88,7 @@ public class RegisterUserTest {
         personRepository.deleteAll();
     }
 
+    @WithMockUser
     @Test
     void personSavedInDBAfterPosting() throws Exception {
         String username = "alice777";
