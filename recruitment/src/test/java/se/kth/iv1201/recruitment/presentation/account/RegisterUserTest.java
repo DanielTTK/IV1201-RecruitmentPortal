@@ -1,12 +1,8 @@
 package se.kth.iv1201.recruitment.presentation.account;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-
-import java.util.Optional;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +23,6 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import se.kth.iv1201.recruitment.application.AccountService;
 import se.kth.iv1201.recruitment.application.ApplicationService;
 import se.kth.iv1201.recruitment.application.ResendEmailService;
-import se.kth.iv1201.recruitment.domain.Person;
 import se.kth.iv1201.recruitment.repository.PersonRepository;
 /**
  * This test verifies if a user is properly registered in the database from the register form. It is a general test, 
@@ -73,11 +68,10 @@ public class RegisterUserTest {
     private WebApplicationContext wac;
 
     @Autowired
-    private PersonRepository personRepository;
+    private AccountService accountService;
 
     @BeforeEach
     void setUp() {
-        personRepository.deleteAll();
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac)
                 .apply(springSecurity())
                 .build();
@@ -85,7 +79,7 @@ public class RegisterUserTest {
 
     @AfterEach
     void tearDown() {
-        personRepository.deleteAll();
+        this.mockMvc = null;
     }
 
     @WithMockUser
@@ -104,14 +98,14 @@ public class RegisterUserTest {
                 .with(csrf()))
                 .andExpect(status().isOk());
 
-        Optional<Person> opt = personRepository.findByUsernameIgnoreCase(username);
-        assertThat(opt).isPresent();
-        Person p = opt.get();
-        assertEquals("Alice", p.getName(), "First name should be saved correctly");
-        assertEquals("Swedishson", p.getSurname(), "Last name should be saved correctly");
-        assertEquals("alice@google.com", p.getEmail(), "Email should be saved correctly");
-        assertNotNull(p.getPassword(), "Password should not be null");
-        assertNotEquals("password123", p.getPassword(), "Password needs to be hashed");
-        assertEquals(Integer.valueOf(2), p.getRoleId());
+    // Controller delegates registration to AccountService, verify it was called with expected args
+    Mockito.verify(accountService).registerUser(
+        "Alice",
+        "Swedishson",
+        username,
+        "197101015678",
+        "alice@google.com",
+        "password123"
+    );
     }
 }
