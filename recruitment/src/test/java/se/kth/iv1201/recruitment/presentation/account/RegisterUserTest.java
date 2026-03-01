@@ -54,11 +54,6 @@ public class RegisterUserTest {
         public ApplicationService applicationService() {
             return Mockito.mock(ApplicationService.class);
         }
-
-        @Bean
-        public ResendEmailService resendEmailService() {
-            return Mockito.mock(ResendEmailService.class);
-        }
     }
 
 
