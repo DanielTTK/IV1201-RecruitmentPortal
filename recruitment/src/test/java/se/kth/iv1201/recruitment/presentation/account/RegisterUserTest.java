@@ -22,7 +22,6 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 
 import se.kth.iv1201.recruitment.application.AccountService;
 import se.kth.iv1201.recruitment.application.ApplicationService;
-import se.kth.iv1201.recruitment.application.ResendEmailService;
 import se.kth.iv1201.recruitment.repository.PersonRepository;
 /**
  * This test verifies if a user is properly registered in the database from the register form. It is a general test, 
@@ -93,7 +92,7 @@ public class RegisterUserTest {
                 .with(csrf()))
                 .andExpect(status().isOk());
 
-    // Controller delegates registration to AccountService, verify it was called with expected args
+    // Controller delegates registration to AccountService, verifies it was called with expected params
     Mockito.verify(accountService).registerUser(
         "Alice",
         "Swedishson",
