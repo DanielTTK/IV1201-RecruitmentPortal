@@ -36,4 +36,13 @@ public interface AvailabilityRepository extends JpaRepository<Availability, Inte
 
 
 
+    /**
+     * Deletes all availability rows for a person. Used when an application is deleted to clean up the database.
+     * 
+     * @param personId The person's ID whose availability rows should be deleted.
+    */    
+    void deleteAllByPersonPersonId(Integer personId);
+
+
+
 }

@@ -48,4 +48,14 @@ public interface CompetenceProfileRepository extends JpaRepository<CompetencePro
      * @return True if it exists, otherwise false.
      */
     boolean existsByPersonPersonIdAndCompetenceCompetenceId(Integer personId, Integer competenceId);
+
+
+
+    /**
+     * Deletes all competence profiles for a person.
+     * Used when an application is deleted to clean up the database.
+     * 
+     * @param personId The person's ID whose competence profiles should be deleted.
+     */
+    void deleteAllByPersonPersonId(Integer personId);
 }

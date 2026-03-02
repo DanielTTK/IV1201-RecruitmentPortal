@@ -86,10 +86,10 @@ public class ApplicationService {
 
         Application application = new Application();
         application.setPerson(person);
-        application.setStatus(ApplicationStatus.DRAFT);
+        application.setStatus(ApplicationStatus.SUBMITTED);
         applicationRepository.save(application);
 
-        // Provided List (iterable) of dates that is submitted and collect them into a list for "batch" persistence. 
+        //Provided List (iterable) of dates that is submitted and collect them into a list for "batch" persistence. 
         List<Availability> availabilities = form.getDateRanges().stream()
                 .map(dateRange -> {
                     Availability availability = new Availability();
@@ -99,7 +99,7 @@ public class ApplicationService {
                     return availability;
                 })
                 .toList();
-        // Persist all Availability entities in a single repository call.    
+        //Persist all Availability entities in a single repository call.    
         availabilityRepository.saveAll(availabilities);
 
         List<CompetenceProfile> profiles = form.getExperiences().stream()
@@ -117,5 +117,37 @@ public class ApplicationService {
                 .toList();
 
         competenceProfileRepository.saveAll(profiles);
+    }
+
+    /**
+     * Withdraws an existing application for a user. 
+     * This method deletes the Application entity and all associated Availability and CompetenceProfile entities for the user.
+     * 
+     * @param identifier
+     * @param applicationId
+     */
+    @Transactional
+    public void withdrawApplication(String identifier, Integer applicationId) {
+        Person person = personRepository
+                .findByUsernameIgnoreCaseOrEmailIgnoreCase(identifier, identifier)
+                .orElseThrow(() -> new IllegalArgumentException("Person not found"));
+
+        Application app = applicationRepository.findById(applicationId)
+                .orElseThrow(() -> new IllegalArgumentException("Application not found"));
+
+        if (!app.getPerson().getPersonId().equals(person.getPersonId())) {
+            throw new IllegalArgumentException("Not your application");
+        }
+
+        applicationRepository.delete(app);
+
+
+        /**
+         * Cleaning up associated availability and competence profile entries for the person.
+         * This makes sure that when an application is withdrawn, all related data is also removed from the DB.
+         */
+
+        availabilityRepository.deleteAllByPersonPersonId(person.getPersonId());
+        competenceProfileRepository.deleteAllByPersonPersonId(person.getPersonId());
     }
 }

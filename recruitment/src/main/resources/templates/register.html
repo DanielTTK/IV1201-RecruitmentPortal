@@ -16,15 +16,16 @@
         th:replace="fragments :: field('First name', 'firstName', 'text')"></div>
       <div
         th:replace="fragments :: field('Last name', 'lastName', 'text')"></div>
-      <div th:replace="fragments :: field('Username', 'username', 'text')"></div>
-      <div
-        th:replace="fragments :: fieldWithMax('Person number', 'personNumber', 'text', 12)"></div>
+      <div 
+        th:replace="fragments :: field('Username', 'username', 'text')"></div>
+      <div 
+        th:replace="fragments :: fieldWithRules('Person number','personNumber','text', 12, 13, '\\d{8}-?\\d{4}', 'Use YYYYMMDD-XXXX')"></div>
       <div
         th:replace="fragments :: field('Email address', 'email', 'email')"></div>
       <div
-        th:replace="fragments :: field('Password', 'password', 'password')"></div>
+        th:replace="fragments :: fieldWithRules('Password','password','password',6, 100,'.*','At least 6 characters')"></div>
       <div
-        th:replace="fragments :: field('Confirm password', 'confirmedPassword', 'password')"></div>
+        th:replace="fragments :: fieldWithRules('Confirm password','confirmedPassword','password',6, 100,'.*','At least 6 characters')"></div>
       <div>
         <button type="submit">Submit</button>
       </div>
