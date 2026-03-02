@@ -20,7 +20,8 @@
               type="radio"
               th:field="*{workingBefore}"
               value="yes"
-              id="yes" />
+              id="yes"
+              required />
           </div>
           <div class="radio-option">
             <label for="no">No</label>
@@ -28,25 +29,26 @@
               type="radio"
               th:field="*{workingBefore}"
               value="no"
-              id="no" />
+              id="no"
+              required />
           </div>
         </div>
         <h3>Previous Experience</h3>
         <div th:each="exp, iterStat : *{experiences}">
           <div class="row">
-            <select th:field="*{experiences[__${iterStat.index}__].expertise}">
+            <select required th:field="*{experiences[__${iterStat.index}__].expertise}">
               <option value="">None of the alternatives</option>
-              <option value="Restaurant">Restaurant</option>
-              <option value="Cashier">Cashier</option>
-              <option value="Mechanics">Mechanics</option>
-              <option value="Entertainer">Entertainer</option>
-              <option value="Customer Service">Customer Service</option>
-              <option value="Cleaner">Cleaner</option>
+              <option value="restaurant">Restaurant</option>
+              <option value="cashier">Cashier</option>
+              <option value="mechanics">Mechanics</option>
+              <option value="entertainer">Entertainer</option>
+              <option value="customer service">Customer Service</option>
+              <option value="cleaner">Cleaner</option>
               <option value = "ticket sales"> Ticket Sales</option>
               <option value = "lotteries"> Lotteries </option>
               <option value = "roller coaster operation"> Roller Coaster Operation</option>
             </select>
-            <select th:field="*{experiences[__${iterStat.index}__].years}">
+            <select required th:field="*{experiences[__${iterStat.index}__].years}">
               <option value="">-</option>
               <option value="0">&lt 1 Year</option>
               <option value="1">1 Year</option>
