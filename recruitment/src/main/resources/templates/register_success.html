@@ -10,6 +10,22 @@
   <body>
     <div th:insert="header :: header"></div>
     <h1>Registration successful!</h1>
+    <div
+      style="
+        border: 2px solid black;
+        border-radius: 8px;
+        max-width: 300px;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+      ">
+      <p style="font-size: large">Go to login</p>
+      <a
+        style="text-decoration: none; color: black; font-size: 40px"
+        href="/loginPage"
+        >&#8592;</a
+      >
+    </div>
     <div th:insert="footer :: footer"></div>
   </body>
 </html>
