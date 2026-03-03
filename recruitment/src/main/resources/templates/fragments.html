@@ -58,5 +58,28 @@
           th:attr="role=alert"></span>
       </div>
     </div>
+
+    <div th:fragment="fieldWithRules(labelText, fieldName, type, minlength, maxlength, pattern, title)">
+      <div>
+        <label th:for="${fieldName}" th:text="${labelText}"></label>
+        <input
+          th:id="${fieldName}"
+          th:field="*{__${fieldName}__}"
+          th:attr="type=${type},
+                  minlength=${minlength},
+                  maxlength=${maxlength},
+                  pattern=${pattern},
+                  title=${title}"
+          th:aria-label="${labelText}"
+          required />
+      </div>
+      <div>
+        <span th:if="${#fields.hasErrors(fieldName)}"
+              th:errors="*{__${fieldName}__}"
+              style="color: red"
+              role="alert"></span>
+      </div>
+    </div>
+    
   </body>
 </html>
