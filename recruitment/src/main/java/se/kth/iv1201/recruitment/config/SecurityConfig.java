@@ -123,7 +123,7 @@ public class SecurityConfig {
                     response.sendRedirect("/loginPage?error");// display any {param.error} that is included in the given thymeleaf template.
                     return;
                 }
-                response.sendRedirect("/competenceProfile");
+                response.sendRedirect("/userPage");
                 })
             .failureHandler((request, response, exception) -> {
                 String identifier = request.getParameter("username");

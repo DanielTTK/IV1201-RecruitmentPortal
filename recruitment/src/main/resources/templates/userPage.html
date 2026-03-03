@@ -20,17 +20,17 @@
 
     <h3>My applications</h3>
 
-    <table>
+    <table >
       <thead>
-        <tr>
-          <th>Status</th>
-          <th>Created</th>
-          <th>Action</th>
+        <tr >
+          <th style="padding-right: 120px;">Status</th>
+          <th style="padding-right: 140px;">Created</th>
+          <th style="padding-right: 120px; text-align:center">Action</th>
         </tr>
       </thead>
       <tbody>
         <tr th:if="${#lists.isEmpty(applications)}">
-          <td colspan="3">No applications yet</td>
+          <td colspan="3" style="padding-top: 20px; color: darkblue; font-weight:bold;">No applications yet, submit one by pressing "+"</td>
         </tr>
 
         <tr th:each="app : ${applications}">
@@ -50,9 +50,9 @@
                   style="display:inline;"
                   th:if="${!#lists.isEmpty(applications)}">
 
-              <input type="hidden" name="applicationId" th:value="${app.applicationId}" />
+              <input type="hidden" name="applicationId" th:value="${app.applicationId}" style="padding: 50px;"/>
               <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-              <button type="submit">Withdraw</button>
+              <button type="submit" style="align-items: left;">Withdraw</button>
             </form>
           </td>
         </tr>
