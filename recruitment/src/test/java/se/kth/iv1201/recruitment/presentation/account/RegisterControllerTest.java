@@ -23,6 +23,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 /**
@@ -61,6 +62,9 @@ public class RegisterControllerTest {
     @Autowired
     private WebApplicationContext context;
 
+    @Autowired
+    private AccountService accountService;
+
     private MockMvc mockMvc;
 
     @BeforeEach
@@ -73,6 +77,27 @@ public class RegisterControllerTest {
     @AfterEach
     void tearDown() {
         this.mockMvc = null;
+    }
+
+    /**
+     * This test verifies that after a successful registration, the AccountService's 
+     * registerUser method is called with the expected parameters.
+     * @throws Exception
+     */
+    @Test
+    void expectedParametersInAccountService() throws Exception {
+        mockMvc.perform(post("/register")
+                .param("firstName", "Alice")
+                .param("lastName", "Swedishson")
+                .param("username", "alice777")
+                .param("personNumber", "197101015678")
+                .param("email", "alice@google.com")
+                .param("password", "password123")
+                .param("confirmedPassword", "password123")
+                )
+                .andExpect(status().isOk());
+
+        verify(accountService).registerUser("Alice", "Swedishson", "alice777", "197101015678", "alice@google.com", "password123");
     }
 
     @WithMockUser

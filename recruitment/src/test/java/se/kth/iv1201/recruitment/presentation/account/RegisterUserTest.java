@@ -2,6 +2,7 @@ package se.kth.iv1201.recruitment.presentation.account;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 import org.junit.jupiter.api.AfterEach;
@@ -22,6 +23,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 
 import se.kth.iv1201.recruitment.application.AccountService;
 import se.kth.iv1201.recruitment.application.ApplicationService;
+import se.kth.iv1201.recruitment.domain.Person;
 import se.kth.iv1201.recruitment.repository.PersonRepository;
 /**
  * This test verifies if a user is properly registered in the database from the register form. It is a general test, 
@@ -64,6 +66,9 @@ public class RegisterUserTest {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private PersonRepository personRepository;
+
     @BeforeEach
     void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac)
@@ -76,9 +81,14 @@ public class RegisterUserTest {
         this.mockMvc = null;
     }
 
+
+    /**
+     * This test verifies that after a successful registration, the AccountService's registerUser method is called with the expected parameters.
+     * @throws Exception
+     */
     @WithMockUser
     @Test
-    void personSavedInDBAfterPosting() throws Exception {
+    void personSentToAccountService() throws Exception {
         String username = "alice777";
 
         mockMvc.perform(post("/register")
@@ -101,5 +111,29 @@ public class RegisterUserTest {
         "alice@google.com",
         "password123"
     );
+    }
+
+    /**
+     * This test verifies that after a successful registration, the user is saved in the database with the correct attributes.
+     * @throws Exception
+     */
+    @Test
+    void personSentToPersonRepository() throws Exception {
+        String username = "alice777";
+
+        mockMvc.perform(post("/register")
+                .param("firstName", "Alice")
+                .param("lastName", "Swedishson")
+                .param("username", username)
+                .param("personNumber", "197101015678")
+                .param("email", "alice@google.com")
+                .param("password", "password123")
+                .param("confirmedPassword", "password123"))
+                .andExpect(status().isOk());
+
+        Person p = personRepository.findByUsernameIgnoreCase(username).orElse(null);
+        assertThat(p).isNotNull();
+        assertThat(p.getEmail()).isEqualTo("alice@google.com");
+        assertThat(p.getPassword()).isNotEqualTo("password123");
     }
 }
