@@ -12,10 +12,16 @@
     <div style="text-align: left">
       <h3>Submit a new application</h3>
       <div style="margin-top: 20px; padding-top: 20px; padding-bottom: 50px">
-        <a href="/competenceProfile"
-           style="padding: 20px 40px; border: 2px solid black; text-decoration: none; color: black; border-radius: 4px;">
+        <a th:if="${#lists.isEmpty(applications)}"
+          th:href="@{/competenceProfile}"
+          style="padding: 20px 40px; border: 2px solid black; text-decoration: none; color: black; border-radius: 4px;">
           +
         </a>
+
+        <span th:if="${!#lists.isEmpty(applications)}"
+              style="display:inline-block; padding: 20px 0; color: #444;">
+          You already have an application submitted.
+        </span>
       </div>
 
     <h3>My applications</h3>
@@ -35,14 +41,10 @@
 
         <tr th:each="app : ${applications}">
           <td>
-            <span th:text="${app.status}">DRAFT</span>
+            <span th:text="${app.status}">UNHANDLED</span>
           </td>
           <td th:text="${#temporals.format(app.createdAt, 'yyyy-MM-dd HH:mm')}">2026-03-02 14:54</td>
           <td>
-            <a th:if="${app.status.name() == 'DRAFT'}"
-              href="/competenceProfile"
-              style="display:inline-block; padding: 6px 10px; border: 1px solid #000; border-radius: 4px; text-decoration:none; color:inherit;">
-              Continue
             </a>
 
             <form th:action="@{/application/withdraw}"

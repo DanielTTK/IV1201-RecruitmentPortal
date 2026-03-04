@@ -43,6 +43,16 @@ public class ApplicationService {
     private final AvailabilityRepository availabilityRepository;
 
 
+    /**
+     * Constructs the ApplicationService with required dependencies.
+     * The repositories are injected to allow the service to perform necessary database operations for handling applications.
+     * 
+     * @param applicationRepository
+     * @param personRepository
+     * @param availabilityRepository
+     * @param competenceProfileRepository
+     * @param competenceRepository
+     */
     public ApplicationService(ApplicationRepository applicationRepository, 
         PersonRepository personRepository,             
         AvailabilityRepository availabilityRepository,
@@ -86,7 +96,7 @@ public class ApplicationService {
 
         Application application = new Application();
         application.setPerson(person);
-        application.setStatus(ApplicationStatus.SUBMITTED);
+        application.setStatus(ApplicationStatus.UNHANDLED);
         applicationRepository.save(application);
 
         //Provided List (iterable) of dates that is submitted and collect them into a list for "batch" persistence. 
