@@ -21,6 +21,7 @@ import jakarta.validation.Validator;
 import se.kth.iv1201.recruitment.application.AccountService;
 
 /**
+ * Tests for {@link RegisterForm} covering all constraints and cases.
  */
 @WebMvcTest(RegisterForm.class)
 @AutoConfigureMockMvc(addFilters = false)
