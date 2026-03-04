@@ -19,9 +19,9 @@ import se.kth.iv1201.recruitment.repository.PersonRepository;
  * 
  * The controller retrieves the user's information and their applications from the database and populates the model for the user page view.
  * It also handles the withdrawal of applications by calling the ApplicationService to delete the application and associated data.
+ * 
+ * @return the user page view, where the user can see their name and a list of their applications, with options to withdraw them.
  */
-
-
 @Controller
 public class UserPageController {
 
@@ -29,6 +29,16 @@ public class UserPageController {
     private final ApplicationRepository applicationRepository;
     private final ApplicationService applicationService;
 
+
+    /**
+     * Constructs the UserPageController with the required dependencies. The PersonRepository is used to retrieve user information from the 
+     * database, the ApplicationRepository is used to retrieve the user's applications, and the ApplicationService is used to handle the 
+     * business logic of withdrawing an application.
+     * 
+     * @param personRepository
+     * @param applicationRepository
+     * @param applicationService
+     */
     public UserPageController(PersonRepository personRepository, ApplicationRepository applicationRepository, ApplicationService applicationService) {
         this.personRepository = personRepository;
         this.applicationRepository = applicationRepository;
@@ -56,14 +66,21 @@ public class UserPageController {
         }
 
         var person = personOpt.get();
-        List<Application> applications =
-                applicationRepository.findAllByPersonPersonId(person.getPersonId());
+        List<Application> applications = applicationRepository.findAllByPersonPersonId(person.getPersonId());
 
         model.addAttribute("name", person.getName());
         model.addAttribute("applications", applications);
         return "userPage";
     }
 
+    /**
+     * Handles POST requests to withdraw an application. It calls the ApplicationService to delete the application and associated data, 
+     * and then redirects back to the user page.
+     * 
+     * @param applicationId
+     * @param principal
+     * @return
+     */
     @PostMapping("/application/withdraw")
     public String withdraw(@RequestParam("applicationId") Integer applicationId, Principal principal) {
         applicationService.withdrawApplication(principal.getName(), applicationId);
