@@ -11,6 +11,9 @@ import se.kth.iv1201.recruitment.repository.PersonRepository;
 
 import java.security.SecureRandom;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Controller for handling legacy user verification. This controller manages the flow for users who has the is_legacy 
  * flag set to true during login. 
@@ -20,6 +23,8 @@ import java.security.SecureRandom;
 @Controller
 @RequestMapping("/legacy")
 public class LegacyController {
+
+    private static final Logger log = LoggerFactory.getLogger(LegacyController.class);
 
     private static final String LEGACY_PERSON_ID = "LEGACY_PERSON_ID";
     private static final String LEGACY_OTP = "LEGACY_OTP";
@@ -52,14 +57,18 @@ public class LegacyController {
     public String start(@RequestParam("identifier") String identifier,
                         HttpSession session) {
 
+        log.info("LEGACY_OTP_START identifier_present={}", identifier != null && !identifier.isBlank());
+
         Person person = repo.findByUsernameIgnoreCaseOrEmailIgnoreCase(identifier, identifier)
                 .orElse(null);
 
         if (person == null || !person.isLegacy()) {
+            log.warn("LEGACY_OTP_START_REJECTED reason=not_legacy_or_missing");
             return "redirect:/loginPage?error";
         }
 
         if (person.getEmail() == null || person.getEmail().isBlank()) {
+            log.warn("LEGACY_OTP_START_REJECTED personId={} reason=missing_email", person.getPersonId());
             return "redirect:/loginPage?error";
         }
 
@@ -67,8 +76,8 @@ public class LegacyController {
         session.setAttribute(LEGACY_PERSON_ID, person.getPersonId());
         session.setAttribute(LEGACY_OTP, otp);
 
-
         resendEmailService.sendOtp(person.getEmail(), otp);
+        log.info("LEGACY_OTP_SENT personId={}", person.getPersonId());
 
         return "legacy_otp";
     }
@@ -84,16 +93,19 @@ public class LegacyController {
      */
     @PostMapping("/verify")
     public String verify(@RequestParam("code") String code,
-                         HttpSession session,
-                         Model model) {
+                        HttpSession session,
+                        Model model) {
 
         String expected = (String) session.getAttribute(LEGACY_OTP);
+        Integer personId = (Integer) session.getAttribute(LEGACY_PERSON_ID);
 
         if (expected == null || code == null || !code.equals(expected)) {
+            log.warn("LEGACY_OTP_VERIFY_FAILURE personId={}", personId);
             model.addAttribute("error", true);
             return "legacy_otp";
         }
 
+        log.info("LEGACY_OTP_VERIFY_SUCCESS personId={}", personId);
         return "redirect:/register";
     }
 
@@ -106,6 +118,9 @@ public class LegacyController {
      */
     @GetMapping("/cancel")
     public String cancel(HttpSession session) {
+        Integer personId = (Integer) session.getAttribute(LEGACY_PERSON_ID);
+        log.info("LEGACY_OTP_CANCEL personId={}", personId);
+
         session.removeAttribute(LEGACY_PERSON_ID);
         session.removeAttribute(LEGACY_OTP);
         return "redirect:/loginPage";
