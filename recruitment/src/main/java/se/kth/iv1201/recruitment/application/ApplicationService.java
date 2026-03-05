@@ -15,8 +15,12 @@ import se.kth.iv1201.recruitment.repository.AvailabilityRepository;
 import se.kth.iv1201.recruitment.repository.CompetenceProfileRepository;
 import se.kth.iv1201.recruitment.repository.CompetenceRepository;
 import se.kth.iv1201.recruitment.repository.PersonRepository;
+import se.kth.iv1201.recruitment.util.ApplicationPersistenceValidator;
 import se.kth.iv1201.recruitment.domain.CompetenceProfile;
 import se.kth.iv1201.recruitment.presentation.account.CompetenceProfileForm;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -42,7 +46,18 @@ public class ApplicationService {
     private final CompetenceRepository competenceRepository;
     private final AvailabilityRepository availabilityRepository;
 
+    private static final Logger log = LoggerFactory.getLogger(ApplicationService.class);
 
+    /**
+     * Constructs the ApplicationService with required dependencies.
+     * The repositories are injected to allow the service to perform necessary database operations for handling applications.
+     * 
+     * @param applicationRepository
+     * @param personRepository
+     * @param availabilityRepository
+     * @param competenceProfileRepository
+     * @param competenceRepository
+     */
     public ApplicationService(ApplicationRepository applicationRepository, 
         PersonRepository personRepository,             
         AvailabilityRepository availabilityRepository,
@@ -80,14 +95,28 @@ public class ApplicationService {
         Person person = personRepository.findByUsernameIgnoreCase(username)
                 .orElseThrow(() -> new IllegalArgumentException("Person not found"));
 
+        log.info("APPLICATION_SUBMIT_ATTEMPT personId={} availabilityCount={} competenceCount={}",
+                person.getPersonId(),
+                form != null && form.getDateRanges() != null ? form.getDateRanges().size() : 0,
+                form != null && form.getExperiences() != null ? form.getExperiences().size() : 0);
+
+
         if (applicationRepository.existsByPersonPersonId(person.getPersonId())) {
+            log.info("APPLICATION_SUBMIT_BLOCKED_ALREADY_EXISTS personId={}", person.getPersonId());
             throw new ApplicationAlreadySubmitted();
         }
 
+        ApplicationPersistenceValidator.validate(form); //validation in integration layer!
+
         Application application = new Application();
         application.setPerson(person);
-        application.setStatus(ApplicationStatus.SUBMITTED);
-        applicationRepository.save(application);
+        application.setStatus(ApplicationStatus.UNHANDLED);
+
+        Application savedApp = applicationRepository.save(application);
+
+        log.info("APPLICATION_SUBMIT_SUCCESS applicationId={} personId={}",
+                savedApp.getApplicationId(), person.getPersonId());
+
 
         //Provided List (iterable) of dates that is submitted and collect them into a list for "batch" persistence. 
         List<Availability> availabilities = form.getDateRanges().stream()
@@ -132,22 +161,25 @@ public class ApplicationService {
                 .findByUsernameIgnoreCaseOrEmailIgnoreCase(identifier, identifier)
                 .orElseThrow(() -> new IllegalArgumentException("Person not found"));
 
+        log.info("APPLICATION_WITHDRAW_ATTEMPT personId={} applicationId={}",
+                person.getPersonId(), applicationId);
+
         Application app = applicationRepository.findById(applicationId)
                 .orElseThrow(() -> new IllegalArgumentException("Application not found"));
 
         if (!app.getPerson().getPersonId().equals(person.getPersonId())) {
+            log.warn("APPLICATION_WITHDRAW_FORBIDDEN_NOT_OWNER requesterPersonId={} applicationOwnerPersonId={} applicationId={}",
+                    person.getPersonId(), app.getPerson().getPersonId(), applicationId);
             throw new IllegalArgumentException("Not your application");
         }
 
         applicationRepository.delete(app);
 
-
-        /**
-         * Cleaning up associated availability and competence profile entries for the person.
-         * This makes sure that when an application is withdrawn, all related data is also removed from the DB.
-         */
-
+        //Clean up associated availability and competence profile entries
         availabilityRepository.deleteAllByPersonPersonId(person.getPersonId());
         competenceProfileRepository.deleteAllByPersonPersonId(person.getPersonId());
+
+        log.info("APPLICATION_WITHDRAW_SUCCESS personId={} applicationId={}",
+                person.getPersonId(), applicationId);
     }
 }
