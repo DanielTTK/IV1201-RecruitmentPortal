@@ -12,8 +12,6 @@ import se.kth.iv1201.recruitment.domain.Application;
  *
  */
 
-
-
 public interface ApplicationRepository extends JpaRepository<Application, Integer> {
 
     /**
@@ -25,8 +23,6 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
 
     List<Application> findAllByPersonPersonId(Integer personId);
 
-
-
     /**
      * Returns an application for a person if it exists.
      *
@@ -34,8 +30,6 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
      * @return The person's application, or empty if none exists.
      */
     Optional<Application> findByPersonPersonId(Integer personId);
-
-
 
     /**
      * Checks whether a person already has an application.
