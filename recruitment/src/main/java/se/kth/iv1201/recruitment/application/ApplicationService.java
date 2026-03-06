@@ -155,7 +155,7 @@ public class ApplicationService {
      * @param identifier
      * @param applicationId
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public void withdrawApplication(String identifier, Integer applicationId) {
         Person person = personRepository
                 .findByUsernameIgnoreCaseOrEmailIgnoreCase(identifier, identifier)
@@ -166,7 +166,7 @@ public class ApplicationService {
 
         Application app = applicationRepository.findById(applicationId)
                 .orElseThrow(() -> new IllegalArgumentException("Application not found"));
-
+        
         if (!app.getPerson().getPersonId().equals(person.getPersonId())) {
             log.warn("APPLICATION_WITHDRAW_FORBIDDEN_NOT_OWNER requesterPersonId={} applicationOwnerPersonId={} applicationId={}",
                     person.getPersonId(), app.getPerson().getPersonId(), applicationId);
@@ -182,9 +182,11 @@ public class ApplicationService {
         log.info("APPLICATION_WITHDRAW_SUCCESS personId={} applicationId={}",
                 person.getPersonId(), applicationId);
     }
-
-    // Method to retrieve all the applications 
+    // Read-only method to fetch the content from the database
+    @Transactional(readOnly = true)
     public List<Application> getAllApplications() {
-        return applicationRepository.findAllWithPerson();
+        List<Application> apps = applicationRepository.findAll();
+        apps.forEach(app -> app.getPerson().getName());   // force lazy load while transaction is open
+    return apps;
     }
 }

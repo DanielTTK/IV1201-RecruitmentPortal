@@ -59,6 +59,7 @@ public class UserPageController {
         String identifier = principal.getName();
 
         var personOpt = personRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(identifier, identifier);
+        
         if (personOpt.isEmpty()) {
             model.addAttribute("name", "User");
             model.addAttribute("applications", List.of());

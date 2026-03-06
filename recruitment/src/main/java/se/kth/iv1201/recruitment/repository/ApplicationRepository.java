@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import se.kth.iv1201.recruitment.domain.Application;
-import org.springframework.data.jpa.repository.Query;
 
 
 /**
@@ -41,6 +40,4 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
      */
     boolean existsByPersonPersonId(Integer personId);
 
-    @Query("SELECT a FROM Application a JOIN FETCH a.person")
-    List<Application> findAllWithPerson();
 }
