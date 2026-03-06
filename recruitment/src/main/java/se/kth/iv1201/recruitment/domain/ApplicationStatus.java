@@ -11,17 +11,17 @@ package se.kth.iv1201.recruitment.domain;
 
 public enum ApplicationStatus {
     /**
-     * Application exists but has not been submitted yet.
+     * Application has been reviewed by the recruiters and now rejected.
      */
-    DRAFT,
+    REJECTED,
 
     /**
      * Application has been submitted and not yet reviewed by recruiter.
      */
-    UNHANDLED,
+    ACCEPTED,
 
     /**
-     * Application has been submitted by the applicant.
+     * Application has been submitted by the applicant but has not been reviewed by recruiters yet.
      */
-    SUBMITTED
+    UNHANDLED
 }
