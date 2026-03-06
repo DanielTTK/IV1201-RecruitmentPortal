@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "recruitment/src/main/resources/templates",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
