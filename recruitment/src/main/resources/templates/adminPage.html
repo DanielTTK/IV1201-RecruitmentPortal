@@ -11,6 +11,7 @@
       <table>
         <thead>
           <tr>
+            <th style="padding-right: 140px; padding-bottom: 20px;">Applicant</th>
             <th style="padding-right: 120px; padding-bottom: 20px;">Status</th>
             <th style="padding-right: 140px; padding-bottom: 20px;">Created</th>
             <th style="padding-right: 120px; padding-bottom: 20px; text-align: center"></th>
@@ -20,8 +21,12 @@
           <tr th:if="${#lists.isEmpty(applications)}">
             <td colspan="3">No applications yet</td>
           </tr>
-
           <tr th:each="app : ${applications}">
+          <td style="padding-bottom: 20px;">
+            <span th:text="${app.person.name + ' ' + app.person.surname}">
+              John Doe
+            </span>
+          </td>
             <td style="padding-bottom: 20px;">
               <span th:text="${app.status}">DRAFT</span>
             </td>

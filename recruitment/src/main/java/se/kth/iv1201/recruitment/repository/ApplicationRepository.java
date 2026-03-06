@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import se.kth.iv1201.recruitment.domain.Application;
+import org.springframework.data.jpa.repository.Query;
+
 
 /**
  * Repository for {@link se.kth.iv1201.recruitment.domain.Application}.
@@ -38,4 +40,7 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
      * @return True if an application exists for the person, otherwise false.
      */
     boolean existsByPersonPersonId(Integer personId);
+
+    @Query("SELECT a FROM Application a JOIN FETCH a.person")
+    List<Application> findAllWithPerson();
 }

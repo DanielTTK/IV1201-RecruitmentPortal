@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import se.kth.iv1201.recruitment.application.ApplicationService;
 import se.kth.iv1201.recruitment.domain.Application;
-import se.kth.iv1201.recruitment.repository.ApplicationRepository;
 
 /**
  * Controller for handling requests to the admin page.
@@ -18,14 +17,21 @@ import se.kth.iv1201.recruitment.repository.ApplicationRepository;
 @Controller
 public class AdminPageController {
 
-    private final ApplicationRepository applicationRepository;
+    /*private final ApplicationRepository applicationRepository;
 
     public AdminPageController(ApplicationRepository applicationRepository,
             ApplicationService applicationService) {
         this.applicationRepository = applicationRepository;
+    }*/
+
+    private final ApplicationService applicationService;
+    public AdminPageController(ApplicationService applicationService) {
+        this.applicationService = applicationService;
     }
 
-    @GetMapping("/adminPage")
+
+
+    /*@GetMapping("/adminPage")
     public String adminPage(Model model) {
 
         List<Application> applications = applicationRepository.findAll();
@@ -33,5 +39,11 @@ public class AdminPageController {
         model.addAttribute("applications", applications);
 
         return "adminPage";
+    }*/
+   @GetMapping("/adminPage")
+    public String adminPage(Model model) {
+    List<Application> applications = applicationService.getAllApplications();
+    model.addAttribute("applications", applications);
+    return "adminPage";
     }
 }

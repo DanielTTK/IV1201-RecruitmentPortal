@@ -182,4 +182,8 @@ public class ApplicationService {
         log.info("APPLICATION_WITHDRAW_SUCCESS personId={} applicationId={}",
                 person.getPersonId(), applicationId);
     }
+
+    public List<Application> getAllApplications() {
+        return applicationRepository.findAllWithPerson();
+    }
 }
