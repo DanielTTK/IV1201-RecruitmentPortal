@@ -155,7 +155,7 @@ public class ApplicationService {
      * @param identifier
      * @param applicationId
      */
-    @Transactional(readOnly = true)
+    @Transactional
     public void withdrawApplication(String identifier, Integer applicationId) {
         Person person = personRepository
                 .findByUsernameIgnoreCaseOrEmailIgnoreCase(identifier, identifier)
