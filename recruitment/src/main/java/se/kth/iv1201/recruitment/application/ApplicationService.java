@@ -183,6 +183,7 @@ public class ApplicationService {
                 person.getPersonId(), applicationId);
     }
 
+    // Method to retrieve all the applications 
     public List<Application> getAllApplications() {
         return applicationRepository.findAllWithPerson();
     }
