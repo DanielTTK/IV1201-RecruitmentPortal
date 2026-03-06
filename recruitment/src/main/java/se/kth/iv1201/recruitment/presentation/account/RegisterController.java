@@ -31,6 +31,15 @@ public class RegisterController {
     private final AccountService accountService;
     private final PersonRepository personRepository;
 
+
+    /**
+     * Constructs the RegisterController with the required dependencies. The AccountService is used to handle the business logic of
+     * registering a new user, including validation of unique fields and password encryption. The PersonRepository is used to look up 
+     * legacy user information when a legacy user is completing their registration.
+     * 
+     * @param accountService
+     * @param personRepository
+     */
     public RegisterController(AccountService accountService, PersonRepository personRepository) {
         this.accountService = accountService;
         this.personRepository = personRepository;

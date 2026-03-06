@@ -1,12 +1,3 @@
-/**
- * Handles register/login-related logic.
- *
- * Here the “rules” are kept (unique username, password hashing etc) and log important events
- * PW hashing (HGP 7) and logging (HGP 9) done.
- *
- */
-
-
 package se.kth.iv1201.recruitment.application;
 
 import org.slf4j.Logger;
@@ -80,6 +71,10 @@ public class AccountService {
         //Pnr normalized to match DB format
         String digits = personNumber.replaceAll("\\D", "");
         String normalizedPnr = digits.substring(0, 8) + "-" + digits.substring(8);
+
+        if (!normalizedPnr.matches("\\d{8}-\\d{4}")) {
+            throw new IllegalArgumentException("Invalid person number format"); //Validation in the integration layer
+        }
 
         if (personRepository.existsByPnr(normalizedPnr)) {
             log.info("Register failed: personnumber_taken personNumber={}", normalizedPnr);

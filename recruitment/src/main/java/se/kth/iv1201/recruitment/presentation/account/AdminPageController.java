@@ -10,6 +10,11 @@ import se.kth.iv1201.recruitment.application.ApplicationService;
 import se.kth.iv1201.recruitment.domain.Application;
 import se.kth.iv1201.recruitment.repository.ApplicationRepository;
 
+/**
+ * Controller for handling requests to the admin page.
+ * 
+ * @return the admin page view 
+ */
 @Controller
 public class AdminPageController {
 

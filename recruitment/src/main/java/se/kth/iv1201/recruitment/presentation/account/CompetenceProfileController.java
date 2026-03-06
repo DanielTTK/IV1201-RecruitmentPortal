@@ -28,19 +28,28 @@ import se.kth.iv1201.recruitment.application.ApplicationService;
 @SessionAttributes("competenceProfile") 
 public class CompetenceProfileController {
 
-    /*
-    * Business logic and persistence are delegated to the {@link ApplicationService}.
-    */
     private final ApplicationService applicationService;
+
+    /**
+     * Constructs the CompetenceProfileController with the required ApplicationService dependency. The ApplicationService 
+     * is used to handle the business logic of submitting the competence profile application.
+     * 
+     * @param applicationService
+     */
     public CompetenceProfileController(ApplicationService applicationService) {
     this.applicationService = applicationService;
     }
 
+
     /**
-     * Initializes the {competence profile form} object which exists in the session before 
-     * any request handling method is executed. This is created so that we can pass further the content (data) to be reviewed
-     * at competenceProfile/review. 
-    */
+     * Initializes the competence profile form with default values. This method is called before any request handling method in this 
+     * controller, and ensures that there is a competence profile form object in the session for the user to fill out. The form is 
+     * initialized with one empty date range and one empty experience to allow the user to start filling out their competence profile 
+     * immediately.
+     * 
+     * @return the initialized competence profile form with default values
+     */
+
     @ModelAttribute("competenceProfile")
     public CompetenceProfileForm initializeForm()  {
         CompetenceProfileForm form = new CompetenceProfileForm();
@@ -70,9 +79,6 @@ public class CompetenceProfileController {
             @RequestParam(value = "review", required = false) String review
             ) {
 
-        //! Remove when done with troubleshooting
-        System.out.println("Date ranges" + form.getDateRanges());
-        System.out.println("Experiences" + form.getExperiences());
 
         if (bindingResult.hasErrors()) {
             return "competenceProfile";
@@ -88,12 +94,28 @@ public class CompetenceProfileController {
         return "competenceReview";
     }
 
+
+    /**
+     * Cancels the competence profile form submission process by clearing the session attributes and returning 
+     * to the competence profile page.
+     * 
+     * @param sessionStatus used to clear the session attributes related to the competence profile form
+     * @return a redirect to the competence profile page
+     */
     @GetMapping("/competenceProfile/cancel")
     public String cancel(SessionStatus sessionStatus) {
         sessionStatus.setComplete(); 
         return "/competenceProfile";
     }
 
+
+    /**
+     * Handles the review of the competence profile form. This method is called when the user clicks the "Review"
+     * button on the competence profile form.
+     * 
+     * @return the view name for the competence profile review page, where the user can see a summary of their input and 
+     * confirm submission.
+     */
     @GetMapping("/competenceProfile/review")
     public String review() {
         return "competenceReview";
