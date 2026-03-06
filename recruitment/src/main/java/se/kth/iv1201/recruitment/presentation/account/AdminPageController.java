@@ -16,30 +16,12 @@ import se.kth.iv1201.recruitment.domain.Application;
  */
 @Controller
 public class AdminPageController {
-
-    /*private final ApplicationRepository applicationRepository;
-
-    public AdminPageController(ApplicationRepository applicationRepository,
-            ApplicationService applicationService) {
-        this.applicationRepository = applicationRepository;
-    }*/
-
+    
     private final ApplicationService applicationService;
     public AdminPageController(ApplicationService applicationService) {
         this.applicationService = applicationService;
     }
 
-
-
-    /*@GetMapping("/adminPage")
-    public String adminPage(Model model) {
-
-        List<Application> applications = applicationRepository.findAll();
-
-        model.addAttribute("applications", applications);
-
-        return "adminPage";
-    }*/
    @GetMapping("/adminPage")
     public String adminPage(Model model) {
     List<Application> applications = applicationService.getAllApplications();
