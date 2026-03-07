@@ -59,13 +59,13 @@ public class Application {
     /**
      * Creation timestamp, set by the database.
      */
-    @Column(name = "created_at", nullable = false, insertable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, insertable = false, updatable = false, columnDefinition="timestamp default CURRENT_TIMESTAMP")
     private OffsetDateTime createdAt;
 
     /**
      * Last update timestamp, set/updated by the database.
      */
-    @Column(name = "updated_at", nullable = false, insertable = false, updatable = false)
+    @Column(name = "updated_at", nullable = false, insertable = false, updatable = false, columnDefinition="timestamp default CURRENT_TIMESTAMP")
     private OffsetDateTime updatedAt;
 
 
