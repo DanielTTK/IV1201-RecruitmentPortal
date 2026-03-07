@@ -147,41 +147,6 @@ public class ApplicationService {
 
         competenceProfileRepository.saveAll(profiles);
     }
-
-    /**
-     * Withdraws an existing application for a user. 
-     * This method deletes the Application entity and all associated Availability and CompetenceProfile entities for the user.
-     * 
-     * @param identifier
-     * @param applicationId
-     */
-    @Transactional
-    public void withdrawApplication(String identifier, Integer applicationId) {
-        Person person = personRepository
-                .findByUsernameIgnoreCaseOrEmailIgnoreCase(identifier, identifier)
-                .orElseThrow(() -> new IllegalArgumentException("Person not found"));
-
-        log.info("APPLICATION_WITHDRAW_ATTEMPT personId={} applicationId={}",
-                person.getPersonId(), applicationId);
-
-        Application app = applicationRepository.findById(applicationId)
-                .orElseThrow(() -> new IllegalArgumentException("Application not found"));
-        
-        if (!app.getPerson().getPersonId().equals(person.getPersonId())) {
-            log.warn("APPLICATION_WITHDRAW_FORBIDDEN_NOT_OWNER requesterPersonId={} applicationOwnerPersonId={} applicationId={}",
-                    person.getPersonId(), app.getPerson().getPersonId(), applicationId);
-            throw new IllegalArgumentException("Not your application");
-        }
-
-        applicationRepository.delete(app);
-
-        //Clean up associated availability and competence profile entries
-        availabilityRepository.deleteAllByPersonPersonId(person.getPersonId());
-        competenceProfileRepository.deleteAllByPersonPersonId(person.getPersonId());
-
-        log.info("APPLICATION_WITHDRAW_SUCCESS personId={} applicationId={}",
-                person.getPersonId(), applicationId);
-    }
     // Read-only method to fetch the content from the database
     @Transactional(readOnly = true)
     public List<Application> getAllApplications() {

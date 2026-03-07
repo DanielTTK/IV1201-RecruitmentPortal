@@ -31,7 +31,6 @@
         <tr >
           <th style="padding-right: 120px;">Status</th>
           <th style="padding-right: 140px;">Created</th>
-          <th style="padding-right: 120px; text-align:center">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -46,16 +45,6 @@
           <td th:text="${#temporals.format(app.createdAt, 'yyyy-MM-dd HH:mm')}">2026-03-02 14:54</td>
           <td>
             </a>
-
-            <form th:action="@{/application/withdraw}"
-                  method="post"
-                  style="display:inline;"
-                  th:if="${!#lists.isEmpty(applications)}">
-
-              <input type="hidden" name="applicationId" th:value="${app.applicationId}" style="padding: 50px;"/>
-              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-              <button type="submit" style="align-items: left;">Withdraw</button>
-            </form>
           </td>
         </tr>
       </tbody>
