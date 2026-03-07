@@ -6,10 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import se.kth.iv1201.recruitment.application.ApplicationService;
 import se.kth.iv1201.recruitment.domain.Application;
 import se.kth.iv1201.recruitment.repository.ApplicationRepository;
 import se.kth.iv1201.recruitment.repository.PersonRepository;
@@ -27,7 +23,6 @@ public class UserPageController {
 
     private final PersonRepository personRepository;
     private final ApplicationRepository applicationRepository;
-    private final ApplicationService applicationService;
 
 
     /**
@@ -39,10 +34,9 @@ public class UserPageController {
      * @param applicationRepository
      * @param applicationService
      */
-    public UserPageController(PersonRepository personRepository, ApplicationRepository applicationRepository, ApplicationService applicationService) {
+    public UserPageController(PersonRepository personRepository, ApplicationRepository applicationRepository) {
         this.personRepository = personRepository;
         this.applicationRepository = applicationRepository;
-        this.applicationService = applicationService;
     }
 
 
@@ -59,6 +53,7 @@ public class UserPageController {
         String identifier = principal.getName();
 
         var personOpt = personRepository.findByUsernameIgnoreCaseOrEmailIgnoreCase(identifier, identifier);
+        
         if (personOpt.isEmpty()) {
             model.addAttribute("name", "User");
             model.addAttribute("applications", List.of());
@@ -71,19 +66,5 @@ public class UserPageController {
         model.addAttribute("name", person.getName());
         model.addAttribute("applications", applications);
         return "userPage";
-    }
-
-    /**
-     * Handles POST requests to withdraw an application. It calls the ApplicationService to delete the application and associated data, 
-     * and then redirects back to the user page.
-     * 
-     * @param applicationId
-     * @param principal
-     * @return
-     */
-    @PostMapping("/application/withdraw")
-    public String withdraw(@RequestParam("applicationId") Integer applicationId, Principal principal) {
-        applicationService.withdrawApplication(principal.getName(), applicationId);
-        return "redirect:/userPage";
     }
 }

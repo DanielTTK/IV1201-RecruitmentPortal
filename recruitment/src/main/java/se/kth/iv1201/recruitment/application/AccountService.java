@@ -30,6 +30,7 @@ public class AccountService {
     private final PersonRepository personRepository;
     private final PasswordEncoder passwordEncoder;
 
+
     /**
      * Constructs an AccountService with required dependencies.
      *
