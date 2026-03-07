@@ -5,7 +5,6 @@ package se.kth.iv1201.recruitment.domain;
  * UNHANDLED: The application has been submitted but has not been reviewed by the recruiters yet.
  * ACCEPTED: The application has been reviewed and accepted by the recruiters.
  * REJECTED: The application has been reviewed and rejected by the recruiters.
- * SUBMITTED: The application has been sent to the system.
  * This enum is used in the Application entity to track the current status of each application, and it can be used in the business logic to determine what actions are allowed based on the application's status.
  */
 
@@ -14,12 +13,6 @@ public enum ApplicationStatus {
      * Application has been reviewed by the recruiters and now rejected.
      */
     REJECTED,
-
-    /**
-     * Application has been submitted after review.
-     */
-    SUBMITTED,
-
     /**
      * Application has been submitted and not yet reviewed by recruiter.
      */
