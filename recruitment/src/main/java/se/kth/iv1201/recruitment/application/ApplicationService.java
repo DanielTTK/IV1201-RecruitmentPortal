@@ -152,6 +152,9 @@ public class ApplicationService {
     public List<Application> getAllApplications() {
         List<Application> apps = applicationRepository.findAll();
         apps.forEach(app -> app.getPerson().getName());   // force lazy load while transaction is open
+        apps.forEach(app -> app.getPerson().getCompetenceProfiles().size()); 
+        apps.forEach(app -> app.getPerson().getCompetenceProfiles()
+            .forEach(profile -> profile.getCompetence().getName())); 
     return apps;
     }
 }
