@@ -68,11 +68,6 @@
           </div>
         </div>
 
-        <div
-          th:replace="~{fragments :: textareaField('What is your motivation for applying for this job', 'motivation')}"></div>
-        <div
-          th:replace="~{fragments :: textareaField('Tell us something about yourself', 'aboutYou')}"></div>
-        <div>
           <h3>When will you be able to work?</h3>
           <div class="row" th:each="range, iterStat : *{dateRanges}">
             <label for="startDate__${iterStat.index}">Start date</label>
