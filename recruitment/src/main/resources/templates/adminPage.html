@@ -35,13 +35,13 @@
             <td colspan="3">No applications yet</td>
           </tr>
           <tr th:each="app : ${applications}">
-            <td style="padding-bottom: 20px; vertical-align: top">
-              <span th:text="${app.person.name + ' ' + app.person.surname}">
-                John Doe
-              </span>
-            </td>
-            <td style="padding-bottom: 20px; vertical-align: top">
-              <span th:text="${app.status}">DRAFT</span>
+          <td style="padding-bottom: 20px;">
+            <span th:text="${app.person.name + ' ' + app.person.surname}">
+              John Doe
+            </span>
+          </td>
+            <td style="padding-bottom: 20px;">
+              <span th:text="${app.status}">UNHANDLED</span>
             </td>
             <td
               style="padding-bottom: 20px; vertical-align: top"
