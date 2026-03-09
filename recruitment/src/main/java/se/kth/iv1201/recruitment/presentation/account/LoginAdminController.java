@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 /**
  * Controller for handling admin login requests.
  * 
- * @return the admin login page view
  */
 @Controller
 public class LoginAdminController {

@@ -5,11 +5,15 @@ import java.util.List;
 import jakarta.validation.Valid;
 
 /**
- * Form object for the competence profile page. It contains fields for the user's previous work experience, and motivation.
- * It also contains lists of date ranges and experiences for the user's previous work experience.
+ * Form object for the competence profile page. It contains fields for the
+ * user's previous work experience, and motivation.
+ * It also contains lists of date ranges and experiences for the user's previous
+ * work experience.
  * 
- * The form is used to capture the user's input when they fill out their competence profile, and it is validated using Bean Validation annotations.
- * The controller will handle the submission of this form and save the data to the database.
+ * The form is used to capture the user's input when they fill out their
+ * competence profile, and it is validated using Bean Validation annotations.
+ * The controller will handle the submission of this form and save the data to
+ * the database.
  */
 public class CompetenceProfileForm {
 
@@ -20,13 +24,14 @@ public class CompetenceProfileForm {
     private String prevExperienceYears;
 
     @Valid
-    private List<DateRange> dateRanges = new ArrayList<>();
+    private List<DateRangeForm> dateRanges = new ArrayList<>();
 
     @Valid
-    private List<Experiences> experiences = new ArrayList<>();
+    private List<ExperiencesForm> experiences = new ArrayList<>();
 
     /**
-     * Getters and setters for the form fields. These are used by Spring to bind the form data to the form object when the user submits the form,
+     * Getters and setters for the form fields. These are used by Spring to bind the
+     * form data to the form object when the user submits the form,
      * and to populate the form fields when the form is displayed.
      * 
      * @return the value of the form fields
@@ -34,6 +39,7 @@ public class CompetenceProfileForm {
     public String getWorkingBefore() {
         return workingBefore;
     }
+
     public void setWorkingBefore(String workingBefore) {
         this.workingBefore = workingBefore;
     }
@@ -45,6 +51,7 @@ public class CompetenceProfileForm {
     public void setPrevExperience(String prevExperience) {
         this.prevExperience = prevExperience;
     }
+
     public String getPrevExperienceYears() {
         return prevExperienceYears;
     }
@@ -69,18 +76,19 @@ public class CompetenceProfileForm {
         this.aboutYou = aboutYou;
     }
 
-    public List<DateRange> getDateRanges() {
+    public List<DateRangeForm> getDateRanges() {
         return dateRanges;
     }
 
-    public void setDateRanges(List<DateRange> dateRanges) {
+    public void setDateRanges(List<DateRangeForm> dateRanges) {
         this.dateRanges = dateRanges;
     }
-    public List<Experiences> getExperiences() {
+
+    public List<ExperiencesForm> getExperiences() {
         return experiences;
     }
 
-    public void setExperiences(List<Experiences> experiences) {
+    public void setExperiences(List<ExperiencesForm> experiences) {
         this.experiences = experiences;
     }
 

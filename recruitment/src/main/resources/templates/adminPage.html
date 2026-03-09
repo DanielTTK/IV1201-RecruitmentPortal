@@ -8,7 +8,59 @@
     <div th:insert="header::header"></div>
     <h1 style="color: white">Handle applications</h1>
     <div style="text-align: left">
-        <!-- TODO - show all applications -->
+      <table>
+        <thead>
+          <tr>
+            <th style="padding-right: 180px; padding-bottom: 20px">
+              Applicant
+            </th>
+            <th style="padding-right: 100px; padding-bottom: 20px">Status</th>
+            <th style="padding-right: 150px; padding-bottom: 20px">Created</th>
+            <th style="padding-right: 150px; padding-bottom: 20px">
+              Experience
+            </th>
+            <th style="padding-right: 140px; padding-bottom: 20px">
+              Years of experience
+            </th>
+            <th
+              style="
+                padding-right: 120px;
+                padding-bottom: 20px;
+                text-align: center;
+              "></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:if="${#lists.isEmpty(applications)}">
+            <td colspan="3">No applications yet</td>
+          </tr>
+          <tr th:each="app : ${applications}">
+          <td style="padding-bottom: 20px;">
+            <span th:text="${app.person.name + ' ' + app.person.surname}">
+              John Doe
+            </span>
+          </td>
+            <td style="padding-bottom: 20px;">
+              <span th:text="${app.status}">UNHANDLED</span>
+            </td>
+            <td
+              style="padding-bottom: 20px; vertical-align: top"
+              th:text="${#temporals.format(app.createdAt, 'yyyy-MM-dd HH:mm')}">
+              2026-03-02 14:54
+            </td>
+            <td style="padding-bottom: 20px; vertical-align: top">
+              <span th:each="profile : ${app.person.competenceProfiles}">
+                <span th:text="${profile.competence.name}">skill</span><br />
+              </span>
+            </td>
+            <td style="padding-bottom: 20px; vertical-align: top">
+              <span th:each="profile : ${app.person.competenceProfiles}">
+                <span th:text="${profile.yearsOfExperience}">0</span><br />
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div th:insert="footer::footer"></div>
   </body>

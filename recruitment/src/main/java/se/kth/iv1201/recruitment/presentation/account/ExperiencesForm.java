@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
  * 
  * Also includes getters and setters. 
  */
-public class Experiences {
+public class ExperiencesForm {
     
     @NotBlank(message = "Previous Experience must be selected.")
     private String expertise;
@@ -36,6 +36,6 @@ public class Experiences {
 
     @Override
     public String toString() {
-        return "Experiences{" + "expertise='" + expertise + '\'' + ", years='" + years + '\'' + '}';
+        return "ExperiencesForm{" + "expertise='" + expertise + '\'' + ", years='" + years + '\'' + '}';
     }
 }
