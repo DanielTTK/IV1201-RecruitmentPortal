@@ -123,7 +123,7 @@ public class SecurityConfig {
                                  "/loginAdmin","/legacy/**").permitAll() // allow everyone, including non-authenticated to access the login portal.
                 .requestMatchers("/competenceProfile", "/competence", "/userPage")
                     .hasRole("APPLICANT") // Only allow the applicant to access these pages that are being requested.
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
             )
 
             .formLogin(form -> form
