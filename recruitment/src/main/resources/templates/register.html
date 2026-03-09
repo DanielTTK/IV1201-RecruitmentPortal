@@ -1,16 +1,11 @@
 <!-- Registration form. Use reusable fragments (HGP 27) and client-side validation (HGP 26) where appropriate. -->
 <!--Hardcoded in english atm-->
 
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Register account</title>
-    <link rel="stylesheet" href="/css/style.css" />
-  </head>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout('Register Account', ~{::body})">
+<body>
   <body>
     <h1>Register your account</h1>
-    <div th:insert="header :: header"></div>
     <form method="post" th:action="@{/register}" th:object="${registerForm}">
       <div
         th:replace="fragments :: field('First name', 'firstName', 'text')"></div>
@@ -29,7 +24,6 @@
       <div>
         <button type="submit">Submit</button>
       </div>
-      <div th:insert="footer :: footer"></div>
     </form>
   </body>
 </html>

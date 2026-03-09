@@ -1,12 +1,6 @@
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Login</title>
-    <link rel="stylesheet" href="/css/style.css" />
-  </head>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout('Login', ~{::body})">
   <body>
-    <div th:insert="header :: header"></div>
-
     <div>
       <h1>Login</h1>
       <form th:action="@{/login}" method="post">
@@ -25,7 +19,5 @@
         <button type="submit">Login</button>
       </form>
     </div>
-
-    <div th:insert="footer :: footer"></div>
   </body>
 </html>

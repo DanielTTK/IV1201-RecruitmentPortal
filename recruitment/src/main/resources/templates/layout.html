@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout(title, content)">
+
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${title}">Default title</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+
+<body>
+
+    <div th:replace="header :: header"></div>
+
+    <main>
+        <div th:replace="${content}"></div>
+    </main>
+
+    <div th:replace="footer :: footer"></div>
+
+</body>
+</html>

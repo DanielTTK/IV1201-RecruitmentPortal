@@ -1,9 +1,6 @@
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Home</title>
-    <link rel="stylesheet" href="/css/style.css" />
-  </head>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout('Home', ~{::body})">
+
   <body>
     <div th:insert="header :: header"></div>
     <div
