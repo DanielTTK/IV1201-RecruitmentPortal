@@ -1,14 +1,9 @@
 <!-- Simple confirmation page after successful application. -->
-
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Application Successful</title>
-    <link rel="stylesheet" href="/css/style.css" />
-  </head>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout('Application Successful', ~{::body})">
+
   <body>
-    <div th:insert="header :: header"></div>
     <h1>Application Sent!</h1>
     <p>Thank you for you application!</p>
     <p>
@@ -20,6 +15,5 @@
       <a href="/userPage" style="text-decoration: none; color: black;">Go back to my applications</a>
     </div>
 
-    <div th:insert="footer :: footer"></div>
   </body>
 </html>

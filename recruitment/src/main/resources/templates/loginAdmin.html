@@ -1,11 +1,6 @@
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Login Admin</title>
-    <link rel="stylesheet" href="/css/style.css" />
-  </head>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout('Login Admin', ~{::body})">
   <body style="background-color: #1d254d">
-    <div th:insert="header :: header"></div>
     <div class="loginAdmin" >
       <h1>Login for Recruiters</h1>
         <!--changed the post endpoint -->
@@ -24,6 +19,5 @@
         <button type="submit">Login</button>
       </form>
     </div>
-    <div th:insert="footer :: footer"></div>
   </body>
 </html>

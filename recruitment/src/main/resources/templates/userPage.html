@@ -1,14 +1,9 @@
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>User Page</title>
-    <link rel="stylesheet" href="/css/style.css" />
-  </head>
+<!-- Simple confirmation page after successful application. -->
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout('User Page', ~{::body})">
+
   <body>
-    <div th:insert="header :: header"></div>
-
     <h1>Welcome <span th:text="${name ?: 'User'}">User</span></h1>
-
     <div style="text-align: left">
       <h3>Submit a new application</h3>
       <div style="margin-top: 20px; padding-top: 20px; padding-bottom: 50px">
@@ -17,7 +12,6 @@
           style="padding: 20px 40px; border: 2px solid black; text-decoration: none; color: black; border-radius: 4px;">
           +
         </a>
-
         <span th:if="${!#lists.isEmpty(applications)}"
               style="display:inline-block; padding: 20px 0; color: #444;">
           You already have an application submitted.
@@ -49,7 +43,5 @@
         </tr>
       </tbody>
     </table>
-
-    <div th:insert="footer :: footer"></div>
   </body>
 </html>

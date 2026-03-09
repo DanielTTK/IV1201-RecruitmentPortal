@@ -1,9 +1,6 @@
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>User Page</title>
-    <link rel="stylesheet" href="/css/style.css" />
-  </head>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout('Admin Page', ~{::body})">
+      
   <body style="background-color: #1d254d; color: white">
     <div th:insert="header::header"></div>
     <h1 style="color: white">Handle applications</h1>
@@ -62,6 +59,5 @@
         </tbody>
       </table>
     </div>
-    <div th:insert="footer::footer"></div>
   </body>
 </html>
