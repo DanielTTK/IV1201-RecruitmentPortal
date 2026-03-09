@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 /**
  * Controller for handling requests to the home page.
  * 
- * @return the home page view 
  */
 @Controller
 

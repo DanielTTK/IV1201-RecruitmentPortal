@@ -16,7 +16,6 @@ import se.kth.iv1201.recruitment.repository.PersonRepository;
  * The controller retrieves the user's information and their applications from the database and populates the model for the user page view.
  * It also handles the withdrawal of applications by calling the ApplicationService to delete the application and associated data.
  * 
- * @return the user page view, where the user can see their name and a list of their applications, with options to withdraw them.
  */
 @Controller
 public class UserPageController {
@@ -32,7 +31,6 @@ public class UserPageController {
      * 
      * @param personRepository
      * @param applicationRepository
-     * @param applicationService
      */
     public UserPageController(PersonRepository personRepository, ApplicationRepository applicationRepository) {
         this.personRepository = personRepository;

@@ -19,7 +19,7 @@ import se.kth.iv1201.recruitment.application.ApplicationService;
  * application to database.
  * 
  * The form state is stored temporarily in the HTTP session using
- * @SessionAttributes, until the application is either submitted
+ * '@SessionAttributes', until the application is either submitted
  * or cancelled.
  * 
  */
@@ -65,6 +65,12 @@ public class CompetenceProfileController {
     /**
      * Handles competence profile form submission
      * Returns different views depending on the input.
+     * 
+     * @param form the competence profile form submitted by the user, which is validated for correctness
+     * @param bindingResult contains the results of the validation incl. any errors that may have occurred during the validation process
+     * @param addDateRow indicates whether the user has requested to add a new date range
+     * @param addExperienceRow indicates whether the user has requested to add a new experience row
+     * @param review indicates whether the user has requested to review their competence profile before final submission
      * 
      * @return If button for "+" next to competences are pressed, a new row of competences should appear.
      * @return If button for "+" next to dates are pressed, a new row of dates should appear.
@@ -129,7 +135,6 @@ public class CompetenceProfileController {
      * @param form: The competence profile stored in the session
      * @param sessionStatus: used to clear the session after successful submission
      * @param model: used to pass error messages to the view
-     * @return: Returns to competence_success view if the submission is successful, otherwise review view.
      */
     @PostMapping("/competenceProfile/submit")
         public String submit(Authentication authentication, 

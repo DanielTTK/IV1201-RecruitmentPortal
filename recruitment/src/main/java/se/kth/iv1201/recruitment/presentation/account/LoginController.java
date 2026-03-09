@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
  * Controller for log in and handle authentication for the user.
  * Handles the displaying of the login page and the process from submitting.
  * 
- * @return the login page view
  */
 @Controller
 public class LoginController {
