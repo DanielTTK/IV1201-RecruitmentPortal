@@ -1,10 +1,8 @@
-/**
- * Thrown when user tries to register with a username that already exists.
- * Shown on form
- */
-
 package se.kth.iv1201.recruitment.application.error;
 
+/**
+ * Exception thrown when a username is already in use.
+ */
 public class UsernameTakenException extends RuntimeException {
 
     public UsernameTakenException(String username) {

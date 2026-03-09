@@ -9,6 +9,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import se.kth.iv1201.recruitment.repository.PersonRepository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Security configuration for the application. Defines two security filter chains:
  * - AdminSecurity: Protects admin pages, only allows users with RECRUITER role.
@@ -31,11 +34,17 @@ public class SecurityConfig {
 
     private final PersonRepository personRepository;
 
+    private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
+
+    /**
+     * Constructs the SecurityConfig with the required PersonRepository dependency. The PersonRepository is used to check for legacy users 
+     * during login attempts.
+     * 
+     * @param personRepository
+     */
     public SecurityConfig(PersonRepository personRepository) {
     this.personRepository = personRepository;
     }
-
-
 
     @Bean
     PasswordEncoder passwordEncoder() {
@@ -61,23 +70,30 @@ public class SecurityConfig {
             .formLogin(form -> form
                 .loginPage("/loginAdmin") 
                 .loginProcessingUrl("/admin/login") 
-                .successHandler((request, response, authentication) -> { // Using the successHandler in order to separate authentication from authorization
+            .successHandler((request, response, authentication) -> {
 
                 boolean isRecruiter = authentication.getAuthorities().stream()
                     .anyMatch(a -> a.getAuthority().equals("ROLE_RECRUITER"));
 
                 if (!isRecruiter) {
+                    log.warn("LOGIN_SUCCESS_ROLE_MISMATCH portal=admin username={} authorities={}",
+                            authentication.getName(), authentication.getAuthorities());
                     request.getSession().invalidate();
                     response.sendRedirect("/loginAdmin?error");
                     return;
                 }
 
+                log.info("LOGIN_SUCCESS portal=admin username={}", authentication.getName());
                 response.sendRedirect("/adminPage");
             })
 
 
             .failureHandler((request, response, exception) -> {
                 String identifier = request.getParameter("username");
+                boolean legacy = isLegacyIdentifier(identifier);
+                log.warn("LOGIN_FAILURE portal=admin identifier_present={} legacy={}",
+                        identifier != null && !identifier.isBlank(), legacy);
+
                 response.sendRedirect(legacyRedirectTarget(identifier, "/loginAdmin?error"));
             })
             )
@@ -113,22 +129,30 @@ public class SecurityConfig {
             .formLogin(form -> form
                 .loginPage("/loginPage")
                 .loginProcessingUrl("/login")
-                .successHandler((request, response, authentication) -> { // Using the successHandler in order to separate authentication from authorization
+                .successHandler((request, response, authentication) -> {
 
-                boolean isApplicant = authentication.getAuthorities().stream()
-                    .anyMatch(a -> a.getAuthority().equals("ROLE_APPLICANT"));
+                    boolean isApplicant = authentication.getAuthorities().stream()
+                        .anyMatch(a -> a.getAuthority().equals("ROLE_APPLICANT"));
 
-                if (!isApplicant) {
-                    request.getSession().invalidate(); // 
-                    response.sendRedirect("/loginPage?error");// display any {param.error} that is included in the given thymeleaf template.
-                    return;
-                }
-                response.sendRedirect("/userPage");
+                    if (!isApplicant) {
+                        log.warn("LOGIN_SUCCESS_ROLE_MISMATCH portal=user username={} authorities={}",
+                                authentication.getName(), authentication.getAuthorities());
+                        request.getSession().invalidate();
+                        response.sendRedirect("/loginPage?error");
+                        return;
+                    }
+
+                    log.info("LOGIN_SUCCESS portal=user username={}", authentication.getName());
+                    response.sendRedirect("/userPage");
                 })
-            .failureHandler((request, response, exception) -> {
-                String identifier = request.getParameter("username");
-                response.sendRedirect(legacyRedirectTarget(identifier, "/loginPage?error"));
-            })
+                .failureHandler((request, response, exception) -> {
+                    String identifier = request.getParameter("username");
+                    boolean legacy = isLegacyIdentifier(identifier);
+                    log.warn("LOGIN_FAILURE portal=user identifier_present={} legacy={}",
+                            identifier != null && !identifier.isBlank(), legacy);
+
+                    response.sendRedirect(legacyRedirectTarget(identifier, "/loginPage?error"));
+                })
             )
             .logout(logout -> logout
             .logoutUrl("/logout")

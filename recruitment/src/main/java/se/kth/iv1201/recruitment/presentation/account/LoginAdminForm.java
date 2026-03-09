@@ -1,9 +1,13 @@
 package se.kth.iv1201.recruitment.presentation.account;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class LoginAdminForm {
 
+    @NotBlank
     private String usernameAdmin;
 
+    @NotBlank
     private String passwordAdmin;
 
     public String getUsernameAdmin(){

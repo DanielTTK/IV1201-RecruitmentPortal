@@ -5,14 +5,13 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import se.kth.iv1201.recruitment.domain.Application;
 
+
 /**
  * Repository for {@link se.kth.iv1201.recruitment.domain.Application}.
  *
  * Used by UC 5.3-5.5 to store and query applications for an applicant.
  *
  */
-
-
 
 public interface ApplicationRepository extends JpaRepository<Application, Integer> {
 
@@ -25,8 +24,6 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
 
     List<Application> findAllByPersonPersonId(Integer personId);
 
-
-
     /**
      * Returns an application for a person if it exists.
      *
@@ -35,8 +32,6 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
      */
     Optional<Application> findByPersonPersonId(Integer personId);
 
-
-
     /**
      * Checks whether a person already has an application.
      *
@@ -44,4 +39,5 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
      * @return True if an application exists for the person, otherwise false.
      */
     boolean existsByPersonPersonId(Integer personId);
+
 }
