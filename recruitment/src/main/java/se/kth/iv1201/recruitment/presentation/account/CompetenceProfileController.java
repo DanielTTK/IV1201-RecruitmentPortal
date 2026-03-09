@@ -1,6 +1,7 @@
 package se.kth.iv1201.recruitment.presentation.account;
 
 import jakarta.validation.Valid;
+import java.time.LocalDate;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -97,7 +98,25 @@ public class CompetenceProfileController {
             form.getExperiences().add(new ExperiencesForm());
             return "competenceProfile";
         }
+
+        if (hasInvalidDateRanges(form, bindingResult)) {
+            return "competenceProfile";
+        }
+
         return "competenceReview";
+    }
+
+    
+    private boolean hasInvalidDateRanges(CompetenceProfileForm form, BindingResult bindingResult) {
+        for (DateRangeForm dr : form.getDateRanges()) {
+            LocalDate start = dr.getStartDate();
+            LocalDate end = dr.getEndDate();
+            if (!start.isBefore(end)) {
+                bindingResult.reject("dateRange.endBeforeStart", "End date must be after start date");
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
