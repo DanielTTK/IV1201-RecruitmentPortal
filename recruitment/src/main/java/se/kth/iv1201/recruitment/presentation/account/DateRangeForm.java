@@ -10,7 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  * periods that the applicant is available to work.
  */
 
-public class DateRange {
+public class DateRangeForm {
     @FutureOrPresent(message = "Start date cannot be in the past")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
@@ -57,6 +57,6 @@ public class DateRange {
 
     @Override
     public String toString() {
-        return "DateRange{" + "startDate='" + startDate + '\'' + ", endDate='" + endDate + '\'' + '}';
+        return "DateRangeForm{" + "startDate='" + startDate + '\'' + ", endDate='" + endDate + '\'' + '}';
     }
 }
