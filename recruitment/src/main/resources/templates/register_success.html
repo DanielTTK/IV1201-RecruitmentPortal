@@ -1,14 +1,6 @@
-<!-- Simple confirmation page after successful registration. -->
-
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Registration Successful</title>
-    <link rel="stylesheet" href="/css/style.css" />
-  </head>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout('Registration Successful', ~{::body})">
   <body>
-    <div th:insert="header :: header"></div>
     <h1>Thank you for registering an account</h1>
     <div
       style="
@@ -24,6 +16,5 @@
         >&#8592;</a
       >
     </div>
-    <div th:insert="footer :: footer"></div>
   </body>
 </html>

@@ -1,11 +1,7 @@
-<!doctype html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      th:replace="layout :: layout('Review Application', ~{::body})">
 
-<div th:if="${submitError}" style="color:red;">
-    <p th:text="${submitError}"></p>
-</div>
 <head>
     <title>Review Application</title>
     <link rel="stylesheet" href="/css/style.css" />
@@ -13,9 +9,11 @@
 
 <body>
 
-<div th:insert="header :: header"></div>
 
 <div>
+    <div th:if="${submitError}" style="color:red;">
+    <p th:text="${submitError}"></p>
+    </div>
     <h1>Review Your Application</h1>
 
     <h3>Have you worked with us before?</h3>
@@ -69,8 +67,5 @@
         <br/><br/>
     </div>
 </div>
-
-<div th:insert="footer :: footer"></div>
-
 </body>
 </html>

@@ -1,11 +1,8 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Competence profile</title>
-    <link rel="stylesheet" href="/css/style.css" />
-  </head>
-  <body>
-    <div th:insert="header :: header"></div>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout('Competence Profile', ~{::body})">
+
+<body>
     <div>
       <h1>Fill out your competences!</h1>
       <form
@@ -94,7 +91,6 @@
         <div class="marg-15">
           <button type="submit" name="review" value="true">Review</button>
         </div>
-        <div th:insert="footer :: footer"></div>
       </form>
     </div>
   </body>
