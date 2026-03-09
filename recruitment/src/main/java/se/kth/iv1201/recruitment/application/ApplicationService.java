@@ -147,11 +147,22 @@ public class ApplicationService {
 
         competenceProfileRepository.saveAll(profiles);
     }
-    // Read-only method to fetch the content from the database
-    @Transactional(readOnly = true)
-    public List<Application> getAllApplications() {
-        List<Application> apps = applicationRepository.findAll();
-        apps.forEach(app -> app.getPerson().getName());   // force lazy load while transaction is open
-    return apps;
-    }
+        /**
+         * Gets all applications from the database, with each applicant's
+         * person details and competence profiles.
+         *
+         * Using lazy-load to make sure they are accessible
+         *  after the method returns.
+         *
+         * @return a list of all applications
+         */
+        @Transactional(readOnly = true)
+        public List<Application> getAllApplications() {
+                List<Application> apps = applicationRepository.findAll();
+                apps.forEach(app -> app.getPerson().getName());   // force lazy load while transaction is open
+                apps.forEach(app -> app.getPerson().getCompetenceProfiles().size()); 
+                apps.forEach(app -> app.getPerson().getCompetenceProfiles()
+                .forEach(profile -> profile.getCompetence().getName())); 
+        return apps;
+        }
 }

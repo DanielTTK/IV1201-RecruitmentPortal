@@ -35,7 +35,7 @@
       </thead>
       <tbody>
         <tr th:if="${#lists.isEmpty(applications)}">
-          <td colspan="3" style="padding-top: 20px; color: darkblue; font-weight:bold;">No applications yet, submit one by pressing "+"</td>
+          <td colspan="3" style="padding-top: 20px; font-weight:bold;">No applications yet, submit one by pressing "+"</td>
         </tr>
 
         <tr th:each="app : ${applications}">
