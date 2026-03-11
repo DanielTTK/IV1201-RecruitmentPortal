@@ -2,6 +2,8 @@ package se.kth.iv1201.recruitment.util;
 
 import java.time.LocalDate;
 import se.kth.iv1201.recruitment.presentation.account.CompetenceProfileForm;
+import se.kth.iv1201.recruitment.presentation.account.DateRangeForm;
+import se.kth.iv1201.recruitment.presentation.account.ExperiencesForm;
 
 /**
  * Utility class for validating the data of a job application before it is persisted to the database.
@@ -9,7 +11,7 @@ import se.kth.iv1201.recruitment.presentation.account.CompetenceProfileForm;
  */
 public final class ApplicationPersistenceValidator {
 
-    private ApplicationPersistenceValidator() {   // Private constructor to prevent instantiation
+    private ApplicationPersistenceValidator() {
     }
 
     /**
@@ -32,9 +34,10 @@ public final class ApplicationPersistenceValidator {
             throw new IllegalArgumentException("Invalid application - missing experience");
         }
 
-        // Validate date ranges
-        for (int i = 0; i < form.getDateRanges().size(); i++) {
-            var dateRange = form.getDateRanges().get(i);
+        for (DateRangeForm dateRange : form.getDateRanges()) {
+            if (dateRange == null) {
+                throw new IllegalArgumentException("Invalid availability - date range required");
+            }
 
             LocalDate startDate = dateRange.getStartDate();
             LocalDate endDate = dateRange.getEndDate();
@@ -43,19 +46,24 @@ public final class ApplicationPersistenceValidator {
                 throw new IllegalArgumentException("Invalid availability - start/end required");
             }
 
-            if (startDate.isAfter(endDate)) {
-                throw new IllegalArgumentException("Invalid availability - start must be before or equal to end");
+            if (startDate.isBefore(LocalDate.now()) || endDate.isBefore(LocalDate.now())) {
+                throw new IllegalArgumentException("Invalid availability - dates cannot be in the past");
+            }
+
+            if (!startDate.isBefore(endDate)) {
+                throw new IllegalArgumentException("Invalid availability - end must be after start");
             }
         }
 
-        // Validate experiences
-        for (int i = 0; i < form.getExperiences().size(); i++) {
-            var experience = form.getExperiences().get(i);
+        for (ExperiencesForm experience : form.getExperiences()) {
+            if (experience == null) {
+                throw new IllegalArgumentException("Invalid experience - entry required");
+            }
 
             String expertise = experience.getExpertise();
             Integer years = experience.getYears();
 
-            if (expertise == null || expertise.trim().isEmpty()) {
+            if (expertise == null || expertise.isBlank()) {
                 throw new IllegalArgumentException("Invalid experience - expertise required");
             }
 

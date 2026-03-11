@@ -47,8 +47,8 @@ public class LegacyController {
 
 
     /** 
-     * Starts the legacy verification process. It checks if the provided identifier (username or email) belongs to a legacy user,
-     * generates an OTP code, stores it in the session, and sends it to the user's email address.
+     * Starts the legacy verification process. It checks if the provided identifier (username or email) belongs to 
+     * a legacy user, generates an OTP code, stores it in the session, and sends it to the user's email address.
      * 
      * @param identifier the username or email entered by the user during login
      * @param session the session to store legacy user information and OTP code
