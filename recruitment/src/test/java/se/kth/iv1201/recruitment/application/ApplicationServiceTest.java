@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -25,8 +26,8 @@ import se.kth.iv1201.recruitment.domain.Competence;
 import se.kth.iv1201.recruitment.domain.CompetenceProfile;
 import se.kth.iv1201.recruitment.domain.Person;
 import se.kth.iv1201.recruitment.presentation.account.CompetenceProfileForm;
-import se.kth.iv1201.recruitment.presentation.account.DateRange;
-import se.kth.iv1201.recruitment.presentation.account.Experiences;
+import se.kth.iv1201.recruitment.presentation.account.DateRangeForm;
+import se.kth.iv1201.recruitment.presentation.account.ExperiencesForm;
 import se.kth.iv1201.recruitment.repository.ApplicationRepository;
 import se.kth.iv1201.recruitment.repository.AvailabilityRepository;
 import se.kth.iv1201.recruitment.repository.CompetenceProfileRepository;
@@ -76,15 +77,15 @@ class ApplicationServiceTest {
 
         // Prepare a form with one date range and one experience
         CompetenceProfileForm form = new CompetenceProfileForm();
-        DateRange dr = new DateRange();
-        dr.setStartDate(LocalDate.of(2026,1,1));
-        dr.setEndDate(LocalDate.of(2026,1,31));
-        form.getDateRanges().add(dr);
+    DateRangeForm dr = new DateRangeForm();
+    dr.setStartDate(LocalDate.of(2026,1,1));
+    dr.setEndDate(LocalDate.of(2026,1,31));
+    form.getDateRanges().add(dr);
 
-        Experiences exp = new Experiences();
-        exp.setExpertise("Carpentry");
-        exp.setYears(3);
-        form.getExperiences().add(exp);
+    ExperiencesForm exp = new ExperiencesForm();
+    exp.setExpertise("Carpentry");
+    exp.setYears(3);
+    form.getExperiences().add(exp);
 
         // Make repository.save calls return the passed objector a new application 
         // allows service to continue and run logic that need verification.
@@ -115,9 +116,9 @@ class ApplicationServiceTest {
         assertThat(availability.get(0).getPerson()).isEqualTo(person);
 
         assertThat(availability.get(0).getFromDate())
-        .isEqualTo(LocalDate.of(2026,1,1));
+            .isEqualTo(LocalDate.of(2026,1,1));
         assertThat(availability.get(0).getToDate())
-        .isEqualTo(LocalDate.of(2026,1,31));
+            .isEqualTo(LocalDate.of(2026,1,31));
 
         // Verify competence profile saved
     @SuppressWarnings({"unchecked", "rawtypes"})
@@ -155,14 +156,14 @@ class ApplicationServiceTest {
 
         CompetenceProfileForm form = new CompetenceProfileForm();
         // Add a valid date range so ApplicationPersistenceValidator.validate(form) pass
-        DateRange dr = new DateRange();
-        dr.setStartDate(LocalDate.of(2026, 2, 1));
-        dr.setEndDate(LocalDate.of(2026, 2, 28));
-        form.getDateRanges().add(dr);
-        Experiences exp = new Experiences();
-        exp.setExpertise("UnknownSkill");
-        exp.setYears(1);
-        form.getExperiences().add(exp);
+    DateRangeForm dr = new DateRangeForm();
+    dr.setStartDate(LocalDate.of(2026, 2, 1));
+    dr.setEndDate(LocalDate.of(2026, 2, 28));
+    form.getDateRanges().add(dr);
+    ExperiencesForm exp = new ExperiencesForm();
+    exp.setExpertise("UnknownSkill");
+    exp.setYears(1);
+    form.getExperiences().add(exp);
 
         when(competenceRepository.findByNameIgnoreCase("UnknownSkill")).thenReturn(Optional.empty());
 
@@ -173,6 +174,7 @@ class ApplicationServiceTest {
         assertThrows(IllegalArgumentException.class, () -> applicationService.submitApplication("samuel31434141", form));
     }
 
+    @Disabled("Withdraw application functionality was removed.")
     @Test
     void withdrawApplicationSuccessDeletesApplication() {
         // person is also owner of application
@@ -191,7 +193,7 @@ class ApplicationServiceTest {
         when(applicationRepository.findById(300)).thenReturn(Optional.of(app));
 
         //withdraw
-        applicationService.withdrawApplication("bob@example.com", 300);
+        //applicationService.withdrawApplication("bob@example.com", 300);
 
         // Verify application deleted and entries remved
         verify(applicationRepository).delete(app);
@@ -199,6 +201,7 @@ class ApplicationServiceTest {
         verify(competenceProfileRepository).deleteAllByPersonPersonId(200);
     }
 
+    @Disabled("Withdraw application functionality was removed.")
     @Test
     void withdrawApplicationAndApplicationNotFoundThrows() {
         Person person = new Person();
@@ -207,9 +210,10 @@ class ApplicationServiceTest {
 
         when(applicationRepository.findById(400)).thenReturn(Optional.empty());
 
-        assertThrows(IllegalArgumentException.class, () -> applicationService.withdrawApplication("alice@example.com", 400));
+        //assertThrows(IllegalArgumentException.class, () -> applicationService.withdrawApplication("alice@example.com", 400));
     }
 
+    @Disabled("Withdraw application functionality was removed.")
     @Test
     void withdrawApplicationNotOwnerThrows() {
         // conMan is different from application owner
@@ -225,6 +229,6 @@ class ApplicationServiceTest {
 
         when(applicationRepository.findById(310)).thenReturn(Optional.of(app));
 
-        assertThrows(IllegalArgumentException.class, () -> applicationService.withdrawApplication("charlie@example.com", 310));
+        //assertThrows(IllegalArgumentException.class, () -> applicationService.withdrawApplication("charlie@example.com", 310));
     }
 }
