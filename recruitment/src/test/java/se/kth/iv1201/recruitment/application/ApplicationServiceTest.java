@@ -78,8 +78,8 @@ class ApplicationServiceTest {
         // Prepare a form with one date range and one experience
         CompetenceProfileForm form = new CompetenceProfileForm();
     DateRangeForm dr = new DateRangeForm();
-    dr.setStartDate(LocalDate.of(2026,1,1));
-    dr.setEndDate(LocalDate.of(2026,1,31));
+    dr.setStartDate(LocalDate.now().plusDays(1));
+    dr.setEndDate(LocalDate.now().plusDays(30));
     form.getDateRanges().add(dr);
 
     ExperiencesForm exp = new ExperiencesForm();
@@ -116,9 +116,9 @@ class ApplicationServiceTest {
         assertThat(availability.get(0).getPerson()).isEqualTo(person);
 
         assertThat(availability.get(0).getFromDate())
-            .isEqualTo(LocalDate.of(2026,1,1));
+            .isEqualTo(LocalDate.now().plusDays(1));
         assertThat(availability.get(0).getToDate())
-            .isEqualTo(LocalDate.of(2026,1,31));
+            .isEqualTo(LocalDate.now().plusDays(30));
 
         // Verify competence profile saved
     @SuppressWarnings({"unchecked", "rawtypes"})
@@ -157,15 +157,15 @@ class ApplicationServiceTest {
         CompetenceProfileForm form = new CompetenceProfileForm();
         // Add a valid date range so ApplicationPersistenceValidator.validate(form) pass
     DateRangeForm dr = new DateRangeForm();
-    dr.setStartDate(LocalDate.of(2026, 2, 1));
-    dr.setEndDate(LocalDate.of(2026, 2, 28));
+    dr.setStartDate(LocalDate.now().plusDays(1));
+    dr.setEndDate(LocalDate.now().plusDays(30));
     form.getDateRanges().add(dr);
     ExperiencesForm exp = new ExperiencesForm();
     exp.setExpertise("UnknownSkill");
     exp.setYears(1);
     form.getExperiences().add(exp);
 
-        when(competenceRepository.findByNameIgnoreCase("UnknownSkill")).thenReturn(Optional.empty());
+        //when(competenceRepository.findByNameIgnoreCase("UnknownSkill")).thenReturn(Optional.empty());
 
         // Ensure save() returns a non-null Application so the service processes
         //  competences and triggers expected exception.

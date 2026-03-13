@@ -87,7 +87,7 @@ class AccountServiceTest {
     @Test
     void whenPersonNumberInvalidThrows() {
         // Ensure username check passes so the method proceeds to pnr normalization/validation
-        when(personRepository.existsByUsernameIgnoreCase(any())).thenReturn(false);
+        //when(personRepository.existsByUsernameIgnoreCase(any())).thenReturn(false);
 
         // Provide a person number with 9 digits "197101015" (Should be 12345678-1234. It is 12345678-9)
         // will not meet required 12 digits (8-4) and AccountService should throw IllegalArgumentException.
@@ -110,7 +110,7 @@ class AccountServiceTest {
         // This simulates DB saved object, allowing us to check differences.
         when(personRepository.save(any())).thenAnswer(invocation -> invocation.getArgument(0));
 
-        accountService.completeLegacyUser(5, "First", "Last", "newuser", "19700101-7777", "u@u.com", "pw123");
+        accountService.completeLegacyUser(5, "First", "Last", "newuser", "19700101-7777", "u@u.com", "pw12345");
 
     // capture the Person passed to save() to inspect the changes made by the service
     ArgumentCaptor<Person> captor = ArgumentCaptor.forClass(Person.class);
@@ -120,7 +120,7 @@ class AccountServiceTest {
         assertThat(saved.getPersonId()).isEqualTo(5);
         assertThat(saved.getUsername()).isEqualTo("newuser");
         assertThat(saved.getPnr()).isEqualTo("19700101-7777");
-        assertThat(encoder.matches("pw123", saved.getPassword())).isTrue();
+        assertThat(encoder.matches("pw12345", saved.getPassword())).isTrue();
         assertThat(saved.isLegacy()).isFalse();
         assertThat(saved.getRoleId()).isEqualTo(1);
     }
