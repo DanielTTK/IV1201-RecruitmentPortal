@@ -20,9 +20,7 @@ import se.kth.iv1201.recruitment.repository.PersonRepository;
 /**
  * Controller for registering an account. Connected to application to make it
  * possible to forward the post and send the data to the database.
- * 
- * @param accountService the service to handle account creation logic
- * @param personRepository the repository to look up legacy user information
+ *
  * @see AccountService for the business logic of account creation, including validation and error handling.
  */
 @Controller
