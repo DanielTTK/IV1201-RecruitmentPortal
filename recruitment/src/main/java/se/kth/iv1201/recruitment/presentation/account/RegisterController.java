@@ -136,6 +136,9 @@ public class RegisterController {
         } catch (PersonNumberTakenException e) {
             bindingResult.rejectValue("personNumber", "error.pnrTaken", e.getMessage());
             return "register";
-        } 
+        } catch (IllegalArgumentException e) {
+            bindingResult.reject("error.invalidInput", e.getMessage()); //fallback
+            return "register";
+        }
     }
 }
